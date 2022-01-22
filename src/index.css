@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("./fonts/JetBrainsMono-Regular.woff2") format("woff2");
+}
+
+
+:root {
+    --i-bg: #131316;
+    --i-modal-bg: #1C1C21;
+
+    --text-primary-light: #F2F2F3;
+    --text-secondary-gray: #8585AD;
+}
+
+html {
+    font-family: 'JetBrains Mono', Arial, sans-serif;
+    background-color: var(--i-bg);
+    margin: 0;
+    padding: 0;
+}

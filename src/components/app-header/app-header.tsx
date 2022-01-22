@@ -6,8 +6,8 @@ const AppHeader = ({ activeTab, selectTab }) => {
 
     return (
         <header className={`${headerStyles.header} pt-4 pb-4`}>
-            <div className={`${headerStyles.content} `}>
-                <nav className={`${headerStyles.side} ${headerStyles.leftSide}`}>
+            <nav className={`${headerStyles.content} `}>
+                <div className={`${headerStyles.side} ${headerStyles.leftSide}`}>
                     <button
                         className={`${headerStyles.menuBtn} ${activeTab === 'constructor' ? headerStyles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
                         type="button"
@@ -24,7 +24,7 @@ const AppHeader = ({ activeTab, selectTab }) => {
                         <ListIcon type={activeTab === 'order_list' ? 'primary' : 'secondary'}/>
                         <span className={`${headerStyles.menuBtnTitle} ml-2`}>Лист заказов</span>
                     </button>
-                </nav>
+                </div>
                 <div className={`${headerStyles.side} ${headerStyles.rightSide}`}>
                     <button  className={`${headerStyles.menuBtn} ${activeTab === 'profile' ? headerStyles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
                         type="button"
@@ -37,7 +37,7 @@ const AppHeader = ({ activeTab, selectTab }) => {
                 <div className={`${headerStyles.side} ${headerStyles.middleSide}`}>
                     <Logo />
                 </div>
-            </div>
+            </nav>
         </header>
     );
 }

@@ -1,12 +1,19 @@
 import React from 'react';
+import AppHeader from '../app-header/app-header';
 
-import appStyles from './app.module.css';
+// import appStyles from './app.module.css';
 
-function App() {
+const App = () => {
+  const [state, setState] = React.useState({
+    activeTab: 'constructor'
+  });
+
+  const selectTab = (tab) => setState({ activeTab: tab });
+
   return (
-    <div className="App">
-      
-    </div>
+    <>
+      <AppHeader activeTab={state.activeTab} selectTab={selectTab}/>
+    </>
   );
 }
 

@@ -11,7 +11,15 @@ import appStyles from './app.module.css';
 const App = () => {
   const [state, setState] = React.useState({
     activeTab: 'constructor',
-    basket: null,
+    basket: [
+      { "_id": "60666c42cc7b410027a1a9b1" },
+      { "_id": "60666c42cc7b410027a1a9b9" },
+      { "_id": "60666c42cc7b410027a1a9b4" },
+      { "_id": "60666c42cc7b410027a1a9bc" },
+      { "_id": "60666c42cc7b410027a1a9bb" },
+      { "_id": "60666c42cc7b410027a1a9bb" },
+      { "_id": "60666c42cc7b410027a1a9b1" },
+    ],
     ingredients: [
       {
          "_id":"60666c42cc7b410027a1a9b1",
@@ -235,8 +243,8 @@ const App = () => {
         <section className={classNames(appStyles.contentBlock, 'mt-10')}>
           <BurgerIngredients ingredients={state.ingredients} basket={state.basket} />
         </section>
-        <section className={classNames(appStyles.contentBlock, 'mt-10')}>
-          <BurgerConstructor ingredients={state.ingredients} />
+        <section className={classNames(appStyles.contentBlock, 'mt-25')}>
+          <BurgerConstructor ingredients={state.ingredients} basket={state.basket} />
         </section>
       </main>
     </>

@@ -1,0 +1,65 @@
+.burgerConstructor {
+    height: calc(100% - 156px);
+}
+
+.tabs {
+    
+}
+
+.ingredientsBlock {
+
+}
+
+.ingredientsList {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style: none;
+}
+
+.ingredientsListItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0;
+}
+
+.ingredientsListItem {
+    position: relative;
+}
+
+.ingredientsListItem:nth-child(odd) {
+    margin-left: calc(var(--offset-base-size)  * 4);
+}
+.ingredientsListItem:nth-child(even) {
+    margin-left: calc(var(--offset-base-size)  * 6);
+} 
+
+.ingredientItemCount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    background-color: var(--i-accent);
+}
+
+.ingredientItemImg {
+    width: 240px;
+    height: 120px;
+}
+
+.ingredientItemPrice {
+    display: flex;
+    align-items: center;
+}
+
+.ingredientItemName {
+    height: 48px;
+    text-align: center;
+}

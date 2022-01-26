@@ -1,3 +1,6 @@
+
+import classNames from 'classnames';
+
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import headerStyles from './app-header.module.css';
@@ -14,7 +17,7 @@ const AppHeader = ({ activeTab, selectTab }) => {
                         onClick={() => selectTab('constructor')}
                     >
                         <BurgerIcon type={activeTab === 'constructor' ? 'primary' : 'secondary'} />
-                        <span className={`${headerStyles.menuBtnTitle} ml-2`}>Конструктор</span>
+                        <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Конструктор</span>
                     </button>
                     <button
                         className={`${headerStyles.menuBtn} ${activeTab === 'order_list' ? headerStyles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
@@ -22,7 +25,7 @@ const AppHeader = ({ activeTab, selectTab }) => {
                         onClick={() => selectTab('order_list')}
                     >
                         <ListIcon type={activeTab === 'order_list' ? 'primary' : 'secondary'}/>
-                        <span className={`${headerStyles.menuBtnTitle} ml-2`}>Лист заказов</span>
+                        <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Лист заказов</span>
                     </button>
                 </div>
                 <div className={`${headerStyles.side} ${headerStyles.rightSide}`}>
@@ -31,7 +34,7 @@ const AppHeader = ({ activeTab, selectTab }) => {
                         onClick={() => selectTab('profile')}
                     >
                         <ProfileIcon type={activeTab === 'profile' ? 'primary' : 'secondary'}/>
-                        <span className={`${headerStyles.menuBtnTitle} ml-2`}>Личный кабинет</span>
+                        <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Личный кабинет</span>
                     </button>
                 </div>
                 <div className={`${headerStyles.side} ${headerStyles.middleSide}`}>

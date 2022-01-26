@@ -1,0 +1,35 @@
+.basketListContainer {
+    height: calc(100% - 204px);
+}
+
+.basketList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.basketListElem {
+    display: flex;
+    align-items: center;
+}
+
+.bullet {
+    display: flex;
+}
+
+.orderInfo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.orderInfoPrice {
+    display: flex;
+    align-items: center;
+}
+
+.orderInfoPrice svg {
+    width: 33px;
+    height: 33px;
+}

@@ -1,5 +1,9 @@
 import React from 'react';
+
+import classNames from 'classnames';
+
 import AppHeader from '../app-header/app-header';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 
 import appStyles from './app.module.css';
@@ -7,6 +11,7 @@ import appStyles from './app.module.css';
 const App = () => {
   const [state, setState] = React.useState({
     activeTab: 'constructor',
+    basket: null,
     ingredients: [
       {
          "_id":"60666c42cc7b410027a1a9b1",
@@ -221,14 +226,18 @@ const App = () => {
    ]
   });
 
-  const selectTab = (tab) => setState({ activeTab: tab });
+  const selectTab = (tab) => setState({ ...state, activeTab: tab });
 
   return (
     <>
       <AppHeader activeTab={state.activeTab} selectTab={selectTab}/>
       <main className={appStyles.content}>
-        <BurgerIngredients ingredients={ingredients} />
-        {/* BurgerConstructor */}
+        <section className={classNames(appStyles.contentBlock, 'mt-10')}>
+          <BurgerIngredients ingredients={state.ingredients} basket={state.basket} />
+        </section>
+        <section className={classNames(appStyles.contentBlock, 'mt-10')}>
+          <BurgerConstructor ingredients={state.ingredients} />
+        </section>
       </main>
     </>
   );

@@ -3,7 +3,7 @@
 }
 
 .tabs {
-    
+    display: flex;
 }
 
 .ingredientsBlock {

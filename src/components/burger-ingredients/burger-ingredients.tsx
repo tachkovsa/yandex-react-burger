@@ -19,7 +19,7 @@ const BurgerIngredients = ({ ingredients, basket }) => {
             <p className="text text_type_main-large">
                 Собери бургер
             </p>
-            <div className={classNames('mt-5')} style={{ display: 'flex' }}>
+            <div className={classNames(burgerIngredientsStyles.tabs, 'mt-5')}>
                 <Tab value="buns" active={tab === 'buns'} onClick={setTab}>
                     Булки
                 </Tab>

@@ -1,5 +1,11 @@
 .basketListContainer {
-    height: calc(100% - 204px);
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+}
+
+.basketListBar {
+    height: calc(100% - 192px);
 }
 
 .basketList {
@@ -16,6 +22,11 @@
 
 .bullet {
     display: flex;
+}
+
+.bulletEdge{
+    display: flex;
+    margin-left: auto;
 }
 
 .orderInfo {

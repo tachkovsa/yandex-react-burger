@@ -24,10 +24,10 @@ const BurgerConstructor = ({ ingredients, basket }) => {
             <SimpleBar className={classNames(burgerConstructorStyles.basketListContainer)} >
                 <div className={classNames(burgerConstructorStyles.basketList, 'mr-4')}>
                     {basket.map((elem, index) => {
-                        let ingredient = ingredients.find(i => i._id === elem._id);
+                        const ingredient = ingredients.find(i => i._id === elem._id);
 
-                        let isFirst = index === 0;
-                        let isLast = index === (basket.length - 1);
+                        const isFirst = index === 0;
+                        const isLast = index === (basket.length - 1);
                         
                         return (
                             <div className={classNames(burgerConstructorStyles.basketListElem, 'ml-4')} 

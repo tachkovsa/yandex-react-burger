@@ -36,11 +36,11 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                         Булки
                     </p>
                     <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
-                        {ingredients.filter(i => i.type === 'bun').map(ingredient => 
+                        {ingredients.filter(i => i.type === 'bun').map(ingredient => (
                             <li className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')} key={ingredient._id}>
                                 <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
                             </li>  
-                        )}
+                        ))}
                     </ul>
                 </div>
                 <div className={classNames(burgerIngredientsStyles.ingredientsBlock, 'mt-10')}>
@@ -48,11 +48,11 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                         Соусы
                     </p>
                     <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
-                        {ingredients.filter(i => i.type === 'sauce').map(ingredient => 
+                        {ingredients.filter(i => i.type === 'sauce').map(ingredient => (
                             <li className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')} key={ingredient._id}>
                                 <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
                             </li>  
-                        )}
+                        ))}
                     </ul>
                 </div>
                 <div className={classNames(burgerIngredientsStyles.ingredientsBlock, 'mt-10')}>
@@ -60,11 +60,11 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                         Начинки
                     </p>
                     <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
-                        {ingredients.filter(i => i.type === 'main').map(ingredient => 
+                        {ingredients.filter(i => i.type === 'main').map(ingredient => (
                             <li className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')} key={ingredient._id}>
                                 <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
                             </li>  
-                        )}
+                        ))}
                     </ul>
                 </div>
             </SimpleBar>
@@ -76,7 +76,7 @@ const BurgerIngredient = ({ ingredient, inBasketCount }) => {
 
     return (
         <>
-            {!!inBasketCount && <div className={classNames(burgerIngredientsStyles.ingredientItemCount, 'text', 'text_type_digits-default')}>{ inBasketCount }</div>}
+            {!!inBasketCount && (<div className={classNames(burgerIngredientsStyles.ingredientItemCount, 'text', 'text_type_digits-default')}>{ inBasketCount }</div>)}
             <picture className={classNames(burgerIngredientsStyles.ingredientItemImg, 'ml-4', 'mr-4')}>
                 <source media="(max-width: 640px)" srcSet={ingredient.image_mobile} />
                 <source media="(min-width: 1921px)" srcSet={ingredient.image_large} />

@@ -9,7 +9,7 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
-import { ingredientsPropTypes, basketPropTypes } from '../app/app';
+import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
 
 const BurgerConstructor = ({ ingredients, basket }) => {
     const [totalPrice, setTotalPrice] = useState(0);

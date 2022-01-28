@@ -10,7 +10,7 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 
-import { ingredientsPropTypes, basketPropTypes } from '../app/app';
+import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
 
 const BurgerIngredients = ({ ingredients, basket }) => {
   const [tab, setTab] = useState('buns')

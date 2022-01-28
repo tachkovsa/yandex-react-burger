@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 
@@ -8,6 +9,8 @@ import SimpleBar from 'simplebar-react';
 
 import 'simplebar/dist/simplebar.min.css';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
+
+import { ingredientsPropTypes, basketPropTypes } from '../app/app';
 
 const BurgerIngredients = ({ ingredients, basket }) => {
   const [tab, setTab] = useState('buns')
@@ -72,6 +75,11 @@ const BurgerIngredients = ({ ingredients, basket }) => {
     );
 }
 
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
+    basket: PropTypes.arrayOf(basketPropTypes.isRequired)
+}
+
 const BurgerIngredient = ({ ingredient, inBasketCount }) => {
 
     return (
@@ -89,21 +97,13 @@ const BurgerIngredient = ({ ingredient, inBasketCount }) => {
             <div className={classNames(burgerIngredientsStyles.ingredientItemName, 'mt-1', 'text', 'text_type_main-default')}>
                 { ingredient.name }
             </div>
-
-            {/* "_id":"60666c42cc7b410027a1a9b1",
-         "name":"Краторная булка N-200i",
-         "type":"bun",
-         "proteins":80,
-         "fat":24,
-         "carbohydrates":53,
-         "calories":420,
-         "price":1255,
-         "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-         "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-         "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png", */}
-
         </>
     );
+}
+
+BurgerIngredient.propTypes = {
+    ingredient: ingredientsPropTypes.isRequired,
+    inBasketCount: PropTypes.number.isRequired
 }
 
 export default BurgerIngredients;

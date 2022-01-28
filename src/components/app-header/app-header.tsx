@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 
@@ -43,6 +44,11 @@ const AppHeader = ({ activeTab, selectTab }) => {
             </nav>
         </header>
     );
+}
+
+AppHeader.propTypes = {
+    activeTab: PropTypes.oneOf(['constructor', 'order_list', 'profile']),
+    selectTab: PropTypes.func
 }
 
 export default AppHeader;

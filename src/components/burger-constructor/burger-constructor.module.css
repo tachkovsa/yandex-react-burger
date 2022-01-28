@@ -1,0 +1,46 @@
+.basketListContainer {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+}
+
+.basketListBar {
+    height: calc(100% - 190px);
+}
+
+.basketList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.basketListElem {
+    display: flex;
+    align-items: center;
+}
+
+.bullet {
+    display: flex;
+}
+
+.bulletEdge{
+    display: flex;
+    margin-left: auto;
+}
+
+.orderInfo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.orderInfoPrice {
+    display: flex;
+    align-items: center;
+}
+
+.orderInfoPrice svg {
+    width: 33px;
+    height: 33px;
+}

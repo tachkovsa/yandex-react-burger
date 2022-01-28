@@ -1,13 +1,29 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("./fonts/JetBrainsMono-Regular.woff2") format("woff2");
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+:root {
+    --content-width: 1280px;
+    
+    --i-bg: #131316;
+    --i-modal-bg: #1C1C21;
+    --i-accent: #4C4CFF;
+
+    --text-primary-light: #F2F2F3;
+    --text-secondary-grey: #8585AD;
+    --text-secondary-dark-grey: #8585AD;
+}
+
+html {
+    font-family: 'JetBrains Mono', Arial, sans-serif;
+    background-color: var(--i-bg);
+    margin: 0;
+    padding: 0;
+}
+
+.simplebar-scrollbar,
+.simplebar-scrollbar::before {
+    background-color: var(--text-secondary-dark-grey);
 }

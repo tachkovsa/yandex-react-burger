@@ -30,6 +30,8 @@ const BurgerConstructor = ({ ingredients, basket }) => {
                 bun = element;
                 return true;
             }
+
+            return false;
         });
         setTopBun(bun);
         setBottomBun(bun);

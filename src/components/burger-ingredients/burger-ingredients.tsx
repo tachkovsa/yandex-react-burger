@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
@@ -17,6 +17,8 @@ const BurgerIngredients = ({ ingredients, basket }) => {
 
     const [modalVisible, setModalVisible] = useState(true);
     const [toggledIngredient, setToggledIngredient] = useState(null);
+
+    const getInBasketCount = useCallback((ingredientId) => basket.filter(b => b._id === ingredientId).length, [basket]);
 
     const handleOpenModal = (ingredient) => {
         setToggledIngredient(ingredient);
@@ -56,7 +58,10 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                                 key={ingredient._id}
                                 onClick={() => handleOpenModal(ingredient)}
                             >
-                                <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
+                                <BurgerIngredient
+                                    ingredient={ingredient}
+                                    inBasketCount={getInBasketCount(ingredient._id)}
+                                />
                             </li>  
                         ))}
                     </ul>
@@ -72,7 +77,10 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                                 key={ingredient._id}
                                 onClick={() => handleOpenModal(ingredient)}
                             >
-                                <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
+                                <BurgerIngredient
+                                    ingredient={ingredient}
+                                    inBasketCount={getInBasketCount(ingredient._id)}
+                                />
                             </li>  
                         ))}
                     </ul>
@@ -88,7 +96,10 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                                 key={ingredient._id}
                                 onClick={() => handleOpenModal(ingredient)}
                             >
-                                <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
+                                <BurgerIngredient
+                                    ingredient={ingredient}
+                                    inBasketCount={getInBasketCount(ingredient._id)}
+                                />
                             </li>  
                         ))}
                     </ul>

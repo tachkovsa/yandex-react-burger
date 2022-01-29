@@ -9,12 +9,26 @@ import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktiku
 import 'simplebar/dist/simplebar.min.css';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
 
 const BurgerConstructor = ({ ingredients, basket }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [topBun, setTopBun] = useState<any>(undefined);
     const [bottomBun, setBottomBun] = useState<any>(undefined);
+
+    const [modalVisible, setModalVisible] = useState(true);
+    const [orderNumber, setOrderNumber] = useState('');
+
+    const handleOpenModal = () => {
+        setOrderNumber('034536');
+        setModalVisible(true);
+    }
+
+    const handleCloseModal = () => {
+        setModalVisible(false);
+    }
 
     useEffect(() => {
         setTotalPrice(
@@ -93,10 +107,19 @@ const BurgerConstructor = ({ ingredients, basket }) => {
                     <span className={classNames('text', 'text_type_digits-medium', 'mr-2')}>{totalPrice}</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large">
+                <Button
+                    type="primary"
+                    size="large"
+                    onClick={handleOpenModal}
+                >
                     Оформить заказ
                 </Button>
             </div>
+            {modalVisible && orderNumber && (
+                <Modal onClose={handleCloseModal}> 
+                    <OrderDetails orderNumber={orderNumber} />
+                </Modal>
+            )}
         </>
     );
 }

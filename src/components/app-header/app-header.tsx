@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import classNames from 'classnames';
 
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";

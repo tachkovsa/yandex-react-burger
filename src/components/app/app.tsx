@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
-
 import classNames from 'classnames';
+
+import appStyles from './app.module.css';
 
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-
-import appStyles from './app.module.css';
-
 import { defaultBasket } from '../../utils/data';
-
 import { domainURL } from '../../utils/constants';
 
 const App = () => {
@@ -19,7 +16,7 @@ const App = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [hasError, setHasError] = React.useState(false);
   const [loadingText, setLoadingText] = React.useState('');
-  
+
   useEffect(() => {
     let interval, tick = 0;
     if (isLoading) {

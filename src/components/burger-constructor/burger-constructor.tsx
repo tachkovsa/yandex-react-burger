@@ -1,10 +1,10 @@
 
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
+
+import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import 'simplebar/dist/simplebar.min.css';
 import burgerConstructorStyles from './burger-constructor.module.css';

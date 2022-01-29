@@ -14,7 +14,7 @@ const App = () => {
   const [basket, setBasket] = React.useState(defaultBasket);
   const [ingredients, setIngredients] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [hasError, setHasError] = React.useState(false);
+  const [errorText, setErrorText] = React.useState(false);
   const [loadingText, setLoadingText] = React.useState('');
 
   useEffect(() => {
@@ -32,18 +32,23 @@ const App = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    console.info('FETCH_INGREDIENTS');
     fetch(`${domainURL}/api/ingredients`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          return Promise.reject('Unable to fetch data from requested url');
+        }
+
+        return res.json()
+      })
       .then(res => {
         if (!res.success) {
-          throw new Error('Something went wrong while processing requrest');
+          return Promise.reject('Something went wrong while processing requrest');
         }
 
         setIngredients(res.data);
-        setHasError(false);
+        setErrorText(false);
       })
-      .catch(error => setHasError(error))
+      .catch(error => setErrorText(error))
       .finally(() => setIsLoading(false));
   }, []);
 
@@ -51,9 +56,15 @@ const App = () => {
     <>
       <AppHeader activeTab={activeTab} selectTab={setActiveTab}/>
       {isLoading && (
-        <div className={appStyles.loader}>{loadingText}</div>
+        <div className={classNames(appStyles.loader, 'text', 'text_type_main-default')}>{loadingText}</div>
       )}
-      {!isLoading && !hasError && ingredients.length > 0 && (
+      {errorText && (
+        <div className={classNames(appStyles.error, 'text', 'text_type_main-default')}>
+          Что-то пошло не так... 😞
+          <span className={classNames('mt-2', 'text', 'text_type_main-default', 'text_color_inactive')}>{errorText}</span>
+        </div>
+      )}
+      {!isLoading && !errorText && ingredients.length > 0 && (
         <main className={appStyles.content}>
           <section className={classNames(appStyles.contentBlock, 'mt-10')}>
             <BurgerIngredients ingredients={ingredients} basket={basket} />

@@ -1,21 +1,32 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import classNames from 'classnames';
+import SimpleBar from 'simplebar-react';
 
 import { Tab, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import SimpleBar from 'simplebar-react';
 
 import 'simplebar/dist/simplebar.min.css';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
 
 const BurgerIngredients = ({ ingredients, basket }) => {
-  const [tab, setTab] = useState('buns')
+    const [tab, setTab] = useState('buns')
 
-    // Add scrolling and state changing on scroll
+    const [modalVisible, setModalVisible] = useState(true);
+    const [toggledIngredient, setToggledIngredient] = useState(null);
+
+    const handleOpenModal = (ingredient) => {
+        setToggledIngredient(ingredient);
+        setModalVisible(true);
+    }
+
+    const handleCloseModal = () => {
+        setModalVisible(false);
+        setToggledIngredient(null);
+    }
 
     return (
         <>
@@ -40,7 +51,11 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                     </p>
                     <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
                         {ingredients.filter(i => i.type === 'bun').map(ingredient => (
-                            <li className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')} key={ingredient._id}>
+                            <li
+                                className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')}
+                                key={ingredient._id}
+                                onClick={() => handleOpenModal(ingredient)}
+                            >
                                 <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
                             </li>  
                         ))}
@@ -52,7 +67,11 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                     </p>
                     <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
                         {ingredients.filter(i => i.type === 'sauce').map(ingredient => (
-                            <li className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')} key={ingredient._id}>
+                            <li
+                                className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')}
+                                key={ingredient._id}
+                                onClick={() => handleOpenModal(ingredient)}
+                            >
                                 <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
                             </li>  
                         ))}
@@ -64,13 +83,22 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                     </p>
                     <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
                         {ingredients.filter(i => i.type === 'main').map(ingredient => (
-                            <li className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')} key={ingredient._id}>
+                            <li
+                                className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')}
+                                key={ingredient._id}
+                                onClick={() => handleOpenModal(ingredient)}
+                            >
                                 <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
                             </li>  
                         ))}
                     </ul>
                 </div>
             </SimpleBar>
+            {modalVisible && toggledIngredient && (
+                <Modal header="Детали ингредиента" onClose={handleCloseModal}> 
+                    <IngredientDetails ingredient={toggledIngredient} />
+                </Modal>
+            )}
         </>
     );
 }

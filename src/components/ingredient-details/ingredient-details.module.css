@@ -1,0 +1,28 @@
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modalIngredientImage {
+    display: flex;
+    height: 240px;
+    justify-content: center;
+}
+
+.modalIngredientName {
+
+}
+
+.modalIngredientSpecsList {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.modalIngredientSpecsListItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-secondary-dark-grey);
+}

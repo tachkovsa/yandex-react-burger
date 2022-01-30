@@ -8,27 +8,19 @@ import { Tab, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-compo
 import 'simplebar/dist/simplebar.min.css';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
 
-const BurgerIngredients = ({ ingredients, basket }) => {
+const BurgerIngredients = ({ ingredients, basket, onOpenModal }) => {
     const [tab, setTab] = useState('buns')
-
-    const [modalVisible, setModalVisible] = useState(true);
-    const [toggledIngredient, setToggledIngredient] = useState(null);
-
     const getInBasketCount = useCallback((ingredientId) => basket.filter(b => b._id === ingredientId).length, [basket]);
 
     const handleOpenModal = (ingredient) => {
-        setToggledIngredient(ingredient);
-        setModalVisible(true);
-    }
-
-    const handleCloseModal = () => {
-        setModalVisible(false);
-        setToggledIngredient(null);
-    }
+        onOpenModal({
+            type: 'ingredient_details',
+            ingredient,
+            header: 'Детали ингредиента'
+        });
+    };
 
     return (
         <>
@@ -105,18 +97,14 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                     </ul>
                 </div>
             </SimpleBar>
-            {modalVisible && toggledIngredient && (
-                <Modal header="Детали ингредиента" onClose={handleCloseModal}> 
-                    <IngredientDetails ingredient={toggledIngredient} />
-                </Modal>
-            )}
         </>
     );
 }
 
 BurgerIngredients.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
-    basket: PropTypes.arrayOf(basketPropTypes.isRequired)
+    basket: PropTypes.arrayOf(basketPropTypes.isRequired),
+    onOpenModal: PropTypes.func.isRequired
 }
 
 const BurgerIngredient = ({ ingredient, inBasketCount }) => {

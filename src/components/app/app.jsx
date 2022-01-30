@@ -9,6 +9,10 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import { defaultBasket } from '../../utils/data';
 import { domainURL } from '../../utils/constants';
 
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+
 const App = () => {
   const [activeTab, setActiveTab] = React.useState('constructor');
   const [basket, setBasket] = React.useState(defaultBasket);
@@ -16,6 +20,18 @@ const App = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [errorText, setErrorText] = React.useState(false);
   const [loadingText, setLoadingText] = React.useState('');
+
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalPayload, setModalPayload] = React.useState(null);
+
+  const handleOpenModal = (payload) => {
+    setModalPayload(payload);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
 
   useEffect(() => {
     let interval, tick = 0;
@@ -67,12 +83,30 @@ const App = () => {
       {!isLoading && !errorText && ingredients.length > 0 && (
         <main className={appStyles.content}>
           <section className={classNames(appStyles.contentBlock, 'mt-10')}>
-            <BurgerIngredients ingredients={ingredients} basket={basket} />
+            <BurgerIngredients
+              ingredients={ingredients}
+              basket={basket}
+              onOpenModal={handleOpenModal}
+            />
           </section>
           <section className={classNames(appStyles.contentBlock, 'mt-25')}>
-            <BurgerConstructor ingredients={ingredients} basket={basket} />
+            <BurgerConstructor
+              ingredients={ingredients}
+              basket={basket}
+              onOpenModal={handleOpenModal}
+            />
           </section>
         </main>
+      )}
+      {modalVisible && (
+        <Modal header={modalPayload.header} onClose={handleCloseModal}> 
+          {modalPayload.type === 'order_details' && (
+            <OrderDetails orderNumber={modalPayload.orderNumber} />
+          )}
+          {modalPayload.type === 'ingredient_details' && (
+            <IngredientDetails ingredient={modalPayload.ingredient} />
+          )}
+        </Modal>
       )}
     </>
   );

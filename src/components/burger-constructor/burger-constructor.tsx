@@ -9,25 +9,19 @@ import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktiku
 import 'simplebar/dist/simplebar.min.css';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
-import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
 import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
 
-const BurgerConstructor = ({ ingredients, basket }) => {
+const BurgerConstructor = ({ ingredients, basket, onOpenModal }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [burgerBun, setBurgerBun] = useState<any>(undefined);
 
-    const [modalVisible, setModalVisible] = useState(true);
-    const [orderNumber, setOrderNumber] = useState('');
-
     const handleOpenModal = () => {
-        setOrderNumber('034536');
-        setModalVisible(true);
-    }
-
-    const handleCloseModal = () => {
-        setModalVisible(false);
-    }
+        onOpenModal({
+            type: 'order_details',
+            orderNumber: '034536',
+            header: ''
+        });
+    };
 
     useEffect(() => {
         setTotalPrice(
@@ -104,18 +98,14 @@ const BurgerConstructor = ({ ingredients, basket }) => {
                     Оформить заказ
                 </Button>
             </div>
-            {modalVisible && orderNumber && (
-                <Modal onClose={handleCloseModal}> 
-                    <OrderDetails orderNumber={orderNumber} />
-                </Modal>
-            )}
         </>
     );
 }
 
 BurgerConstructor.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
-    basket: PropTypes.arrayOf(basketPropTypes.isRequired)
+    basket: PropTypes.arrayOf(basketPropTypes.isRequired),
+    onOpenModal: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

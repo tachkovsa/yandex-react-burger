@@ -9,11 +9,12 @@ import modalStyles from './modal.module.css';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
+const ESC_KEYCODE = 27;
 const Modal = ({ children , header, onClose }) => {
 
     useEffect(() => {
         const closeModal = (e) => {
-            if (e.key === 'Escape' || e.keyCode === 27) {
+            if (e.key === 'Escape' || e.keyCode === ESC_KEYCODE) {
                 onClose();
             }
         }

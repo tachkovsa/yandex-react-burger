@@ -1,0 +1,33 @@
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    width: 720px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    background-color: var(--i-modal-bg);
+    border-radius: calc(var(--offset-base-size)  * 10);
+    border: 1px solid var(--i-accent-pale);   
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 64px;
+}
+
+.modalHeader > svg {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.modalContent {
+    box-sizing: border-box;
+    max-width: inherit;
+}

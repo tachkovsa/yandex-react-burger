@@ -6,6 +6,21 @@
     height: calc(100vh - 88px); /* 100vh minus header height */
 }
 
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 88px);
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 88px);
+}
+
 .contentBlock {
     display: flex;
     flex-direction: column;

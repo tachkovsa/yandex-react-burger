@@ -1,21 +1,26 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-
 import classNames from 'classnames';
+import SimpleBar from 'simplebar-react';
 
 import { Tab, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import SimpleBar from 'simplebar-react';
 
 import 'simplebar/dist/simplebar.min.css';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 
 import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
 
-const BurgerIngredients = ({ ingredients, basket }) => {
-  const [tab, setTab] = useState('buns')
+const BurgerIngredients = ({ ingredients, basket, onOpenModal }) => {
+    const [tab, setTab] = useState('buns')
+    const getInBasketCount = useCallback((ingredientId) => basket.filter(b => b._id === ingredientId).length, [basket]);
 
-    // Add scrolling and state changing on scroll
+    const handleOpenModal = (ingredient) => {
+        onOpenModal({
+            type: 'ingredient_details',
+            ingredient,
+            header: 'Детали ингредиента'
+        });
+    };
 
     return (
         <>
@@ -40,8 +45,15 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                     </p>
                     <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
                         {ingredients.filter(i => i.type === 'bun').map(ingredient => (
-                            <li className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')} key={ingredient._id}>
-                                <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
+                            <li
+                                className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')}
+                                key={ingredient._id}
+                                onClick={() => handleOpenModal(ingredient)}
+                            >
+                                <BurgerIngredient
+                                    ingredient={ingredient}
+                                    inBasketCount={getInBasketCount(ingredient._id)}
+                                />
                             </li>  
                         ))}
                     </ul>
@@ -52,8 +64,15 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                     </p>
                     <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
                         {ingredients.filter(i => i.type === 'sauce').map(ingredient => (
-                            <li className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')} key={ingredient._id}>
-                                <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
+                            <li
+                                className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')}
+                                key={ingredient._id}
+                                onClick={() => handleOpenModal(ingredient)}
+                            >
+                                <BurgerIngredient
+                                    ingredient={ingredient}
+                                    inBasketCount={getInBasketCount(ingredient._id)}
+                                />
                             </li>  
                         ))}
                     </ul>
@@ -64,8 +83,15 @@ const BurgerIngredients = ({ ingredients, basket }) => {
                     </p>
                     <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
                         {ingredients.filter(i => i.type === 'main').map(ingredient => (
-                            <li className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')} key={ingredient._id}>
-                                <BurgerIngredient ingredient={ingredient} inBasketCount={1} />
+                            <li
+                                className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')}
+                                key={ingredient._id}
+                                onClick={() => handleOpenModal(ingredient)}
+                            >
+                                <BurgerIngredient
+                                    ingredient={ingredient}
+                                    inBasketCount={getInBasketCount(ingredient._id)}
+                                />
                             </li>  
                         ))}
                     </ul>
@@ -77,7 +103,8 @@ const BurgerIngredients = ({ ingredients, basket }) => {
 
 BurgerIngredients.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
-    basket: PropTypes.arrayOf(basketPropTypes.isRequired)
+    basket: PropTypes.arrayOf(basketPropTypes.isRequired),
+    onOpenModal: PropTypes.func.isRequired
 }
 
 const BurgerIngredient = ({ ingredient, inBasketCount }) => {

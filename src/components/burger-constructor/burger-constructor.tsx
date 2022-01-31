@@ -1,20 +1,27 @@
 
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
+
+import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import 'simplebar/dist/simplebar.min.css';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
 import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
 
-const BurgerConstructor = ({ ingredients, basket }) => {
+const BurgerConstructor = ({ ingredients, basket, onOpenModal }) => {
     const [totalPrice, setTotalPrice] = useState(0);
-    const [topBun, setTopBun] = useState<any>(undefined);
-    const [bottomBun, setBottomBun] = useState<any>(undefined);
+    const [burgerBun, setBurgerBun] = useState<any>(undefined);
+
+    const handleOpenModal = () => {
+        onOpenModal({
+            type: 'order_details',
+            orderNumber: '034536',
+            header: ''
+        });
+    };
 
     useEffect(() => {
         setTotalPrice(
@@ -23,32 +30,22 @@ const BurgerConstructor = ({ ingredients, basket }) => {
                 .reduce((acc, price) => acc + price)
         );
 
-        let bun;
-        const buns = ingredients.filter(i => i.type === 'bun');
-        buns.some(element => {
-            if (basket.find(b => b._id === element._id)) {
-                bun = element;
-                return true;
-            }
-
-            return false;
-        });
-        setTopBun(bun);
-        setBottomBun(bun);
+        const bun = ingredients.find(i => i.type === 'bun');
+        setBurgerBun(bun);
 
     }, [ingredients, basket]);
 
     return (
         <>
             <div className={classNames(burgerConstructorStyles.basketListContainer)}>
-                {topBun && (
+                {burgerBun && (
                     <div className={classNames(burgerConstructorStyles.bulletEdge, 'mr-4', 'mb-4')}>
                         <ConstructorElement
                             type={'top'}
                             isLocked={true}
-                            text={`${topBun.name} (верх)`}
-                            price={topBun.price}
-                            thumbnail={topBun.image}
+                            text={`${burgerBun.name} (верх)`}
+                            price={burgerBun.price}
+                            thumbnail={burgerBun.image}
                         />
                     </div>
                 )}
@@ -75,14 +72,14 @@ const BurgerConstructor = ({ ingredients, basket }) => {
                         )}
                     </div>
                 </SimpleBar>
-                {bottomBun && (
+                {burgerBun && (
                     <div className={classNames(burgerConstructorStyles.bulletEdge, 'mr-4', 'mt-4')}>
                         <ConstructorElement
                             type={'bottom'}
                             isLocked={true}
-                            text={`${bottomBun.name} (низ)`}
-                            price={bottomBun.price}
-                            thumbnail={bottomBun.image}
+                            text={`${burgerBun.name} (низ)`}
+                            price={burgerBun.price}
+                            thumbnail={burgerBun.image}
                         />
                     </div>
                 )}
@@ -93,7 +90,11 @@ const BurgerConstructor = ({ ingredients, basket }) => {
                     <span className={classNames('text', 'text_type_digits-medium', 'mr-2')}>{totalPrice}</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large">
+                <Button
+                    type="primary"
+                    size="large"
+                    onClick={handleOpenModal}
+                >
                     Оформить заказ
                 </Button>
             </div>
@@ -103,7 +104,8 @@ const BurgerConstructor = ({ ingredients, basket }) => {
 
 BurgerConstructor.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
-    basket: PropTypes.arrayOf(basketPropTypes.isRequired)
+    basket: PropTypes.arrayOf(basketPropTypes.isRequired),
+    onOpenModal: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

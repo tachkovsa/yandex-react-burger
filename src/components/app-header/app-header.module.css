@@ -22,7 +22,7 @@
     outline: none;
     background-color: transparent;
     font-family: inherit;
-    color: var(--text-secondary-grey);
+    color: var(--text-secondary-dark-grey);
     display: inline-flex;
     align-items: center;
     cursor: pointer;

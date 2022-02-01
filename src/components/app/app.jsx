@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import appStyles from './app.module.css';
@@ -16,7 +16,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { IngredientsContext } from '../services/ingredientsContext';
 
 const App = () => {
-  const [ingredients, setIngredients] = useContext([]);
+  const [ingredients, setIngredients] = useState([]);
   
   const [activeTab, setActiveTab] = React.useState('constructor');
   const [basket, setBasket] = React.useState(defaultBasket);
@@ -88,7 +88,6 @@ const App = () => {
           <main className={appStyles.content}>
             <section className={classNames(appStyles.contentBlock, 'mt-10')}>
               <BurgerIngredients
-                ingredients={ingredients}
                 basket={basket}
                 onOpenModal={handleOpenModal}
               />

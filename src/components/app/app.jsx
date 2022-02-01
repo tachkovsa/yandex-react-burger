@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 import classNames from 'classnames';
 
 import appStyles from './app.module.css';
@@ -34,14 +34,14 @@ const App = () => {
 
   const [ingredients, setIngredients] = useState([]);
   
-  const [activeTab, setActiveTab] = React.useState('constructor');
-  const [basket, setBasket] = React.useState(defaultBasket);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [errorText, setErrorText] = React.useState(false);
-  const [loadingText, setLoadingText] = React.useState('');
+  const [activeTab, setActiveTab] = useState('constructor');
+  const [basket, setBasket] = useState(defaultBasket);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorText, setErrorText] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
 
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [modalPayload, setModalPayload] = React.useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalPayload, setModalPayload] = useState(null);
 
   const handleOpenModal = (payload) => {
     setModalPayload(payload);

@@ -94,7 +94,6 @@ const App = () => {
             </section>
             <section className={classNames(appStyles.contentBlock, 'mt-25')}>
               <BurgerConstructor
-                ingredients={ingredients}
                 basket={basket}
                 onOpenModal={handleOpenModal}
               />

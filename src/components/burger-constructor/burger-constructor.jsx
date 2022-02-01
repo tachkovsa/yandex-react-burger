@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
@@ -9,11 +9,15 @@ import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktiku
 import 'simplebar/dist/simplebar.min.css';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
-import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
+import { basketPropTypes } from '../../utils/types.js';
 
-const BurgerConstructor = ({ ingredients, basket, onOpenModal }) => {
+import { IngredientsContext } from '../services/ingredientsContext';
+
+const BurgerConstructor = ({ basket, onOpenModal }) => {
+    const { ingredients } = useContext(IngredientsContext);
+
     const [totalPrice, setTotalPrice] = useState(0);
-    const [burgerBun, setBurgerBun] = useState<any>(undefined);
+    const [burgerBun, setBurgerBun] = useState(undefined);
 
     const handleOpenModal = () => {
         onOpenModal({
@@ -103,7 +107,6 @@ const BurgerConstructor = ({ ingredients, basket, onOpenModal }) => {
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
     basket: PropTypes.arrayOf(basketPropTypes.isRequired),
     onOpenModal: PropTypes.func.isRequired
 }

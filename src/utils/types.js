@@ -16,5 +16,6 @@ export const ingredientsPropTypes = PropTypes.shape({
 });
 
 export const basketPropTypes = PropTypes.shape({
-    _id: PropTypes.string.isRequired
+    _id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired
 });

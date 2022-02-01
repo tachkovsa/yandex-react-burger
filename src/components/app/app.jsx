@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import classNames from 'classnames';
 
 import appStyles from './app.module.css';
@@ -14,8 +14,24 @@ import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import { IngredientsContext } from '../services/ingredientsContext';
+import { TotalPriceContext } from '../services/appContext';
+
+const totalPriceInitialState = { totalPrice: null };
+
+function totalPriceReducer(state, action) {
+    switch (action.type) {
+        case 'set':
+            return { totalPrice: action.payload };
+        case 'reset':
+            return totalPriceInitialState;
+        default:
+            throw new Error(`Wrong type of action: ${action.type}`); 
+    }
+}
 
 const App = () => {
+  const [totalPriceState, totalPriceDispatcher] = useReducer(totalPriceReducer, totalPriceInitialState, undefined);
+
   const [ingredients, setIngredients] = useState([]);
   
   const [activeTab, setActiveTab] = React.useState('constructor');
@@ -75,41 +91,43 @@ const App = () => {
     <>
       <AppHeader activeTab={activeTab} selectTab={setActiveTab}/>
       <IngredientsContext.Provider value={{ ingredients, setIngredients }}>
-        {isLoading && (
-          <div className={classNames(appStyles.loader, 'text', 'text_type_main-default')}>{loadingText}</div>
-        )}
-        {errorText && (
-          <div className={classNames(appStyles.error, 'text', 'text_type_main-default')}>
-            Что-то пошло не так... 😞
-            <span className={classNames('mt-2', 'text', 'text_type_main-default', 'text_color_inactive')}>{errorText}</span>
-          </div>
-        )}
-        {!isLoading && !errorText && ingredients.length > 0 && (
-          <main className={appStyles.content}>
-            <section className={classNames(appStyles.contentBlock, 'mt-10')}>
-              <BurgerIngredients
-                basket={basket}
-                onOpenModal={handleOpenModal}
-              />
-            </section>
-            <section className={classNames(appStyles.contentBlock, 'mt-25')}>
-              <BurgerConstructor
-                basket={basket}
-                onOpenModal={handleOpenModal}
-              />
-            </section>
-          </main>
-        )}
-        {modalVisible && (
-          <Modal header={modalPayload.header} onClose={handleCloseModal}> 
-            {modalPayload.type === 'order_details' && (
-              <OrderDetails orderNumber={modalPayload.orderNumber} />
-            )}
-            {modalPayload.type === 'ingredient_details' && (
-              <IngredientDetails ingredient={modalPayload.ingredient} />
-            )}
-          </Modal>
-        )}
+        <TotalPriceContext.Provider value={{ totalPriceState, totalPriceDispatcher }}>
+          {isLoading && (
+            <div className={classNames(appStyles.loader, 'text', 'text_type_main-default')}>{loadingText}</div>
+          )}
+          {errorText && (
+            <div className={classNames(appStyles.error, 'text', 'text_type_main-default')}>
+              Что-то пошло не так... 😞
+              <span className={classNames('mt-2', 'text', 'text_type_main-default', 'text_color_inactive')}>{errorText}</span>
+            </div>
+          )}
+          {!isLoading && !errorText && ingredients.length > 0 && (
+            <main className={appStyles.content}>
+              <section className={classNames(appStyles.contentBlock, 'mt-10')}>
+                <BurgerIngredients
+                  basket={basket}
+                  onOpenModal={handleOpenModal}
+                />
+              </section>
+              <section className={classNames(appStyles.contentBlock, 'mt-25')}>
+                <BurgerConstructor
+                  basket={basket}
+                  onOpenModal={handleOpenModal}
+                />
+              </section>
+            </main>
+          )}
+          {modalVisible && (
+            <Modal header={modalPayload.header} onClose={handleCloseModal}> 
+              {modalPayload.type === 'order_details' && (
+                <OrderDetails orderNumber={modalPayload.orderNumber} />
+              )}
+              {modalPayload.type === 'ingredient_details' && (
+                <IngredientDetails ingredient={modalPayload.ingredient} />
+              )}
+            </Modal>
+          )}
+        </TotalPriceContext.Provider>
       </IngredientsContext.Provider>
     </>
   );

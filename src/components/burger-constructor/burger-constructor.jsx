@@ -10,11 +10,14 @@ import 'simplebar/dist/simplebar.min.css';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
 import { IngredientsContext } from '../services/ingredientsContext';
+import { TotalPriceContext } from '../services/appContext';
 
 const BurgerConstructor = ({ basket, onOpenModal }) => {
+    const { totalPriceState, totalPriceDispatcher } = useContext(TotalPriceContext);
+
     const { ingredients } = useContext(IngredientsContext);
 
-    const [totalPrice, setTotalPrice] = useState(0);
+    // const [totalPrice, setTotalPrice] = useState(0);
     const [burgerBun, setBurgerBun] = useState(undefined);
     const [burgerStuffing, setBurgerStuffing] = useState([]);
 
@@ -36,19 +39,23 @@ const BurgerConstructor = ({ basket, onOpenModal }) => {
                 }
             });
 
-            setTotalPrice(
-                inBasketIngredients
-                    .map(ingredient => ingredient.price * (ingredient.type === 'bun' ? 2 : 1))
-                    .reduce((acc, price) => acc + price)
-            );
+            totalPriceDispatcher({
+                type: 'set',
+                payload: (
+                    inBasketIngredients
+                        .map(ingredient => ingredient.price * (ingredient.type === 'bun' ? 2 : 1))
+                        .reduce((acc, price) => acc + price)
+                )
+            });
 
             setBurgerBun(inBasketIngredients.find(ingredient => ingredient.type === 'bun') || null);
             setBurgerStuffing(inBasketIngredients.filter(ingredient => ingredient.type !== 'bun') || []);
         } else {
             setBurgerBun(null);
             setBurgerStuffing([]);
+            totalPriceDispatcher({ type: 'reset' });
         }
-    }, [ingredients, basket]);
+    }, [ingredients, basket, totalPriceDispatcher]);
 
     return (
         <>
@@ -100,7 +107,7 @@ const BurgerConstructor = ({ basket, onOpenModal }) => {
 
             <div className={classNames(burgerConstructorStyles.orderInfo, 'mt-10', 'mr-4')}>
                 <div className={classNames(burgerConstructorStyles.orderInfoPrice, 'mr-10')}>
-                    <span className={classNames('text', 'text_type_digits-medium', 'mr-2')}>{totalPrice}</span>
+                    <span className={classNames('text', 'text_type_digits-medium', 'mr-2')}>{totalPriceState.totalPrice}</span>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button

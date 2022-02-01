@@ -9,8 +9,6 @@ import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktiku
 import 'simplebar/dist/simplebar.min.css';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
-import { basketPropTypes } from '../../utils/types.js';
-
 import { IngredientsContext } from '../services/ingredientsContext';
 
 const BurgerConstructor = ({ basket, onOpenModal }) => {
@@ -18,6 +16,7 @@ const BurgerConstructor = ({ basket, onOpenModal }) => {
 
     const [totalPrice, setTotalPrice] = useState(0);
     const [burgerBun, setBurgerBun] = useState(undefined);
+    const [burgerStuffing, setBurgerStuffing] = useState([]);
 
     const handleOpenModal = () => {
         onOpenModal({
@@ -28,15 +27,27 @@ const BurgerConstructor = ({ basket, onOpenModal }) => {
     };
 
     useEffect(() => {
-        setTotalPrice(
-            basket
-                .map(el => ingredients.find(i => i._id === el._id).price)
-                .reduce((acc, price) => acc + price)
-        );
+        if (ingredients && basket) {    
+            const inBasketIngredients = [];
+            basket.forEach((ingredientId) => {
+                const ingredient = ingredients.find(i => i._id === ingredientId);
+                if (ingredient) {
+                    inBasketIngredients.push(ingredient)
+                }
+            });
 
-        const bun = ingredients.find(i => i.type === 'bun');
-        setBurgerBun(bun);
+            setTotalPrice(
+                inBasketIngredients
+                    .map(ingredient => ingredient.price * (ingredient.type === 'bun' ? 2 : 1))
+                    .reduce((acc, price) => acc + price)
+            );
 
+            setBurgerBun(inBasketIngredients.find(ingredient => ingredient.type === 'bun') || null);
+            setBurgerStuffing(inBasketIngredients.filter(ingredient => ingredient.type !== 'bun') || []);
+        } else {
+            setBurgerBun(null);
+            setBurgerStuffing([]);
+        }
     }, [ingredients, basket]);
 
     return (
@@ -55,12 +66,10 @@ const BurgerConstructor = ({ basket, onOpenModal }) => {
                 )}
                 <SimpleBar className={classNames(burgerConstructorStyles.basketListBar)}>
                     <div className={classNames(burgerConstructorStyles.basketList, 'mr-4')}>
-                        {basket.slice(1, -1).map((elem, index) => {
-                            const ingredient = ingredients.find(i => i._id === elem._id);
-                            
+                        {burgerStuffing.map((ingredient, index) => {
                             return (
                                 <div className={classNames(burgerConstructorStyles.basketListElem, 'ml-4')} 
-                                    key={`${index}_${elem._id}`}>
+                                    key={`${index}_${ingredient._id}`}>
                                     <DragIcon type="primary" />
                                     <div className={classNames(burgerConstructorStyles.bullet, 'ml-2')}>
                                         <ConstructorElement
@@ -107,7 +116,7 @@ const BurgerConstructor = ({ basket, onOpenModal }) => {
 }
 
 BurgerConstructor.propTypes = {
-    basket: PropTypes.arrayOf(basketPropTypes.isRequired),
+    basket: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     onOpenModal: PropTypes.func.isRequired
 }
 

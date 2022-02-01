@@ -212,10 +212,10 @@ export const ingredients = [
 ];
 
 export const defaultBasket = [
-   { "_id": "60d3b41abdacab0026a733c6", "type": "bun" },
-   { "_id": "60d3b41abdacab0026a733ce", "type": "sauce" },
-   { "_id": "60d3b41abdacab0026a733c9", "type": "main" },
-   { "_id": "60d3b41abdacab0026a733d1", "type": "main" },
-   { "_id": "60d3b41abdacab0026a733d0", "type": "main" },
-   { "_id": "60d3b41abdacab0026a733d0", "type": "main" },
+    "60d3b41abdacab0026a733c6",
+    "60d3b41abdacab0026a733ce",
+    "60d3b41abdacab0026a733c9",
+    "60d3b41abdacab0026a733d1",
+    "60d3b41abdacab0026a733d0",
+    "60d3b41abdacab0026a733d0"
 ];

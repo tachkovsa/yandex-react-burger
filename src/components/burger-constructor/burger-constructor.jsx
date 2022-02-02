@@ -16,10 +16,10 @@ import { domainURL } from '../../utils/constants';
 
 const BurgerConstructor = ({ basket, onOpenModal }) => {
     const { totalPriceState, totalPriceDispatcher } = useContext(TotalPriceContext);
-    const { errorState, errorDispatcher } = useContext(ErrorContext);
+    const { errorDispatcher } = useContext(ErrorContext);
 
     const { ingredients } = useContext(IngredientsContext);
-    const { orderNumber, setOrderNumber } = useContext(OrderNumberContext);
+    const { setOrderNumber } = useContext(OrderNumberContext);
     
     const [burgerBun, setBurgerBun] = useState(undefined);
     const [burgerStuffing, setBurgerStuffing] = useState([]);

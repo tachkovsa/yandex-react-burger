@@ -10,23 +10,67 @@ import 'simplebar/dist/simplebar.min.css';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
 import { IngredientsContext } from '../services/ingredientsContext';
-import { TotalPriceContext } from '../services/appContext';
+import { ErrorContext, OrderNumberContext, TotalPriceContext } from '../services/appContext';
+
+import { domainURL } from '../../utils/constants';
 
 const BurgerConstructor = ({ basket, onOpenModal }) => {
     const { totalPriceState, totalPriceDispatcher } = useContext(TotalPriceContext);
+    const { errorState, errorDispatcher } = useContext(ErrorContext);
 
     const { ingredients } = useContext(IngredientsContext);
-
-    // const [totalPrice, setTotalPrice] = useState(0);
+    const { orderNumber, setOrderNumber } = useContext(OrderNumberContext);
+    
     const [burgerBun, setBurgerBun] = useState(undefined);
     const [burgerStuffing, setBurgerStuffing] = useState([]);
+    const [isWaitingForOrderNumber, setIsWaitingForOrderNumber] = useState(false);
 
-    const handleOpenModal = () => {
-        onOpenModal({
-            type: 'order_details',
-            orderNumber: '034536',
-            header: ''
-        });
+    const makeOrder = async () => {
+        if (isWaitingForOrderNumber) return;
+
+        setIsWaitingForOrderNumber(true);
+        setOrderNumber(null);
+
+        try {
+            const fetchedOrderNumber = await fetch(`${domainURL}/api/orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ingredients: basket })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return Promise.reject('Unable to post data to requested url');
+                }
+
+                return res.json();
+            })
+            .then(res => {
+                if (!res.success) {
+                    return Promise.reject('Something went wrong while processing requrest');
+                }
+
+                if (res.order && res.order.number) {
+                    return res.order.number;
+                } else {
+                    return Promise.reject('Order number is missing in response');
+                }
+            })
+            .catch(error => { throw new Error(error) })
+            .finally(() => setIsWaitingForOrderNumber(false));
+
+            setOrderNumber(fetchedOrderNumber);
+            errorDispatcher({ type: 'reset' });
+
+            onOpenModal({
+                type: 'order_details',
+                orderNumber: fetchedOrderNumber,
+                header: ''
+            });
+        } catch(err) {
+            errorDispatcher({ type: 'set', payload: err.message })
+        }
     };
 
     useEffect(() => {
@@ -113,7 +157,8 @@ const BurgerConstructor = ({ basket, onOpenModal }) => {
                 <Button
                     type="primary"
                     size="large"
-                    onClick={handleOpenModal}
+                    onClick={makeOrder}
+                    disabled={isWaitingForOrderNumber}
                 >
                     Оформить заказ
                 </Button>

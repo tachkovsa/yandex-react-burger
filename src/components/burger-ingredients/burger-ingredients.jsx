@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
@@ -8,11 +8,15 @@ import { Tab, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-compo
 import 'simplebar/dist/simplebar.min.css';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 
-import { ingredientsPropTypes, basketPropTypes } from '../../utils/types.js';
+import { ingredientsPropTypes } from '../../utils/types.js';
 
-const BurgerIngredients = ({ ingredients, basket, onOpenModal }) => {
+import { IngredientsContext } from '../services/ingredientsContext';
+
+const BurgerIngredients = ({ basket, onOpenModal }) => {
+    const { ingredients } = useContext(IngredientsContext);
+
     const [tab, setTab] = useState('buns')
-    const getInBasketCount = useCallback((ingredientId) => basket.filter(b => b._id === ingredientId).length, [basket]);
+    const getInBasketCount = useCallback((ingredientId) => basket.filter(b => b === ingredientId).length, [basket]);
 
     const handleOpenModal = (ingredient) => {
         onOpenModal({
@@ -102,8 +106,7 @@ const BurgerIngredients = ({ ingredients, basket, onOpenModal }) => {
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
-    basket: PropTypes.arrayOf(basketPropTypes.isRequired),
+    basket: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     onOpenModal: PropTypes.func.isRequired
 }
 

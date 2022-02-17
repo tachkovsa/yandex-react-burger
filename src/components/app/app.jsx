@@ -2,7 +2,8 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import classNames from 'classnames';
 
-import appStyles from './app.module.css';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -16,6 +17,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import { IngredientsContext } from '../../services/ingredientsContext';
 import { TotalPriceContext, OrderNumberContext, ErrorContext } from '../../services/appContext';
+import appStyles from './app.module.css';
 
 const totalPriceInitialState = { totalPrice: null };
 
@@ -122,20 +124,22 @@ function App() {
             </div>
             )}
             {!isLoading && !errorState.hasError && ingredients.length > 0 && (
-            <main className={appStyles.content}>
-              <section className={classNames(appStyles.contentBlock, 'mt-10')}>
-                <BurgerIngredients
-                  basket={basket}
-                  onOpenModal={handleOpenModal}
-                />
-              </section>
-              <section className={classNames(appStyles.contentBlock, 'mt-25')}>
-                <BurgerConstructor
-                  basket={basket}
-                  onOpenModal={handleOpenModal}
-                />
-              </section>
-            </main>
+              <DndProvider backend={HTML5Backend}>
+                <main className={appStyles.content}>
+                  <section className={classNames(appStyles.contentBlock, 'mt-10')}>
+                    <BurgerIngredients
+                      basket={basket}
+                      onOpenModal={handleOpenModal}
+                    />
+                  </section>
+                  <section className={classNames(appStyles.contentBlock, 'mt-25')}>
+                    <BurgerConstructor
+                      basket={basket}
+                      onOpenModal={handleOpenModal}
+                    />
+                  </section>
+                </main>
+              </DndProvider>
             )}
             {modalVisible && (
             <Modal header={modalPayload.header} onClose={handleCloseModal}>

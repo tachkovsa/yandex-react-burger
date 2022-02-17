@@ -1,6 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, {
+  useEffect, useState, useContext, useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
@@ -10,19 +12,47 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import 'simplebar/dist/simplebar.min.css';
+import { useDrop } from 'react-dnd';
+import { useDispatch, useSelector } from 'react-redux';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
 import { IngredientsContext } from '../../services/ingredientsContext';
 import { ErrorContext, OrderNumberContext, TotalPriceContext } from '../../services/appContext';
 
 import { domainURL } from '../../utils/constants';
+import Actions from '../../services/actions';
 
 function BurgerConstructor({ basket, onOpenModal }) {
+  const dispatch = useDispatch();
+  const ingredientDragged = useSelector((state) => state.ingredients.ingredientDragged);
+
   const { totalPriceState, totalPriceDispatcher } = useContext(TotalPriceContext);
   const { errorDispatcher } = useContext(ErrorContext);
 
   const { ingredients } = useContext(IngredientsContext);
   const { setOrderNumber } = useContext(OrderNumberContext);
+
+  const onDropIngredient = (ingredient) => {
+    if (ingredient.type === 'bun') {
+      // TODO: Add SET_BUN action
+    } else {
+      dispatch({ type: Actions.ADD_INGREDIENT, payload: ingredient });
+    }
+  };
+
+  const onClickOnConstructorElement = (e) => {
+    if (e.target.closest('.constructor-element__action')) {
+      dispatch({ type: Actions.REMOVE_INGREDIENT });
+    }
+  };
+
+  const [{ isHover }, basketRef] = useDrop({
+    accept: 'ingredients',
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop: (ingredient) => onDropIngredient(ingredient),
+  });
 
   const [burgerBun, setBurgerBun] = useState(undefined);
   const [burgerStuffing, setBurgerStuffing] = useState([]);
@@ -107,7 +137,10 @@ function BurgerConstructor({ basket, onOpenModal }) {
   // @ts-ignore
   return (
     <>
-      <div className={classNames(burgerConstructorStyles.basketListContainer)}>
+      <div
+        className={classNames(burgerConstructorStyles.basketListContainer, (isHover ? burgerConstructorStyles.basketListContainerHovered : ''), (ingredientDragged ? burgerConstructorStyles.basketListContainerWaitingForIngredient : ''))}
+        ref={basketRef}
+      >
         {burgerBun && (
         <div className={classNames(burgerConstructorStyles.bulletEdge, 'mr-4', 'mb-4')}>
           <ConstructorElement
@@ -127,7 +160,11 @@ function BurgerConstructor({ basket, onOpenModal }) {
                 key={`${index}_${ingredient._id}`}
               >
                 <DragIcon type="primary" />
-                <div className={classNames(burgerConstructorStyles.bullet, 'ml-2')}>
+                <div
+                  className={classNames(burgerConstructorStyles.bullet, 'ml-2')}
+                  onClick={onClickOnConstructorElement}
+
+                >
                   <ConstructorElement
                     isLocked={false}
                     text={`${ingredient.name}`}

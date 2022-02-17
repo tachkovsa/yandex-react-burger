@@ -8,11 +8,15 @@ import SimpleBar from 'simplebar-react';
 import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import 'simplebar/dist/simplebar.min.css';
+import { useDrag } from 'react-dnd';
+import { useDispatch, useSelector } from 'react-redux';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 
 import { ingredientsPropTypes } from '../../utils/types';
 
 import { IngredientsContext } from '../../services/ingredientsContext';
+import Actions from '../../services/actions';
+import BurgerIngredient from './burger-ingredient';
 
 function BurgerIngredients({ basket, onOpenModal }) {
   const { ingredients } = useContext(IngredientsContext);
@@ -142,31 +146,6 @@ function BurgerIngredients({ basket, onOpenModal }) {
 BurgerIngredients.propTypes = {
   basket: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onOpenModal: PropTypes.func.isRequired,
-};
-
-function BurgerIngredient({ ingredient, inBasketCount }) {
-  return (
-    <>
-      {!!inBasketCount && (<div className={classNames(burgerIngredientsStyles.ingredientItemCount, 'text', 'text_type_digits-default')}>{ inBasketCount }</div>)}
-      <picture className={classNames(burgerIngredientsStyles.ingredientItemImg, 'ml-4', 'mr-4')}>
-        <source media="(max-width: 640px)" srcSet={ingredient.image_mobile} />
-        <source media="(min-width: 1921px)" srcSet={ingredient.image_large} />
-        <img src={ingredient.image} alt={ingredient.name} />
-      </picture>
-      <div className={classNames(burgerIngredientsStyles.ingredientItemPrice, 'mt-1')}>
-        <CurrencyIcon type="primary" />
-        <span className={classNames(burgerIngredientsStyles.ingredientItemPricePriceValue, 'ml-2', 'text', 'text_type_digits-default')}>{ ingredient.price }</span>
-      </div>
-      <div className={classNames(burgerIngredientsStyles.ingredientItemName, 'mt-1', 'text', 'text_type_main-default')}>
-        { ingredient.name }
-      </div>
-    </>
-  );
-}
-
-BurgerIngredient.propTypes = {
-  ingredient: ingredientsPropTypes.isRequired,
-  inBasketCount: PropTypes.number.isRequired,
 };
 
 export default BurgerIngredients;

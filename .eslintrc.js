@@ -9,5 +9,6 @@ module.exports = {
   rules: {
     'import/prefer-default-export': 'off',
     'default-param-last': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useState, useContext, useRef,
+  useCallback, useState, useContext, useRef, useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -18,13 +18,15 @@ function BurgerIngredients({ basket, onOpenModal }) {
   const { ingredients } = useContext(IngredientsContext);
 
   const [tab, setTab] = useState('buns');
+
+  const ingredientsBlockRef = useRef(null);
   const bunsTitleRef = useRef(null);
   const sauceTitleRef = useRef(null);
   const stuffingsTitleRef = useRef(null);
 
-  const onTabClick = (e, ref) => {
-    setTab(e.current.value);
-    ref.current.scrollIntoView();
+  const onTabClick = (value, ref) => {
+    setTab(value);
+    ref.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   const getInBasketCount = useCallback((ingredientId) => basket.filter((b) => b === ingredientId).length, [basket]);
@@ -36,6 +38,23 @@ function BurgerIngredients({ basket, onOpenModal }) {
       header: 'Детали ингредиента',
     });
   };
+
+  const onScrollIngredientsBlock = () => {
+    if (bunsTitleRef.current.getBoundingClientRect().top >= 0) {
+      setTab('buns');
+    } else if (sauceTitleRef.current.getBoundingClientRect().top >= 0) {
+      setTab('sauces');
+    } else if (stuffingsTitleRef.current.getBoundingClientRect().top >= 0) {
+      setTab('stuffings');
+    }
+  };
+
+  useEffect(() => {
+    const ingredientsScrollableDOMElement = ingredientsBlockRef.current;
+    ingredientsScrollableDOMElement.addEventListener('scroll', onScrollIngredientsBlock);
+
+    return () => ingredientsScrollableDOMElement.removeEventListener('scroll', onScrollIngredientsBlock);
+  }, []);
 
   return (
     <>
@@ -53,7 +72,10 @@ function BurgerIngredients({ basket, onOpenModal }) {
           Начинки
         </Tab>
       </div>
-      <SimpleBar className={classNames(burgerIngredientsStyles.burgerConstructor, 'mt-10')}>
+      <SimpleBar
+        className={classNames(burgerIngredientsStyles.burgerConstructor, 'mt-10')}
+        scrollableNodeProps={{ ref: ingredientsBlockRef }}
+      >
         <div className={burgerIngredientsStyles.ingredientsBlock}>
           <p className="text text_type_main-medium" ref={bunsTitleRef}>
             Булки

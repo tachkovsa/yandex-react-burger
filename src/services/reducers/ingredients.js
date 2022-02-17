@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   error: null,
   ingredients: [],
+  ingredientDragged: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -27,6 +28,16 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case Actions.DRAG_INGREDIENT:
+      return {
+        ...state,
+        ingredientDragged: true,
+      };
+    case Actions.DROP_INGREDIENT:
+      return {
+        ...state,
+        ingredientDragged: false,
       };
     default:
       return state;

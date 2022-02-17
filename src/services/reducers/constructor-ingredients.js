@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import Actions from '../actions';
 
 const initialState = {
@@ -9,11 +10,17 @@ export const constructorIngredientsReducer = (state = initialState, action) => {
     case Actions.ADD_INGREDIENT:
       return {
         ...state,
-        ingredients: [...state.ingredients, action.payload],
+        ingredients: [
+          ...state.ingredients,
+          {
+            _uid: uuidv4(),
+            _id: action.payload._id,
+            type: action.payload.type,
+          }],
       };
     case Actions.REMOVE_INGREDIENT: {
       const ingredientIndex = state.ingredients
-        .findIndex((ingredient) => ingredient === action.payload);
+        .findIndex((ingredient) => ingredient._uid === action.payload);
 
       return {
         ...state,

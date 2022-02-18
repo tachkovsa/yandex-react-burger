@@ -12,11 +12,9 @@ function BurgerIngredient({ ingredient, inBasketCount }) {
   const dispatch = useDispatch();
   const didMount = useRef(false);
 
-  const { _id, type } = ingredient;
-
   const [{ isDrag }, drag] = useDrag({
     type: 'ingredients',
-    item: { _id, type },
+    item: ingredient,
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),

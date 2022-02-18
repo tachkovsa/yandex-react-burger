@@ -18,9 +18,9 @@ import burgerConstructorStyles from './burger-constructor.module.css';
 
 import { OrderNumberContext } from '../../services/appContext';
 
-import { domainURL } from '../../utils/constants';
 import Actions from '../../services/actions';
 import { postOrder } from '../../services/actions/order';
+import { BurgerConstructorIngredient } from './burger-constructor-ingredient';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -98,30 +98,16 @@ function BurgerConstructor() {
           <SimpleBar className={classNames(burgerConstructorStyles.basketListBar)}>
             <div className={classNames(burgerConstructorStyles.basketList, 'mr-4')}>
               {burgerStuffing.map((ingredient, index) => (
-                <div
-                  className={classNames(burgerConstructorStyles.basketListElem, 'ml-4')}
+                <BurgerConstructorIngredient
                   key={ingredient._uid}
-                >
-                  <div className={burgerConstructorStyles.basketListDragIcon}>
-                    <DragIcon type="primary" />
-                  </div>
-                  <div
-                    className={classNames(burgerConstructorStyles.bullet, 'ml-2')}
-                    onClick={(e) => onClickOnConstructorElement(e, ingredient._uid)}
-
-                  >
-                    <ConstructorElement
-                      isLocked={false}
-                      text={`${ingredient.name}`}
-                      price={ingredient.price}
-                      thumbnail={ingredient.image}
-                    />
-                  </div>
-                </div>
+                  ingredient={ingredient}
+                  onClick={onClickOnConstructorElement}
+                />
               ))}
             </div>
           </SimpleBar>
         )}
+
         {burgerStuffing.length === 0 && (
         <div className={classNames(burgerConstructorStyles.basketNoStuffing, burgerConstructorStyles.constructorElement, 'ml-15')}>
           <span className="text text_type_main-default text_color_inactive">Выберите наполнение</span>

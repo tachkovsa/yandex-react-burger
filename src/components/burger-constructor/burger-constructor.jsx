@@ -56,13 +56,25 @@ function BurgerConstructor() {
     }
   };
 
-  const [{ isHover }, basketRef] = useDrop({
+  const onMoveConstructorElement = (whichIngredientDroppedIndex, onWhichIngredientDroppedIndex) => {
+    dispatch({ type: Actions.CHANGE_CONSTRUCTOR_INGREDIENT_POSITION, payload: { whichIngredientDroppedIndex, onWhichIngredientDroppedIndex } });
+  };
+
+  const [{ isHoverIngredient }, basketRef] = useDrop({
     accept: 'ingredients',
     collect: (monitor) => ({
-      isHover: monitor.isOver(),
+      isHoverIngredient: monitor.isOver(),
     }),
     drop: (ingredient) => onDropIngredient(ingredient),
   });
+
+  // const [{ isHoverConstructorIngredient }, constructorRef] = useDrop({
+  //   accept: 'constructorIngredients',
+  //   collect: ((monitor) => ({
+  //     isHoverConstructorIngredient: monitor.isOver(),
+  //   })),
+  //   drop: (ingredient) => onDropConstructorIngredient(ingredient),
+  // });
 
   const makeOrder = async () => {
     if (isWaitingForOrderNumber) return;
@@ -73,7 +85,7 @@ function BurgerConstructor() {
   return (
     <>
       <div
-        className={classNames(burgerConstructorStyles.basketListContainer, (isHover ? burgerConstructorStyles.basketListContainerHovered : ''), (ingredientDragged ? burgerConstructorStyles.basketListContainerWaitingForIngredient : ''))}
+        className={classNames(burgerConstructorStyles.basketListContainer, (isHoverIngredient ? burgerConstructorStyles.basketListContainerHovered : ''), (ingredientDragged ? burgerConstructorStyles.basketListContainerWaitingForIngredient : ''))}
         ref={basketRef}
       >
         <div className={classNames(burgerConstructorStyles.bulletEdge, 'mr-4', 'mb-4')}>
@@ -100,8 +112,10 @@ function BurgerConstructor() {
               {burgerStuffing.map((ingredient, index) => (
                 <BurgerConstructorIngredient
                   key={ingredient._uid}
+                  index={index}
                   ingredient={ingredient}
                   onClick={onClickOnConstructorElement}
+                  onMove={onMoveConstructorElement}
                 />
               ))}
             </div>

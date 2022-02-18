@@ -51,6 +51,14 @@
     width: 100%;
 }
 
+.basketListElemDraggable {
+    cursor: grab;
+}
+
+.basketListElemDragging {
+    opacity: 0;
+}
+
 .basketListDragIcon {
     margin-left: 28px;
 }

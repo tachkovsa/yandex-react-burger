@@ -9,16 +9,20 @@ export const getIngredients = () => (dispatch) => {
 
   fetch(`${domainURL}/api/ingredients`)
     .then((res) => {
-      if (res && res.success) {
+      if (res && res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(new Error(res.statusText));
+    })
+    .then((parsedResponse) => {
+      if (parsedResponse.success) {
         dispatch({
           type: Actions.GET_INGREDIENTS_SUCCESS,
-          payload: res.data,
+          payload: parsedResponse.data,
         });
       } else {
-        dispatch({
-          type: Actions.GET_INGREDIENTS_FAILURE,
-          payload: res.statusText,
-        });
+        return Promise.reject(new Error('Что-то пошло не так...'));
       }
     })
     .catch((err) => {

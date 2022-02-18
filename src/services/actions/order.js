@@ -13,29 +13,31 @@ export const postOrder = (ingredients) => (dispatch) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ ingredients }),
-  }).then((res) => {
-    if (res && res.success) {
-      if (res.order && res.order.number) {
+  })
+    .then((res) => {
+      if (res && res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(new Error(res.statusText));
+    })
+    .then((parsedResponse) => {
+      if (parsedResponse.success) {
         dispatch({
           type: Actions.POST_ORDER_SUCCESS,
-          payload: res.order.number,
+          payload: {
+            orderNumber: parsedResponse.order.number,
+            burgerName: parsedResponse.order.name,
+          },
         });
       } else {
-        dispatch({
-          type: Actions.POST_ORDER_FAILURE,
-          payload: 'Server response contains no order number',
-        });
+        return Promise.reject(new Error('Что-то пошло не так...'));
       }
-    } else {
+    })
+    .catch((err) => {
       dispatch({
         type: Actions.POST_ORDER_FAILURE,
-        payload: res.statusText,
+        payload: err.toLocaleString(),
       });
-    }
-  }).catch((err) => {
-    dispatch({
-      type: Actions.POST_ORDER_FAILURE,
-      payload: err.toLocaleString(),
     });
-  });
 };

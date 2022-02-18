@@ -44,15 +44,15 @@ function BurgerConstructor() {
 
   const onDropIngredient = (ingredient) => {
     if (ingredient.type === 'bun') {
-      dispatch({ type: Actions.SET_BUN, payload: { _uid: uuidv4(), ...ingredient } });
+      dispatch({ type: Actions.ADD_BUN_TO_CONSTRUCTOR, payload: { _uid: uuidv4(), ...ingredient } });
     } else {
-      dispatch({ type: Actions.ADD_INGREDIENT, payload: { _uid: uuidv4(), ...ingredient } });
+      dispatch({ type: Actions.ADD_INGREDIENT_TO_CONSTRUCTOR, payload: { _uid: uuidv4(), ...ingredient } });
     }
   };
 
   const onClickOnConstructorElement = (e, uid) => {
     if (e.target.closest('.constructor-element__action')) {
-      dispatch({ type: Actions.REMOVE_INGREDIENT, payload: uid });
+      dispatch({ type: Actions.REMOVE_INGREDIENT_FROM_CONSTRUCTOR, payload: uid });
     }
   };
 

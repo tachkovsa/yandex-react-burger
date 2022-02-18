@@ -6,7 +6,7 @@ const initialState = {
 
 export const constructorIngredientsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case Actions.SET_BUN: {
+    case Actions.ADD_BUN_TO_CONSTRUCTOR: {
       const bunIndex = state.basket.findIndex((b) => b.type === 'bun');
       const bun = action.payload;
 
@@ -22,7 +22,7 @@ export const constructorIngredientsReducer = (state = initialState, action) => {
         basket: updatedBasket,
       };
     }
-    case Actions.ADD_INGREDIENT:
+    case Actions.ADD_INGREDIENT_TO_CONSTRUCTOR:
       return {
         ...state,
         basket: [
@@ -30,13 +30,13 @@ export const constructorIngredientsReducer = (state = initialState, action) => {
           action.payload,
         ],
       };
-    case Actions.REMOVE_INGREDIENT: {
+    case Actions.REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
       return {
         ...state,
         basket: state.basket.filter((ingredient) => ingredient._uid !== action.payload),
       };
     }
-    case Actions.RESET_INGREDIENTS:
+    case Actions.RESET_CONSTRUCTOR_INGREDIENTS:
       return {
         ...state,
         basket: [],

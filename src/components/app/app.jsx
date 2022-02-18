@@ -84,7 +84,10 @@ function App() {
   //   setModalVisible(true);
   // };
 
-  const handleCloseOrderModal = () => dispatch({ type: Actions.RESET_ORDER_NUMBER });
+  const handleCloseOrderModal = () => {
+    dispatch({ type: Actions.RESET_CONSTRUCTOR_INGREDIENTS });
+    dispatch({ type: Actions.RESET_ORDER_NUMBER });
+  };
   const handleCloseDetailedIngredientModal = () => dispatch({ type: Actions.RESET_DETAILED_INGREDIENT });
 
   useEffect(() => {

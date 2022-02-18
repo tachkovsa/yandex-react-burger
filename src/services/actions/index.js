@@ -9,6 +9,7 @@ const Actions = {
   ADD_INGREDIENT: 'constructor-ingredients/ADD_INGREDIENT',
   REMOVE_INGREDIENT: 'constructor-ingredients/REMOVE_INGREDIENT',
   RESET_INGREDIENTS: 'constructor-ingredients/RESET_INGREDIENTS',
+  SET_BUN: 'constructor-ingredients/SET_BUN',
 
   SET_DETAILED_INGREDIENT: 'detailed-ingredient/SET_DETAILED_INGREDIENT',
   RESET_DETAILED_INGREDIENT: 'detailed-ingredient/RESET_DETAILED_INGREDIENT',
@@ -16,6 +17,7 @@ const Actions = {
   POST_ORDER: 'order/POST_ORDER',
   POST_ORDER_SUCCESS: 'order/POST_ORDER_SUCCESS',
   POST_ORDER_FAILURE: 'order/POST_ORDER_FAILURE',
+  RESET_ORDER_NUMBER: 'order/RESET_ORDER_NUMBER',
 };
 
 export default Actions;

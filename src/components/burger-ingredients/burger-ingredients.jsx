@@ -18,8 +18,13 @@ import { IngredientsContext } from '../../services/ingredientsContext';
 import Actions from '../../services/actions';
 import BurgerIngredient from './burger-ingredient';
 
-function BurgerIngredients({ basket, onOpenModal }) {
-  const { ingredients } = useContext(IngredientsContext);
+function BurgerIngredients() {
+  const dispatch = useDispatch();
+
+  const basket = useSelector((state) => state.constructorIngredients.basket);
+  const { ingredients } = useSelector((state) => state.ingredients);
+
+  // const { ingredients } = useContext(IngredientsContext);
 
   const [tab, setTab] = useState('buns');
 
@@ -33,14 +38,15 @@ function BurgerIngredients({ basket, onOpenModal }) {
     ref.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const getInBasketCount = useCallback((ingredientId) => basket.filter((b) => b === ingredientId).length, [basket]);
+  const getInBasketCount = useCallback((ingredient) => {
+    const { _id, type } = ingredient;
+    const ingredientsCount = basket.filter((b) => b._id === _id).length;
+
+    return type === 'bun' ? ingredientsCount * 2 : ingredientsCount;
+  }, [basket]);
 
   const handleOpenModal = (ingredient) => {
-    onOpenModal({
-      type: 'ingredient_details',
-      ingredient,
-      header: 'Детали ингредиента',
-    });
+    dispatch({ type: Actions.SET_DETAILED_INGREDIENT, payload: ingredient });
   };
 
   const onScrollIngredientsBlock = () => {
@@ -93,7 +99,7 @@ function BurgerIngredients({ basket, onOpenModal }) {
               >
                 <BurgerIngredient
                   ingredient={ingredient}
-                  inBasketCount={getInBasketCount(ingredient._id)}
+                  inBasketCount={getInBasketCount(ingredient)}
                 />
               </li>
 
@@ -113,7 +119,7 @@ function BurgerIngredients({ basket, onOpenModal }) {
               >
                 <BurgerIngredient
                   ingredient={ingredient}
-                  inBasketCount={getInBasketCount(ingredient._id)}
+                  inBasketCount={getInBasketCount(ingredient)}
                 />
               </li>
             ))}
@@ -132,7 +138,7 @@ function BurgerIngredients({ basket, onOpenModal }) {
               >
                 <BurgerIngredient
                   ingredient={ingredient}
-                  inBasketCount={getInBasketCount(ingredient._id)}
+                  inBasketCount={getInBasketCount(ingredient)}
                 />
               </li>
             ))}
@@ -142,10 +148,5 @@ function BurgerIngredients({ basket, onOpenModal }) {
     </>
   );
 }
-
-BurgerIngredients.propTypes = {
-  basket: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  onOpenModal: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredients;

@@ -43,20 +43,21 @@ export const constructorIngredientsReducer = (state = initialState, action) => {
         readyForOrder: false,
       };
     case Actions.CHANGE_CONSTRUCTOR_INGREDIENT_POSITION: {
-      const { whichIngredientDroppedIndex, onWhichIngredientDroppedIndex } = action.payload;
+      const { whichIngredientDroppedId, onWhichIngredientDroppedId } = action.payload;
 
-      const bunIndex = state.basket.findIndex((i) => i.type === 'bun');
-      const basketWithoutBuns = [...state.basket];
-      const bunItem = bunIndex >= 0 ? basketWithoutBuns.splice(bunIndex, 1)[0] : null;
-      const draggedItem = basketWithoutBuns[whichIngredientDroppedIndex];
-      const hoveredItem = basketWithoutBuns[onWhichIngredientDroppedIndex];
+      const basket = [...state.basket];
+      const draggedItemIndex = basket.findIndex((ingredient) => ingredient._uid === whichIngredientDroppedId);
+      const hoveredItemIndex = basket.findIndex((ingredient) => ingredient._uid === onWhichIngredientDroppedId);
 
-      basketWithoutBuns[whichIngredientDroppedIndex] = hoveredItem;
-      basketWithoutBuns[onWhichIngredientDroppedIndex] = draggedItem;
+      const draggedItem = basket[draggedItemIndex];
+      const hoveredItem = basket[hoveredItemIndex];
+
+      basket[draggedItemIndex] = hoveredItem;
+      basket[hoveredItemIndex] = draggedItem;
 
       return {
         ...state,
-        basket: bunItem ? [bunItem, ...basketWithoutBuns] : basketWithoutBuns,
+        basket,
       };
     }
     default:

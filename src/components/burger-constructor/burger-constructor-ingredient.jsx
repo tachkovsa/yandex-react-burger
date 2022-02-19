@@ -23,9 +23,11 @@ export function BurgerConstructorIngredient({
         return;
       }
 
-      // Что двигаем
+      if (item.ingredient._uid === ingredient._uid) {
+        return;
+      }
+
       const dragIndex = item.index;
-      // На что положили
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
@@ -36,6 +38,7 @@ export function BurgerConstructorIngredient({
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }

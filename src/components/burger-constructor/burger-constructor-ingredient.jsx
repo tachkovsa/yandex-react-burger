@@ -3,13 +3,16 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
+import { useDispatch } from 'react-redux';
 import burgerConstructorStyles from './burger-constructor.module.css';
 import { ingredientsPropTypes } from '../../utils/types';
+import Actions from '../../services/actions';
 
 export function BurgerConstructorIngredient({
-  index, ingredient, onClick, onMove,
+  index, ingredient, onClick,
 }) {
   const ref = useRef(null);
+  const dispatch = useDispatch();
 
   const [{ handlerId }, drop] = useDrop({
     accept: 'constructorIngredients',
@@ -30,10 +33,6 @@ export function BurgerConstructorIngredient({
       const dragIndex = item.index;
       const hoverIndex = index;
 
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-
       const hoverBoundingRect = ref.current ? ref.current.getBoundingClientRect() : undefined;
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
@@ -46,7 +45,13 @@ export function BurgerConstructorIngredient({
         return;
       }
 
-      onMove(dragIndex, hoverIndex);
+      dispatch({
+        type: Actions.CHANGE_CONSTRUCTOR_INGREDIENT_POSITION,
+        payload: {
+          whichIngredientDroppedId: item.ingredient._uid,
+          onWhichIngredientDroppedId: ingredient._uid,
+        },
+      });
     },
   });
 
@@ -89,5 +94,4 @@ BurgerConstructorIngredient.propTypes = {
   index: PropTypes.number.isRequired,
   ingredient: ingredientsPropTypes.isRequired,
   onClick: PropTypes.func.isRequired,
-  onMove: PropTypes.func.isRequired,
 };

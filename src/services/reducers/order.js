@@ -29,7 +29,7 @@ export const orderReducer = (state = initialState, action) => {
         showModal: true,
       };
     }
-    case Actions.POST_ORDER_FAILURE:
+    case Actions.POST_ORDER_ERROR:
       return {
         ...state,
         loading: false,

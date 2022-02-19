@@ -23,7 +23,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
-    case Actions.GET_INGREDIENTS_FAILURE:
+    case Actions.GET_INGREDIENTS_ERROR:
       return {
         ...state,
         loading: false,

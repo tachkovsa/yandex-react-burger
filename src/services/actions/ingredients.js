@@ -27,7 +27,7 @@ export const getIngredients = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({
-        type: Actions.GET_INGREDIENTS_FAILURE,
+        type: Actions.GET_INGREDIENTS_ERROR,
         payload: err.toLocaleString(),
       });
     });

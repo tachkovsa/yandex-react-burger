@@ -36,7 +36,7 @@ export const postOrder = (ingredients) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({
-        type: Actions.POST_ORDER_FAILURE,
+        type: Actions.POST_ORDER_ERROR,
         payload: err.toLocaleString(),
       });
     });

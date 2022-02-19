@@ -1,26 +1,21 @@
 /* eslint-disable react/no-array-index-key */
 
-import React, {
-  useEffect, useState, useContext, useRef,
-} from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
-
-import {
-  ConstructorElement, DragIcon, CurrencyIcon, Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-
-import 'simplebar/dist/simplebar.min.css';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import burgerConstructorStyles from './burger-constructor.module.css';
+import {
+  ConstructorElement, CurrencyIcon, Button,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { OrderNumberContext } from '../../services/appContext';
-
-import Actions from '../../services/actions';
 import { postOrder } from '../../services/actions/order';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient';
+import Actions from '../../services/actions';
+
+import burgerConstructorStyles from './burger-constructor.module.css';
+import 'simplebar/dist/simplebar.min.css';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -56,10 +51,6 @@ function BurgerConstructor() {
     }
   };
 
-  const onMoveConstructorElement = (whichIngredientDroppedIndex, onWhichIngredientDroppedIndex) => {
-    dispatch({ type: Actions.CHANGE_CONSTRUCTOR_INGREDIENT_POSITION, payload: { whichIngredientDroppedIndex, onWhichIngredientDroppedIndex } });
-  };
-
   const [{ isHoverIngredient }, basketRef] = useDrop({
     accept: 'ingredients',
     collect: (monitor) => ({
@@ -67,14 +58,6 @@ function BurgerConstructor() {
     }),
     drop: (ingredient) => onDropIngredient(ingredient),
   });
-
-  // const [{ isHoverConstructorIngredient }, constructorRef] = useDrop({
-  //   accept: 'constructorIngredients',
-  //   collect: ((monitor) => ({
-  //     isHoverConstructorIngredient: monitor.isOver(),
-  //   })),
-  //   drop: (ingredient) => onDropConstructorIngredient(ingredient),
-  // });
 
   const makeOrder = async () => {
     if (isWaitingForOrderNumber) return;
@@ -115,7 +98,6 @@ function BurgerConstructor() {
                   index={index}
                   ingredient={ingredient}
                   onClick={onClickOnConstructorElement}
-                  onMove={onMoveConstructorElement}
                 />
               ))}
             </div>

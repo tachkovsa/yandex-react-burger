@@ -1,30 +1,22 @@
 import React, {
-  useCallback, useState, useContext, useRef, useEffect,
+  useCallback, useState, useRef, useEffect,
 } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
-
-import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
-import 'simplebar/dist/simplebar.min.css';
-import { useDrag } from 'react-dnd';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
-import burgerIngredientsStyles from './burger-ingredients.module.css';
 
-import { ingredientsPropTypes } from '../../utils/types';
-
-import { IngredientsContext } from '../../services/ingredientsContext';
 import Actions from '../../services/actions';
 import BurgerIngredient from './burger-ingredient';
+
+import burgerIngredientsStyles from './burger-ingredients.module.css';
+import 'simplebar/dist/simplebar.min.css';
 
 function BurgerIngredients() {
   const dispatch = useDispatch();
 
   const basket = useSelector((state) => state.constructorIngredients.basket);
   const { ingredients } = useSelector((state) => state.ingredients);
-
-  // const { ingredients } = useContext(IngredientsContext);
 
   const [tab, setTab] = useState('buns');
 

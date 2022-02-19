@@ -1,63 +1,26 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
-  useEffect, useState, useReducer, useCallback,
+  useEffect, useState, useCallback,
 } from 'react';
 import classNames from 'classnames';
-
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-
 import { useDispatch, useSelector } from 'react-redux';
+
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import { defaultBasket } from '../../utils/data';
-import { domainURL } from '../../utils/constants';
-
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-
-import { IngredientsContext } from '../../services/ingredientsContext';
-import { TotalPriceContext, OrderNumberContext, ErrorContext } from '../../services/appContext';
-import appStyles from './app.module.css';
-import Actions from '../../services/actions';
 import { getIngredients } from '../../services/actions/ingredients';
+import Actions from '../../services/actions';
 
-const totalPriceInitialState = { totalPrice: null };
-
-function totalPriceReducer(state, action) {
-  switch (action.type) {
-    case 'set':
-      return { totalPrice: action.payload };
-    case 'reset':
-      return totalPriceInitialState;
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
-
-const errorInititalState = {
-  hasError: false,
-  errorText: null,
-};
-
-function errorReducer(state, action) {
-  switch (action.type) {
-    case 'set':
-      return { hasError: true, errorText: action.payload };
-    case 'reset':
-      return errorInititalState;
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
+import appStyles from './app.module.css';
 
 function App() {
   const dispatch = useDispatch();
 
-  // const [totalPriceState, totalPriceDispatcher] = useReducer(totalPriceReducer, totalPriceInitialState, undefined);
-  // const [errorState, errorDispatcher] = useReducer(errorReducer, errorInititalState, undefined);
   const orderNumber = useSelector((state) => state.order.orderNumber);
   const detailedIngredient = useSelector((state) => state.currentIngredient.detailedIngredient);
 
@@ -72,17 +35,7 @@ function App() {
   );
 
   const [activeTab, setActiveTab] = useState('constructor');
-  // const [basket, setBasket] = useState(defaultBasket);
-  // const [isLoading, setIsLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('');
-
-  // const [modalVisible, setModalVisible] = useState(false);
-  // const [modalPayload, setModalPayload] = useState(null);
-  //
-  // const handleOpenModal = (payload) => {
-  //   setModalPayload(payload);
-  //   setModalVisible(true);
-  // };
 
   const handleCloseOrderModal = () => {
     dispatch({ type: Actions.RESET_CONSTRUCTOR_INGREDIENTS });

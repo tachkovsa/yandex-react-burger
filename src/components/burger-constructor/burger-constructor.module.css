@@ -2,10 +2,39 @@
     display: flex;
     flex-direction: column;
     height: inherit;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: var(--common-border-radius-s);
+    padding-top: 16px;
+    padding-bottom: 16px;
+    min-height: 308px;
+    transition: all ease-in-out 0.15s;
+}
+
+.constructorElement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.basketNoStuffing {
+    height: 100%;
+}
+
+.basketListContainerWaitingForIngredient {
+    background-color: var(--i-accent-pale);
+    border-color: var(--i-accent);
+}
+
+.basketListContainerHovered {
+    box-shadow: 0 0 16px 8px rgb(51 51 255 / 25%),
+                0 0 8px 8px rgb(51 51 255 / 25%);
 }
 
 .basketListBar {
-    height: calc(100% - 190px);
+    height: calc(100% - 192px);
 }
 
 .basketList {
@@ -18,15 +47,31 @@
 .basketListElem {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.basketListElemDraggable {
+    cursor: grab;
+}
+
+.basketListElemDragging {
+    opacity: 0;
+}
+
+.basketListDragIcon {
+    margin-left: 28px;
 }
 
 .bullet {
     display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
 }
 
 .bulletEdge{
     display: flex;
-    margin-left: auto;
+    justify-content: flex-end;
 }
 
 .orderInfo {

@@ -20,13 +20,7 @@
 .ingredientsListItem {
     display: flex;
     flex-direction: column;
-    align-items: center;
     flex: 0;
-    cursor: pointer;
-}
-
-.ingredientsListItem {
-    position: relative;
 }
 
 .ingredientsListItem:nth-child(odd) {
@@ -34,7 +28,21 @@
 }
 .ingredientsListItem:nth-child(even) {
     margin-left: calc(var(--offset-base-size)  * 6);
-} 
+}
+
+.ingredientItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0;
+    cursor: pointer;
+    position: relative;
+    transition: all ease-in-out 0.15s;
+}
+
+.ingredientItemDragged {
+    opacity: 0.65;
+}
 
 .ingredientItemCount {
     display: flex;

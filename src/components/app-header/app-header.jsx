@@ -6,15 +6,15 @@ import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import headerStyles from './app-header.module.css';
+import styles from './app-header.module.css';
 
 function AppHeader({ activeTab, selectTab }) {
   return (
-    <header className={`${headerStyles.header} pt-4 pb-4`}>
-      <nav className={`${headerStyles.content} `}>
-        <div className={`${headerStyles.side} ${headerStyles.leftSide}`}>
+    <header className={`${styles.header} pt-4 pb-4`}>
+      <nav className={`${styles.content} `}>
+        <div className={`${styles.side} ${styles.leftSide}`}>
           <button
-            className={`${headerStyles.menuBtn} ${activeTab === 'constructor' ? headerStyles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
+            className={`${styles.menuBtn} ${activeTab === 'constructor' ? styles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
             type="button"
             onClick={() => selectTab('constructor')}
           >
@@ -22,7 +22,7 @@ function AppHeader({ activeTab, selectTab }) {
             <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Конструктор</span>
           </button>
           <button
-            className={`${headerStyles.menuBtn} ${activeTab === 'order_list' ? headerStyles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
+            className={`${styles.menuBtn} ${activeTab === 'order_list' ? styles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
             type="button"
             onClick={() => selectTab('order_list')}
           >
@@ -30,9 +30,9 @@ function AppHeader({ activeTab, selectTab }) {
             <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Лист заказов</span>
           </button>
         </div>
-        <div className={`${headerStyles.side} ${headerStyles.rightSide}`}>
+        <div className={`${styles.side} ${styles.rightSide}`}>
           <button
-            className={`${headerStyles.menuBtn} ${activeTab === 'profile' ? headerStyles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
+            className={`${styles.menuBtn} ${activeTab === 'profile' ? styles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
             type="button"
             onClick={() => selectTab('profile')}
           >
@@ -40,7 +40,7 @@ function AppHeader({ activeTab, selectTab }) {
             <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Личный кабинет</span>
           </button>
         </div>
-        <div className={`${headerStyles.side} ${headerStyles.middleSide}`}>
+        <div className={`${styles.side} ${styles.middleSide}`}>
           <Logo />
         </div>
       </nav>

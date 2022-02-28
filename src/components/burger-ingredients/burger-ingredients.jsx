@@ -1,15 +1,15 @@
 import React, {
   useCallback, useState, useRef, useEffect,
 } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Actions from '../../services/actions';
 import BurgerIngredient from './burger-ingredient';
 
-import burgerIngredientsStyles from './burger-ingredients.module.css';
+import styles from './burger-ingredients.module.css';
 import 'simplebar/dist/simplebar.min.css';
 
 function BurgerIngredients() {
@@ -63,7 +63,7 @@ function BurgerIngredients() {
       <p className="text text_type_main-large">
         Собери бургер
       </p>
-      <div className={classNames(burgerIngredientsStyles.tabs, 'mt-5')}>
+      <div className={classNames(styles.tabs, 'mt-5')}>
         <Tab value="buns" active={tab === 'buns'} onClick={(e) => onTabClick(e, bunsTitleRef)}>
           Булки
         </Tab>
@@ -75,17 +75,17 @@ function BurgerIngredients() {
         </Tab>
       </div>
       <SimpleBar
-        className={classNames(burgerIngredientsStyles.burgerConstructor, 'mt-10')}
+        className={classNames(styles.burgerConstructor, 'mt-10')}
         scrollableNodeProps={{ ref: ingredientsBlockRef }}
       >
-        <div className={burgerIngredientsStyles.ingredientsBlock}>
+        <div className={styles.ingredientsBlock}>
           <p className="text text_type_main-medium" ref={bunsTitleRef}>
             Булки
           </p>
-          <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
+          <ul className={classNames(styles.ingredientsList, 'mt-6')}>
             {ingredients.filter((i) => i.type === 'bun').map((ingredient) => (
               <li
-                className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')}
+                className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}
                 onClick={() => handleOpenModal(ingredient)}
               >
@@ -98,14 +98,14 @@ function BurgerIngredients() {
             ))}
           </ul>
         </div>
-        <div className={classNames(burgerIngredientsStyles.ingredientsBlock, 'mt-10')}>
+        <div className={classNames(styles.ingredientsBlock, 'mt-10')}>
           <p className="text text_type_main-medium" ref={sauceTitleRef}>
             Соусы
           </p>
-          <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
+          <ul className={classNames(styles.ingredientsList, 'mt-6')}>
             {ingredients.filter((i) => i.type === 'sauce').map((ingredient) => (
               <li
-                className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')}
+                className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}
                 onClick={() => handleOpenModal(ingredient)}
               >
@@ -117,14 +117,14 @@ function BurgerIngredients() {
             ))}
           </ul>
         </div>
-        <div className={classNames(burgerIngredientsStyles.ingredientsBlock, 'mt-10')}>
+        <div className={classNames(styles.ingredientsBlock, 'mt-10')}>
           <p className="text text_type_main-medium" ref={stuffingsTitleRef}>
             Начинки
           </p>
-          <ul className={classNames(burgerIngredientsStyles.ingredientsList, 'mt-6')}>
+          <ul className={classNames(styles.ingredientsList, 'mt-6')}>
             {ingredients.filter((i) => i.type === 'main').map((ingredient) => (
               <li
-                className={classNames(burgerIngredientsStyles.ingredientsListItem, 'mb-8')}
+                className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}
                 onClick={() => handleOpenModal(ingredient)}
               >

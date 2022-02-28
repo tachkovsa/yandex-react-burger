@@ -16,7 +16,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { getIngredients } from '../../services/actions/ingredients';
 import Actions from '../../services/actions';
 
-import appStyles from './app.module.css';
+import styles from './app.module.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -64,27 +64,27 @@ function App() {
     <>
       <AppHeader activeTab={activeTab} selectTab={setActiveTab} />
       {isLoading && (
-        <div className={classNames(appStyles.loader, 'text', 'text_type_main-default')}>{loadingText}</div>
+        <div className={classNames(styles.loader, 'text', 'text_type_main-default')}>{loadingText}</div>
       )}
       {ingredientsErrorText && (
-        <div className={classNames(appStyles.error, 'text', 'text_type_main-default')}>
+        <div className={classNames(styles.error, 'text', 'text_type_main-default')}>
           При загрузке ингредиетов произошла ошибка... 😞
           <span className={classNames('mt-2', 'text', 'text_type_main-default', 'text_color_inactive')}>{ingredientsErrorText}</span>
         </div>
       )}
       {orderErrorText && (
-        <div className={classNames(appStyles.error, 'text', 'text_type_main-default')}>
+        <div className={classNames(styles.error, 'text', 'text_type_main-default')}>
           При обработке заказа произошла ошибка... 😞
           <span className={classNames('mt-2', 'text', 'text_type_main-default', 'text_color_inactive')}>{orderErrorText}</span>
         </div>
       )}
       {!isLoading && !hasError() && ingredients.length > 0 && (
       <DndProvider backend={HTML5Backend}>
-        <main className={appStyles.content}>
-          <section className={classNames(appStyles.contentBlock, 'mt-10')}>
+        <main className={styles.content}>
+          <section className={classNames(styles.contentBlock, 'mt-10')}>
             <BurgerIngredients />
           </section>
-          <section className={classNames(appStyles.contentBlock, 'mt-25')}>
+          <section className={classNames(styles.contentBlock, 'mt-25')}>
             <BurgerConstructor />
           </section>
         </main>

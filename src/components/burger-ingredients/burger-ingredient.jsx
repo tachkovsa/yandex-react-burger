@@ -1,12 +1,13 @@
-import { useDispatch } from 'react-redux';
 import React, { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+
 import Actions from '../../services/actions';
-import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { ingredientsPropTypes } from '../../utils/types';
+import styles from './burger-ingredients.module.css';
 
 function BurgerIngredient({ ingredient, inBasketCount }) {
   const dispatch = useDispatch();
@@ -33,18 +34,18 @@ function BurgerIngredient({ ingredient, inBasketCount }) {
   }, [dispatch, isDrag]);
 
   return (
-    <div ref={drag} className={classNames(burgerIngredientsStyles.ingredientItem, isDrag ? burgerIngredientsStyles.ingredientItemDragged : '')}>
-      {!!inBasketCount && (<div className={classNames(burgerIngredientsStyles.ingredientItemCount, 'text', 'text_type_digits-default')}>{ inBasketCount }</div>)}
-      <picture className={classNames(burgerIngredientsStyles.ingredientItemImg, 'ml-4', 'mr-4')}>
+    <div ref={drag} className={classNames(styles.ingredientItem, isDrag ? styles.ingredientItemDragged : '')}>
+      {!!inBasketCount && (<div className={classNames(styles.ingredientItemCount, 'text', 'text_type_digits-default')}>{ inBasketCount }</div>)}
+      <picture className={classNames(styles.ingredientItemImg, 'ml-4', 'mr-4')}>
         <source media="(max-width: 640px)" srcSet={ingredient.image_mobile} />
         <source media="(min-width: 1921px)" srcSet={ingredient.image_large} />
         <img src={ingredient.image} alt={ingredient.name} />
       </picture>
-      <div className={classNames(burgerIngredientsStyles.ingredientItemPrice, 'mt-1')}>
+      <div className={classNames(styles.ingredientItemPrice, 'mt-1')}>
         <CurrencyIcon type="primary" />
-        <span className={classNames(burgerIngredientsStyles.ingredientItemPricePriceValue, 'ml-2', 'text', 'text_type_digits-default')}>{ ingredient.price }</span>
+        <span className={classNames(styles.ingredientItemPricePriceValue, 'ml-2', 'text', 'text_type_digits-default')}>{ ingredient.price }</span>
       </div>
-      <div className={classNames(burgerIngredientsStyles.ingredientItemName, 'mt-1', 'text', 'text_type_main-default')}>
+      <div className={classNames(styles.ingredientItemName, 'mt-1', 'text', 'text_type_main-default')}>
         { ingredient.name }
       </div>
     </div>

@@ -3,14 +3,17 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from '../components/app/app.module.css';
-import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../components/burger-constructor/burger-constructor';
-import Modal from '../components/modal/modal';
-import OrderDetails from '../components/order-details/order-details';
-import IngredientDetails from '../components/ingredient-details/ingredient-details';
-import Actions from '../services/actions';
-import { getIngredients } from '../services/actions/ingredients';
+
+import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
+import Modal from '../../components/modal/modal';
+import OrderDetails from '../../components/order-details/order-details';
+import IngredientDetails from '../../components/ingredient-details/ingredient-details';
+import { getIngredients } from '../../services/actions/ingredients';
+
+import Actions from '../../services/actions';
+import commonStyles from '../common.module.css';
+import styles from './main.module.css';
 
 export function MainPage() {
   const dispatch = useDispatch();
@@ -71,7 +74,7 @@ export function MainPage() {
       )}
       {!isLoading && !hasError() && ingredients.length > 0 && (
         <DndProvider backend={HTML5Backend}>
-          <main className={styles.content}>
+          <main className={commonStyles.content}>
             <section className={classNames(styles.contentBlock, 'mt-10')}>
               <BurgerIngredients />
             </section>

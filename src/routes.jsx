@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {
-  MainPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage,
+  MainPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientsPage,
 } from './pages';
 
 export function Routes() {
@@ -19,8 +19,8 @@ export function Routes() {
       <Route exact path="/reset-password" component={ResetPasswordPage} />
       {/* TODO: Страница с настройками профиля пользователя */}
       {/* <Route exact path="/profile" component /> */}
-      {/* TODO: Страница ингредиента */}
-      {/* <Route exact path="/ingredients/:id" component /> */}
+      {/* Страница ингредиента */}
+      <Route exact path="/ingredients/:id" component={IngredientsPage} />
     </Switch>
   );
 }

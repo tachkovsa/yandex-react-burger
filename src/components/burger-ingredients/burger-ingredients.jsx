@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useHistory } from 'react-router-dom';
 
-import Actions from '../../services/actions';
 import BurgerIngredient from './burger-ingredient';
 
 import styles from './burger-ingredients.module.css';
 import 'simplebar/dist/simplebar.min.css';
 
 function BurgerIngredients() {
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   const basket = useSelector((state) => state.constructorIngredients.basket);
   const { ingredients } = useSelector((state) => state.ingredients);
@@ -37,9 +37,9 @@ function BurgerIngredients() {
     return type === 'bun' ? ingredientsCount * 2 : ingredientsCount;
   }, [basket]);
 
-  const handleOpenModal = (ingredient) => {
-    dispatch({ type: Actions.SET_DETAILED_INGREDIENT, payload: ingredient });
-  };
+  const openDetailedIngredientPage = useCallback((ingredientId) => {
+    history.push(`/ingredients/${ingredientId}`);
+  }, [history]);
 
   const onScrollIngredientsBlock = () => {
     if (bunsTitleRef.current.getBoundingClientRect().top >= 0) {
@@ -87,7 +87,7 @@ function BurgerIngredients() {
               <li
                 className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}
-                onClick={() => handleOpenModal(ingredient)}
+                onClick={() => openDetailedIngredientPage(ingredient._id)}
               >
                 <BurgerIngredient
                   ingredient={ingredient}
@@ -107,7 +107,7 @@ function BurgerIngredients() {
               <li
                 className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}
-                onClick={() => handleOpenModal(ingredient)}
+                onClick={() => openDetailedIngredientPage(ingredient._id)}
               >
                 <BurgerIngredient
                   ingredient={ingredient}
@@ -126,7 +126,7 @@ function BurgerIngredients() {
               <li
                 className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}
-                onClick={() => handleOpenModal(ingredient)}
+                onClick={() => openDetailedIngredientPage(ingredient._id)}
               >
                 <BurgerIngredient
                   ingredient={ingredient}

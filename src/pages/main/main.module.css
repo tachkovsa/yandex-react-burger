@@ -1,17 +1,3 @@
-.loader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - var(--header-height));
-}
-
-.error {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - var(--header-height));
-}
 
 .contentBlock {
     display: flex;

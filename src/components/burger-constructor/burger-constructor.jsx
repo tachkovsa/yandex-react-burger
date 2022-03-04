@@ -128,7 +128,7 @@ function BurgerConstructor() {
         </div>
       </div>
 
-      <div className={classNames(styles.orderInfo, 'mt-10', 'mr-4')}>
+      <div className={classNames(styles.orderInfo, 'mt-10', 'mr-4', 'mb-10')}>
         {basket.length > 0 && (
           <div className={classNames(styles.orderInfoPrice, 'mr-10')}>
             <span className={classNames('text', 'text_type_digits-medium', 'mr-2')}>{totalPrice}</span>

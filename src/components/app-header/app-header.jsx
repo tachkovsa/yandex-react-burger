@@ -1,6 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import {
+  NavLink, matchPath, useLocation,
+} from 'react-router-dom';
 
 import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
@@ -8,37 +10,45 @@ import {
 
 import styles from './app-header.module.css';
 
-function AppHeader({ activeTab, selectTab }) {
+function AppHeader() {
+  const location = useLocation();
+
+  const matchedMain = matchPath(location.pathname, { path: '/', exact: true });
+  const matchedOrders = matchPath(location.pathname, { path: '/orders', exact: true });
+  const matchedProfile = matchPath(location.pathname, { path: '/profile', exact: true });
+
   return (
     <header className={`${styles.header} pt-4 pb-4`}>
       <nav className={`${styles.content} `}>
         <div className={`${styles.side} ${styles.leftSide}`}>
-          <button
-            className={`${styles.menuBtn} ${activeTab === 'constructor' ? styles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
+          <NavLink
+            className={classNames(styles.menuBtn, 'pt-4 pr-5 pb-4 pl-5')}
+            activeClassName={styles.menuBtnActive}
             type="button"
-            onClick={() => selectTab('constructor')}
+            exact
+            to="/"
           >
-            <BurgerIcon type={activeTab === 'constructor' ? 'primary' : 'secondary'} />
+            <BurgerIcon type={matchedMain ? 'primary' : 'secondary'} />
             <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Конструктор</span>
-          </button>
-          <button
-            className={`${styles.menuBtn} ${activeTab === 'order_list' ? styles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
-            type="button"
-            onClick={() => selectTab('order_list')}
+          </NavLink>
+          <NavLink
+            className={classNames(styles.menuBtn, 'pt-4 pr-5 pb-4 pl-5')}
+            activeClassName={styles.menuBtnActive}
+            to="/orders"
           >
-            <ListIcon type={activeTab === 'order_list' ? 'primary' : 'secondary'} />
+            <ListIcon type={matchedOrders ? 'primary' : 'secondary'} />
             <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Лист заказов</span>
-          </button>
+          </NavLink>
         </div>
         <div className={`${styles.side} ${styles.rightSide}`}>
-          <button
-            className={`${styles.menuBtn} ${activeTab === 'profile' ? styles.menuBtnActive : ''} pt-4 pr-5 pb-4 pl-5`}
-            type="button"
-            onClick={() => selectTab('profile')}
+          <NavLink
+            className={classNames(styles.menuBtn, 'pt-4 pr-5 pb-4 pl-5')}
+            activeClassName={styles.menuBtnActive}
+            to="/profile"
           >
-            <ProfileIcon type={activeTab === 'profile' ? 'primary' : 'secondary'} />
+            <ProfileIcon type={matchedProfile ? 'primary' : 'secondary'} />
             <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Личный кабинет</span>
-          </button>
+          </NavLink>
         </div>
         <div className={`${styles.side} ${styles.middleSide}`}>
           <Logo />
@@ -47,10 +57,5 @@ function AppHeader({ activeTab, selectTab }) {
     </header>
   );
 }
-
-AppHeader.propTypes = {
-  activeTab: PropTypes.oneOf(['constructor', 'order_list', 'profile']).isRequired,
-  selectTab: PropTypes.func.isRequired,
-};
 
 export default AppHeader;

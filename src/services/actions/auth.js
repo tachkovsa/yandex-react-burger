@@ -58,7 +58,7 @@ export const loginUser = ({ email, password }) => (dispatch) => {
     body: JSON.stringify({ email, password }),
   })
     .then((res) => {
-      if (res && res.ok) {
+      if (res && (res.ok || res.status === 401)) {
         return res.json();
       }
 
@@ -76,7 +76,11 @@ export const loginUser = ({ email, password }) => (dispatch) => {
           payload: user,
         });
       } else {
-        return Promise.reject(parsedResponse.message);
+        const errorMessage = parsedResponse.message === 'email or password are incorrect'
+          ? 'e-mail или пароль указаны неверно'
+          : parsedResponse.message;
+
+        return Promise.reject(errorMessage);
       }
     })
     .catch((err) => {

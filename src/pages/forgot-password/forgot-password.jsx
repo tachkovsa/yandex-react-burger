@@ -5,8 +5,8 @@ import classNames from 'classnames';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { validateEmail } from '../../utils/validation';
 import { requestPasswordResetCode } from '../../services/actions/auth';
+import { validateEmail } from '../../utils/validation';
 
 import commonStyles from '../common.module.css';
 import styles from './forgot-password.module.css';
@@ -19,12 +19,12 @@ export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const { loading, error, resetPasswordCodeRequested } = useSelector((state) => state.auth);
 
+  const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
+
   const restorePassword = (e) => {
     e.preventDefault();
     dispatch(requestPasswordResetCode());
   };
-
-  const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
   useEffect(() => {
     if (resetPasswordCodeRequested) {

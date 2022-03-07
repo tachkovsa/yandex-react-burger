@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  EmailInput, PasswordInput, Input, Button,
+  PasswordInput, Input, Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { registerUser } from '../../services/actions/auth';
@@ -22,13 +22,13 @@ export function RegisterPage() {
 
   const { loading, error, user } = useSelector((state) => state.auth);
 
+  const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
+
   const submitRegistrationForm = (e) => {
     e.preventDefault();
 
     dispatch(registerUser({ email, password, name }));
   };
-
-  const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
   useEffect(() => {
     if (user) {
@@ -47,7 +47,6 @@ export function RegisterPage() {
               placeholder="Имя"
               value={name}
               onChange={(e) => setName(e.target.value)}
-
             />
           </div>
           <div className={classNames('mb-6')}>

@@ -1,39 +1,77 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   EmailInput, PasswordInput, Input, Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { registerUser } from '../../services/actions/auth';
 import commonStyles from '../common.module.css';
 import styles from './register.module.css';
+import { validateEmail } from '../../utils/validation';
 
 export function RegisterPage() {
-  const onChangeEmail = (e) => {};
-  const onChangePassword = (e) => {};
-  const onChangeName = (e) => {};
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+
+  const { loading, error, user } = useSelector((state) => state.auth);
+
+  const submitRegistrationForm = (e) => {
+    e.preventDefault();
+
+    dispatch(registerUser({ email, password, name }));
+  };
+
+  const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
+
+  useEffect(() => {
+    if (user) {
+      history.replace('/');
+    }
+  }, [history, user]);
 
   return (
     <div className={commonStyles.content}>
       <div className={styles.registerContainer}>
-        <form className={classNames('form-fields_width_100', 'mb-20')}>
+        <form className={classNames('form-fields_width_100', 'mb-20')} onSubmit={submitRegistrationForm}>
           <div className={classNames('text', 'text_type_main-medium', 'mb-6', 'text_align_center')}>Регистрация</div>
           <div className={classNames('mb-6')}>
             <Input
               type="text"
               placeholder="Имя"
-              onChange={onChangeName}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+
             />
           </div>
           <div className={classNames('mb-6')}>
-            <EmailInput onChange={onChangeEmail} value="" name="email" />
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              error={!!error || (email !== '' && !isEmailValid())}
+              errorText={error || 'Введён некорректный email'}
+              disabled={loading}
+              success={isEmailValid()}
+            />
           </div>
           <div className={classNames('mb-6')}>
-            <PasswordInput onChange={onChangePassword} value="" name="password" className="mb-6" />
+            <PasswordInput
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              name="password"
+              className="mb-6"
+            />
           </div>
           <div className="text_align_center">
-            <Button type="primary" size="large">
+            <Button type="primary" size="large" disabled={loading}>
               Зарегистрироваться
             </Button>
           </div>

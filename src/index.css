@@ -32,6 +32,9 @@ html {
 .text_align_center {
     text-align: center;
 }
+.text_color_error {
+    color: var(--colors-interface-error);
+}
 .form-fields_width_100 .input__container,
 .form-fields_width_100 .input {
     width: 100%;

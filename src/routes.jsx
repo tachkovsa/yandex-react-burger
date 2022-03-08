@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import {
   MainPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientsPage,
 } from './pages';
+import { ProtectedRoute } from './components/protected-route';
 
 export function Routes() {
   return (
@@ -10,15 +11,25 @@ export function Routes() {
       {/* Главная страница, конструктор бургеров */}
       <Route exact path="/" component={MainPage} />
       {/* Страница авторизации */}
-      <Route exact path="/login" component={LoginPage} />
+      <ProtectedRoute exact path="/login" accessType="unauthorized">
+        <LoginPage />
+      </ProtectedRoute>
       {/* Страница регистрации */}
-      <Route exact path="/register" component={RegisterPage} />
+      <ProtectedRoute exact path="/register" accessType="unauthorized">
+        <RegisterPage />
+      </ProtectedRoute>
       {/* Страница восстановления пароля */}
-      <Route exact path="/forgot-password" component={ForgotPasswordPage} />
+      <ProtectedRoute exact path="/forgot-password" accessType="unauthorized">
+        <ForgotPasswordPage />
+      </ProtectedRoute>
       {/* Страница сброса пароля */}
-      <Route exact path="/reset-password" component={ResetPasswordPage} />
+      <ProtectedRoute exact path="/reset-password" accessType="unauthorized">
+        <ResetPasswordPage />
+      </ProtectedRoute>
       {/* TODO: Страница с настройками профиля пользователя */}
-      {/* <Route exact path="/profile" component /> */}
+      <ProtectedRoute exact path="/profile" accessType="authorized">
+        profile
+      </ProtectedRoute>
       {/* Страница ингредиента */}
       <Route exact path="/ingredients/:id" component={IngredientsPage} />
     </Switch>

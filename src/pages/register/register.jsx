@@ -6,21 +6,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   PasswordInput, Input, Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-
+import { validateEmail } from '../../utils/validation';
 import { registerUser } from '../../services/actions/auth';
+
 import commonStyles from '../common.module.css';
 import styles from './register.module.css';
-import { validateEmail } from '../../utils/validation';
 
 export function RegisterPage() {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const { loading, error, user } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
@@ -29,12 +28,6 @@ export function RegisterPage() {
 
     dispatch(registerUser({ email, password, name }));
   };
-
-  useEffect(() => {
-    if (user) {
-      history.replace('/');
-    }
-  }, [history, user]);
 
   return (
     <div className={commonStyles.content}>

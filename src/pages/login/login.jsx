@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
@@ -14,12 +14,12 @@ import { loginUser } from '../../services/actions/auth';
 
 export function LoginPage() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { loading, error, user } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
   const isFormValid = useCallback(() => isEmailValid() && password !== '', [isEmailValid, password]);
@@ -29,16 +29,10 @@ export function LoginPage() {
     dispatch(loginUser({ email, password }));
   };
 
-  useEffect(() => {
-    if (user) {
-      history.replace('/');
-    }
-  }, [user, history]);
-
   return (
     <div className={commonStyles.content}>
       <div className={styles.loginContainer}>
-        <form className={classNames('form-fields_width_100', 'mb-20')} onSubmit={(e) => login(e)}>
+        <form className={classNames('form-fields_width_100', 'mb-20')} onSubmit={login}>
           <div className={classNames('text', 'text_type_main-medium', 'mb-6', 'text_align_center')}>Вход</div>
           <div className={classNames('mb-6')}>
             <Input

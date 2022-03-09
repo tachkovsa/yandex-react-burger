@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {
-  MainPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientsPage,
+  MainPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientsPage, ProfilePage,
 } from './pages';
 import { ProtectedRoute } from './components/protected-route';
 
@@ -26,9 +26,9 @@ export function Routes() {
       <ProtectedRoute exact path="/reset-password" accessType="unauthorized">
         <ResetPasswordPage />
       </ProtectedRoute>
-      {/* TODO: Страница с настройками профиля пользователя */}
+      {/* Страница с настройками профиля пользователя */}
       <ProtectedRoute exact path="/profile" accessType="authorized">
-        profile
+        <ProfilePage />
       </ProtectedRoute>
       {/* Страница ингредиента */}
       <Route exact path="/ingredients/:id" component={IngredientsPage} />

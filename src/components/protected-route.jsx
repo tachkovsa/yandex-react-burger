@@ -1,30 +1,31 @@
-// import { useAuth } from '../services/auth';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { auth } from '../services/auth';
+import { fetchUser } from '../store/actions/auth';
+
 export function ProtectedRoute({ children, accessType = 'anonymous', ...rest }) {
-  const { user, token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  // let { getUser, ...auth } = useAuth();
-  // const [isUserLoaded, setUserLoaded] = useState(false);
+  const { user } = useSelector((state) => state.auth);
+  const { accessToken } = auth();
 
-  const init = useCallback(async () => {
-    // TODO: Request user info
-    console.log('init user...', !!user);
-    // const success = await getUser();
-    //
-    // setUserLoaded(success ? true : null);
-  }, [user]);
+  const isAuth = useCallback(() => !!(accessToken && user), [accessToken, user]);
+
+  useEffect(() => {
+    if (accessToken && !user) {
+      dispatch(fetchUser());
+    }
+  }, [accessToken, dispatch, user]);
 
   const render = () => {
     let elementToRender = (<Route {...rest} render={() => children} />);
 
     switch (accessType) {
       case 'authorized':
-        // TODO: Add expires checking
-        if (!user) { // !expired
+        if (!isAuth()) {
           elementToRender = (
             <Route render={({ location }) => (
               <Redirect
@@ -39,7 +40,7 @@ export function ProtectedRoute({ children, accessType = 'anonymous', ...rest }) 
         }
         break;
       case 'unauthorized':
-        if (user) {
+        if (isAuth()) {
           elementToRender = (
             <Route render={({ location }) => (
               <Redirect
@@ -61,10 +62,6 @@ export function ProtectedRoute({ children, accessType = 'anonymous', ...rest }) 
 
     return elementToRender;
   };
-
-  useEffect(() => {
-    init();
-  }, [init]);
 
   return render();
 }

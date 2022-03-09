@@ -4,11 +4,36 @@ const initialState = {
   user: null,
   loading: null,
   error: null,
+  tokenExpired: null,
   resetPasswordCodeRequested: false,
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case Actions.FETCH_USER_INFO:
+      return {
+        ...state,
+        loading: true,
+      };
+    case Actions.FETCH_USER_INFO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        user: action.payload,
+      };
+    case Actions.FETCH_USER_INFO_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case Actions.RESET_AUTH:
+      return {
+        ...state,
+        user: null,
+        tokenExpired: true,
+      };
     case Actions.LOGIN:
       return {
         ...state,

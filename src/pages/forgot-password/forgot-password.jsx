@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { requestPasswordResetCode } from '../../services/actions/auth';
+import { requestPasswordResetCode } from '../../store/actions/auth';
 import { validateEmail } from '../../utils/validation';
 
 import commonStyles from '../common.module.css';

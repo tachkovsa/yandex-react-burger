@@ -9,9 +9,9 @@ import BurgerConstructor from '../../components/burger-constructor/burger-constr
 import Modal from '../../components/modal/modal';
 import OrderDetails from '../../components/order-details/order-details';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
-import { getIngredients } from '../../services/actions/ingredients';
+import { getIngredients } from '../../store/actions/ingredients';
 
-import Actions from '../../services/actions';
+import Actions from '../../store/actions';
 import commonStyles from '../common.module.css';
 import styles from './main.module.css';
 

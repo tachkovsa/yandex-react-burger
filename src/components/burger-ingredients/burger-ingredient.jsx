@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import Actions from '../../services/actions';
+import Actions from '../../store/actions';
 import { ingredientsPropTypes } from '../../utils/types';
 import styles from './burger-ingredients.module.css';
 

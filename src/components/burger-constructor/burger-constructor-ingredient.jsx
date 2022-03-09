@@ -7,7 +7,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 
 import { ingredientsPropTypes } from '../../utils/types';
 
-import Actions from '../../services/actions';
+import Actions from '../../store/actions';
 import styles from './burger-constructor.module.css';
 
 export function BurgerConstructorIngredient({

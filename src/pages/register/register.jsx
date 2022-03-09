@@ -7,7 +7,7 @@ import {
   PasswordInput, Input, Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { validateEmail } from '../../utils/validation';
-import { registerUser } from '../../services/actions/auth';
+import { registerUser } from '../../store/actions/auth';
 
 import commonStyles from '../common.module.css';
 import styles from './register.module.css';

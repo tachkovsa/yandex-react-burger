@@ -10,9 +10,9 @@ import {
   ConstructorElement, CurrencyIcon, Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { postOrder } from '../../services/actions/order';
+import { postOrder } from '../../store/actions/order';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient';
-import Actions from '../../services/actions';
+import Actions from '../../store/actions';
 
 import styles from './burger-constructor.module.css';
 import 'simplebar/dist/simplebar.min.css';

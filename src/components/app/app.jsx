@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import AppHeader from '../app-header/app-header';
 import { Routes } from '../../routes';
-import { getIngredients } from '../../services/actions/ingredients';
+import { getIngredients } from '../../store/actions/ingredients';
 
 import commonStyles from '../../pages/common.module.css';
 

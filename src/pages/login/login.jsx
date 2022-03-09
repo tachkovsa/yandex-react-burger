@@ -10,11 +10,10 @@ import { validateEmail } from '../../utils/validation';
 
 import commonStyles from '../common.module.css';
 import styles from './login.module.css';
-import { loginUser } from '../../services/actions/auth';
+import { loginUser } from '../../store/actions/auth';
 
 export function LoginPage() {
   const dispatch = useDispatch();
-  // const history = useHistory();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

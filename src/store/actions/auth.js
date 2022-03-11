@@ -76,6 +76,32 @@ export const loginUser = ({ email, password }) => (dispatch) => {
   });
 };
 
+export const patchUser = ({ name, email, password }) => (dispatch) => {
+  dispatch({ type: Actions.PATCH_USER_INFO });
+
+  request({
+    url: 'auth/user',
+    method: 'PATCH',
+    body: JSON.stringify({ name, email, password }),
+  }).then((parsedResponse) => {
+    if (parsedResponse.success) {
+      const { user } = parsedResponse;
+
+      dispatch({
+        type: Actions.PATCH_USER_INFO_SUCCESS,
+        payload: user,
+      });
+    } else {
+      return Promise.reject(parsedResponse.message);
+    }
+  }).catch((err) => {
+    dispatch({
+      type: Actions.FETCH_USER_INFO_ERROR,
+      payload: err.toLocaleString(),
+    });
+  });
+};
+
 export const fetchUser = () => (dispatch) => {
   dispatch({ type: Actions.FETCH_USER_INFO });
 

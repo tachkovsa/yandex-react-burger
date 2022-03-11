@@ -15,7 +15,7 @@ function AppHeader() {
 
   const matchedMain = matchPath(location.pathname, { path: '/', exact: true });
   const matchedOrders = matchPath(location.pathname, { path: '/orders', exact: true });
-  const matchedProfile = matchPath(location.pathname, { path: '/profile', exact: true });
+  const matchedProfile = matchPath(location.pathname, { path: '/profile' });
 
   return (
     <header className={`${styles.header} pt-4 pb-4`}>

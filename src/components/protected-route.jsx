@@ -10,15 +10,15 @@ export function ProtectedRoute({ children, accessType = 'anonymous', ...rest }) 
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { accessToken } = auth();
+  const { accessToken, refreshToken } = auth();
 
-  const isAuth = useCallback(() => !!(accessToken && user), [accessToken, user]);
+  const isAuth = useCallback(() => !!((accessToken || refreshToken) && user), [accessToken, refreshToken, user]);
 
   useEffect(() => {
-    if (accessToken && !user) {
+    if ((accessToken || refreshToken) && !user) {
       dispatch(fetchUser());
     }
-  }, [accessToken, dispatch, user]);
+  }, [accessToken, dispatch, refreshToken, user]);
 
   const render = () => {
     let elementToRender = (<Route {...rest} render={() => children} />);

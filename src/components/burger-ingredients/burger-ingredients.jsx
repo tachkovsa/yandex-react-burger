@@ -1,11 +1,11 @@
 import React, {
   useCallback, useState, useRef, useEffect,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import BurgerIngredient from './burger-ingredient';
 
@@ -14,6 +14,7 @@ import 'simplebar/dist/simplebar.min.css';
 
 function BurgerIngredients() {
   const history = useHistory();
+  const location = useLocation();
 
   const basket = useSelector((state) => state.constructorIngredients.basket);
   const { ingredients } = useSelector((state) => state.ingredients);
@@ -38,8 +39,11 @@ function BurgerIngredients() {
   }, [basket]);
 
   const openDetailedIngredientPage = useCallback((ingredientId) => {
-    history.push(`/ingredients/${ingredientId}`);
-  }, [history]);
+    history.push({
+      pathname: `/ingredients/${ingredientId}`,
+      state: { ingredientModal: location },
+    });
+  }, [history, location]);
 
   const onScrollIngredientsBlock = () => {
     if (bunsTitleRef.current.getBoundingClientRect().top >= 0) {

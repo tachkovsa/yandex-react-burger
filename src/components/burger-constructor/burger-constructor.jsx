@@ -16,9 +16,11 @@ import Actions from '../../store/actions';
 
 import styles from './burger-constructor.module.css';
 import 'simplebar/dist/simplebar.min.css';
+import { auth } from '../../services/auth';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
+  const { accessToken, refreshToken } = auth();
 
   const { ingredientDragged } = useSelector((state) => state.ingredients);
   const { basket } = useSelector((state) => state.constructorIngredients);
@@ -139,7 +141,7 @@ function BurgerConstructor() {
           type="primary"
           size="large"
           onClick={makeOrder}
-          disabled={!readyForOrder || isWaitingForOrderNumber}
+          disabled={(accessToken || refreshToken) && (!readyForOrder || isWaitingForOrderNumber)}
         >
           Оформить заказ
         </Button>

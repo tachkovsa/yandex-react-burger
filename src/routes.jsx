@@ -27,7 +27,7 @@ export function Routes() {
         <ResetPasswordPage />
       </ProtectedRoute>
       {/* Страница с настройками профиля пользователя */}
-      <ProtectedRoute exact path="/profile" accessType="authorized">
+      <ProtectedRoute exact path={['/profile', '/profile/orders', '/profile/orders/:id']} accessType="authorized">
         <ProfilePage />
       </ProtectedRoute>
       {/* Страница ингредиента */}

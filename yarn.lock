@@ -2113,7 +2113,7 @@
 
 "@ya.praktikum/react-developer-burger-ui-components@^1.13.1":
   version "1.13.1"
-  resolved "https://registry.npmjs.org/@ya.praktikum/react-developer-burger-ui-components/-/react-developer-burger-ui-components-1.13.1.tgz"
+  resolved "https://registry.yarnpkg.com/@ya.praktikum/react-developer-burger-ui-components/-/react-developer-burger-ui-components-1.13.1.tgz#b7dce048e55148b878c5659feae24fd2cec05e9f"
   integrity sha512-j/esyxoMOm18MFHa31cF4eCdUJPNy8601YftqQEM7lwEC5Gp9aQf5+xAnujzCNdhghcQntYJ6Mx3bg2/U8Zx2g==
   dependencies:
     clsx "^1.1.1"

@@ -18,19 +18,24 @@ export function ForgotPasswordPage() {
 
   const [email, setEmail] = useState('');
   const { loading, error, resetPasswordCodeRequested } = useSelector((state) => state.auth);
-
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
   const restorePassword = (e) => {
     e.preventDefault();
-    dispatch(requestPasswordResetCode());
+    dispatch(requestPasswordResetCode(email));
   };
 
   useEffect(() => {
     if (resetPasswordCodeRequested) {
-      history.push('/reset-password');
+      history.push({
+        pathname: '/reset-password',
+        state: {
+          email,
+          emailTimestamp: new Date().getTime(),
+        },
+      });
     }
-  }, [history, resetPasswordCodeRequested]);
+  }, [history, resetPasswordCodeRequested, email]);
 
   return (
     <div className={commonStyles.content}>

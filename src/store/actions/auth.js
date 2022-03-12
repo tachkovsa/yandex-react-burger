@@ -128,12 +128,35 @@ export const fetchUser = () => (dispatch) => {
     });
 };
 
+export const resetPassword = ({ email, password, token }) => (dispatch) => {
+  dispatch({ type: Actions.PASSWORD_RESET });
+
+  request({
+    url: 'password-reset/reset',
+    method: 'POST',
+    body: JSON.stringify({ token, password }),
+  }).then((parsedResponse) => {
+    if (parsedResponse.success) {
+      dispatch({ type: Actions.PASSWORD_RESET_SUCCESS });
+      dispatch(loginUser({ email, password }));
+    } else {
+      return Promise.reject(parsedResponse.message);
+    }
+  }).catch((err) => {
+    dispatch({
+      type: Actions.PASSWORD_RESET_ERROR,
+      payload: err.toLocaleString(),
+    });
+  });
+};
+
 export const requestPasswordResetCode = (email) => (dispatch) => {
   dispatch({ type: Actions.REQUEST_PASSWORD_RESET_CODE });
 
   request({
-    url: '/password-reset',
+    url: 'password-reset',
     method: 'POST',
+    body: JSON.stringify({ email }),
   }).then((parsedResponse) => {
     if (parsedResponse.success) {
       dispatch({ type: Actions.REQUEST_PASSWORD_RESET_CODE_SUCCESS });

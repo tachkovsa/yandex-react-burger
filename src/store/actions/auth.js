@@ -174,7 +174,7 @@ export const resetPassword = ({ email, password, token }) => (dispatch) => {
 };
 
 export const requestPasswordResetCode = (email) => (dispatch) => {
-  dispatch({ type: Actions.REQUEST_PASSWORD_RESET_CODE });
+  dispatch({ type: Actions.REQUEST_PASSWORD_RESET_CODE, payload: email });
 
   request({
     url: 'password-reset',

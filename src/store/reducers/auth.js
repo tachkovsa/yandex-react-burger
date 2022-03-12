@@ -6,6 +6,7 @@ const initialState = {
   error: null,
   tokenExpired: null,
   resetPasswordCodeRequested: false,
+  resetPasswordCodeEmail: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -95,6 +96,7 @@ export const authReducer = (state = initialState, action) => {
         loading: true,
         error: false,
         resetPasswordCodeRequested: false,
+        resetPasswordCodeEmail: action.payload,
       };
     case Actions.REQUEST_PASSWORD_RESET_CODE_SUCCESS:
       return {
@@ -108,6 +110,28 @@ export const authReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+    case Actions.PASSWORD_RESET: {
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
+    }
+    case Actions.PASSWORD_RESET_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        resetPasswordCodeEmail: null,
+        resetPasswordCodeRequested: false,
+      };
+    }
+    case Actions.PASSWORD_RESET_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        resetPasswordCodeRequested: false,
+      };
+    }
     default:
       return state;
   }

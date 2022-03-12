@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
-import { Input, Button, ShowIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import commonStyles from '../common.module.css';
 import styles from './reset-password.module.css';
@@ -12,14 +12,11 @@ import { resetPassword } from '../../store/actions/auth';
 export function ResetPasswordPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+
+  const email = useSelector((state) => state.auth.resetPasswordCodeEmail);
 
   const [token, setToken] = useState('');
   const [password, setPassword] = useState('');
-
-  const email = location.state && location.state.email;
-  // TODO: Add reset code alive time checking if it necessary
-  const emailTimestamp = location.state && location.state.emailTimestamp;
 
   useEffect(() => {
     if (!email) {

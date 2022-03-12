@@ -38,7 +38,7 @@ export function ProtectedRoute({ children, accessType = 'anonymous', ...rest }) 
   }, [accessToken, dispatch, refreshToken, user]);
 
   const render = () => {
-    if (accessType !== 'anonymous' && loading) {
+    if (accessType !== 'anonymous' && !user && loading) {
       return (
         <div className={classNames(commonStyles.loader, 'text', 'text_type_main-default')}>{loadingText}</div>
       );

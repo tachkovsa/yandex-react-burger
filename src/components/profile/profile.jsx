@@ -72,6 +72,15 @@ export function Profile() {
   };
 
   useEffect(() => {
+    if (user) {
+      const { email, name } = user;
+      setForm({
+        email,
+        name,
+        password: PASSWORD_PLACEHOLDER_VALUE,
+      });
+      setIsDirty(false);
+    }
   }, [user]);
 
   return (

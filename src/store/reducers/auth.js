@@ -11,6 +11,23 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case Actions.PATCH_USER_INFO:
+      return {
+        ...state,
+        loading: true,
+      };
+    case Actions.PATCH_USER_INFO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+    case Actions.PATCH_USER_INFO_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     case Actions.FETCH_USER_INFO:
       return {
         ...state,

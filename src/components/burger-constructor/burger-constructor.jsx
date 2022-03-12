@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
 import { useDrop } from 'react-dnd';
@@ -10,6 +10,7 @@ import {
   ConstructorElement, CurrencyIcon, Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { useHistory } from 'react-router-dom';
 import { postOrder } from '../../store/actions/order';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient';
 import Actions from '../../store/actions';
@@ -20,13 +21,12 @@ import { auth } from '../../services/auth';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { accessToken, refreshToken } = auth();
 
   const { ingredientDragged } = useSelector((state) => state.ingredients);
   const { basket } = useSelector((state) => state.constructorIngredients);
-
-  const readyForOrder = useSelector((state) => (state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun')
-      && state.constructorIngredients.basket.length >= 2));
+  const isWaitingForOrderNumber = useSelector((state) => state.order.loading);
 
   const totalPrice = useSelector((state) => (state.constructorIngredients.basket.length > 0
     ? state.constructorIngredients.basket
@@ -37,7 +37,11 @@ function BurgerConstructor() {
   const burgerBun = useSelector((state) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
   const burgerStuffing = useSelector((state) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
 
-  const isWaitingForOrderNumber = useSelector((state) => state.order.loading);
+  const isReadyForOrder = useCallback(() => (
+    basket.find((ingredient) => ingredient.type === 'bun')
+      && basket.find((ingredient) => ingredient.type !== 'bun')
+      && !isWaitingForOrderNumber
+  ), [basket, isWaitingForOrderNumber]);
 
   const onDropIngredient = (ingredient) => {
     if (ingredient.type === 'bun') {
@@ -62,9 +66,11 @@ function BurgerConstructor() {
   });
 
   const makeOrder = async () => {
-    if (isWaitingForOrderNumber) return;
-
-    dispatch(postOrder(basket.map((b) => b._id)));
+    if (!(accessToken || refreshToken)) {
+      history.push('/login');
+    } else if (!isWaitingForOrderNumber) {
+      dispatch(postOrder(basket.map((b) => b._id)));
+    }
   };
 
   return (
@@ -141,7 +147,7 @@ function BurgerConstructor() {
           type="primary"
           size="large"
           onClick={makeOrder}
-          disabled={(accessToken || refreshToken) && (!readyForOrder || isWaitingForOrderNumber)}
+          disabled={!isReadyForOrder()}
         >
           Оформить заказ
         </Button>

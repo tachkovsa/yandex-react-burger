@@ -2,7 +2,7 @@ import { domainURL } from '../../utils/constants';
 
 import Actions from './index';
 import { setCookie } from '../../utils/cookie';
-import { setTokens } from '../../services/auth';
+import { getTokens, setTokens } from '../../services/auth';
 import { request } from '../../services/api';
 
 export const resetAuth = (reason) => (dispatch) => {
@@ -43,6 +43,29 @@ export const registerUser = ({ email, name, password }) => (dispatch) => {
       type: Actions.REGISTER_USER_ERROR,
       payload: err.toLocaleString(),
     }));
+};
+
+export const logoutUser = () => (dispatch) => {
+  dispatch({ type: Actions.LOGOUT });
+
+  const { refreshToken } = getTokens();
+  request({
+    url: 'auth/logout',
+    method: 'POST',
+    body: JSON.stringify({ token: refreshToken }),
+  }).then((parsedResponse) => {
+    if (parsedResponse.success) {
+      dispatch({ type: Actions.LOGOUT_SUCCESS });
+      dispatch({ type: Actions.RESET_AUTH });
+    } else {
+      return Promise.reject(parsedResponse.message);
+    }
+  }).catch((err) => {
+    dispatch({
+      type: Actions.LOGOUT_ERROR,
+      payload: err.toLocaleString(),
+    });
+  });
 };
 
 export const loginUser = ({ email, password }) => (dispatch) => {

@@ -34,6 +34,23 @@ export const authReducer = (state = initialState, action) => {
         user: null,
         tokenExpired: true,
       };
+    case Actions.LOGOUT:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case Actions.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case Actions.LOGOUT_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     case Actions.LOGIN:
       return {
         ...state,

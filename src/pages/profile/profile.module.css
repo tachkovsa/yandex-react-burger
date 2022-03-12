@@ -1,0 +1,41 @@
+.profile {
+    display: flex;
+    margin-top: calc(var(--offset-base-size) * 30);
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 320px;
+    flex-shrink: 0;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    height: 64px;
+}
+
+.menuItemLink {
+    color: var(--text-secondary-dark-grey);
+    text-decoration: none;
+}
+.menuItemLinkActive {
+    color: var(--text-primary-light);
+    cursor: default;
+}
+
+.menuDesc {
+
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}

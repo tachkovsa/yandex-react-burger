@@ -1,7 +1,8 @@
 import Actions from '../actions';
 
 const initialState = {
-  loading: false,
+  loading: null,
+  loaded: false,
   error: null,
   ingredients: [],
   ingredientDragged: false,
@@ -13,6 +14,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        loaded: false,
         error: null,
       };
 
@@ -21,6 +23,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredients: action.payload,
         loading: false,
+        loaded: true,
         error: null,
       };
     case Actions.GET_INGREDIENTS_ERROR:

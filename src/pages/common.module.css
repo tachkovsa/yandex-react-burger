@@ -1,0 +1,27 @@
+.content {
+    display: flex;
+    width: var(--content-width);
+    box-sizing: border-box;
+    margin: 0 auto;
+    height: calc(100vh - var(--header-height)); /* 100vh minus header height */
+}
+
+.link {
+    text-decoration: none;
+    color: var(--i-accent);
+}
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - var(--header-height));
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - var(--header-height));
+}

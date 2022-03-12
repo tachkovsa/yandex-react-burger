@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
 import { useDrop } from 'react-dnd';
@@ -10,21 +10,23 @@ import {
   ConstructorElement, CurrencyIcon, Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { postOrder } from '../../services/actions/order';
+import { useHistory } from 'react-router-dom';
+import { postOrder } from '../../store/actions/order';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient';
-import Actions from '../../services/actions';
+import Actions from '../../store/actions';
 
-import burgerConstructorStyles from './burger-constructor.module.css';
+import styles from './burger-constructor.module.css';
 import 'simplebar/dist/simplebar.min.css';
+import { auth } from '../../services/auth';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { accessToken, refreshToken } = auth();
 
   const { ingredientDragged } = useSelector((state) => state.ingredients);
   const { basket } = useSelector((state) => state.constructorIngredients);
-
-  const readyForOrder = useSelector((state) => (state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun')
-      && state.constructorIngredients.basket.length >= 2));
+  const isWaitingForOrderNumber = useSelector((state) => state.order.loading);
 
   const totalPrice = useSelector((state) => (state.constructorIngredients.basket.length > 0
     ? state.constructorIngredients.basket
@@ -35,7 +37,11 @@ function BurgerConstructor() {
   const burgerBun = useSelector((state) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
   const burgerStuffing = useSelector((state) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
 
-  const isWaitingForOrderNumber = useSelector((state) => state.order.loading);
+  const isReadyForOrder = useCallback(() => (
+    basket.find((ingredient) => ingredient.type === 'bun')
+      && basket.find((ingredient) => ingredient.type !== 'bun')
+      && !isWaitingForOrderNumber
+  ), [basket, isWaitingForOrderNumber]);
 
   const onDropIngredient = (ingredient) => {
     if (ingredient.type === 'bun') {
@@ -60,18 +66,20 @@ function BurgerConstructor() {
   });
 
   const makeOrder = async () => {
-    if (isWaitingForOrderNumber) return;
-
-    dispatch(postOrder(basket.map((b) => b._id)));
+    if (!(accessToken || refreshToken)) {
+      history.push('/login');
+    } else if (!isWaitingForOrderNumber) {
+      dispatch(postOrder(basket.map((b) => b._id)));
+    }
   };
 
   return (
     <>
       <div
-        className={classNames(burgerConstructorStyles.basketListContainer, (isHoverIngredient ? burgerConstructorStyles.basketListContainerHovered : ''), (ingredientDragged ? burgerConstructorStyles.basketListContainerWaitingForIngredient : ''))}
+        className={classNames(styles.basketListContainer, (isHoverIngredient ? styles.basketListContainerHovered : ''), (ingredientDragged ? styles.basketListContainerWaitingForIngredient : ''))}
         ref={basketRef}
       >
-        <div className={classNames(burgerConstructorStyles.bulletEdge, 'mr-4', 'mb-4')}>
+        <div className={classNames(styles.bulletEdge, 'mr-4', 'mb-4')}>
 
           {burgerBun && (
             <ConstructorElement
@@ -83,15 +91,15 @@ function BurgerConstructor() {
             />
           )}
           {!burgerBun && (
-          <div className={classNames(burgerConstructorStyles.constructorElement, 'constructor-element constructor-element_pos_top')}>
+          <div className={classNames(styles.constructorElement, 'constructor-element constructor-element_pos_top')}>
             <span className="text text_type_main-default text_color_inactive">Выберите булочку</span>
           </div>
           )}
         </div>
 
         {burgerStuffing.length > 0 && (
-          <SimpleBar className={classNames(burgerConstructorStyles.basketListBar)}>
-            <div className={classNames(burgerConstructorStyles.basketList, 'mr-4')}>
+          <SimpleBar className={classNames(styles.basketListBar)}>
+            <div className={classNames(styles.basketList, 'mr-4')}>
               {burgerStuffing.map((ingredient, index) => (
                 <BurgerConstructorIngredient
                   key={ingredient._uid}
@@ -105,11 +113,11 @@ function BurgerConstructor() {
         )}
 
         {burgerStuffing.length === 0 && (
-        <div className={classNames(burgerConstructorStyles.basketNoStuffing, burgerConstructorStyles.constructorElement, 'ml-15')}>
+        <div className={classNames(styles.basketNoStuffing, styles.constructorElement, 'ml-15')}>
           <span className="text text_type_main-default text_color_inactive">Выберите наполнение</span>
         </div>
         )}
-        <div className={classNames(burgerConstructorStyles.bulletEdge, 'mr-4', 'mt-4')}>
+        <div className={classNames(styles.bulletEdge, 'mr-4', 'mt-4')}>
           {burgerBun && (
           <ConstructorElement
             type="bottom"
@@ -121,16 +129,16 @@ function BurgerConstructor() {
           )}
           {!burgerBun
             && (
-            <div className={classNames(burgerConstructorStyles.constructorElement, 'constructor-element constructor-element_pos_bottom')}>
+            <div className={classNames(styles.constructorElement, 'constructor-element constructor-element_pos_bottom')}>
               <span className="text text_type_main-default text_color_inactive">Выберите булочку</span>
             </div>
             )}
         </div>
       </div>
 
-      <div className={classNames(burgerConstructorStyles.orderInfo, 'mt-10', 'mr-4')}>
+      <div className={classNames(styles.orderInfo, 'mt-10', 'mr-4', 'mb-10')}>
         {basket.length > 0 && (
-          <div className={classNames(burgerConstructorStyles.orderInfoPrice, 'mr-10')}>
+          <div className={classNames(styles.orderInfoPrice, 'mr-10')}>
             <span className={classNames('text', 'text_type_digits-medium', 'mr-2')}>{totalPrice}</span>
             <CurrencyIcon type="primary" />
           </div>
@@ -139,7 +147,7 @@ function BurgerConstructor() {
           type="primary"
           size="large"
           onClick={makeOrder}
-          disabled={!readyForOrder || isWaitingForOrderNumber}
+          disabled={!isReadyForOrder()}
         >
           Оформить заказ
         </Button>

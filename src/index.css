@@ -3,9 +3,9 @@
     src: url("./fonts/JetBrainsMono-Regular.woff2") format("woff2");
 }
 
-
 :root {
     --content-width: 1280px;
+    --header-height: 88px;
     
     --i-bg: #131316;
     --i-modal-bg: #1C1C21;
@@ -27,3 +27,16 @@ html {
 .simplebar-scrollbar::before {
     background-color: var(--text-secondary-dark-grey);
 }
+
+/* Common UI */
+.text_align_center {
+    text-align: center;
+}
+.text_color_error {
+    color: var(--colors-interface-error);
+}
+.form-fields_width_100 .input__container,
+.form-fields_width_100 .input {
+    width: 100%;
+}
+

@@ -1,12 +1,14 @@
-import classNames from 'classnames';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import burgerConstructorStyles from './burger-constructor.module.css';
+import classNames from 'classnames';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import { ingredientsPropTypes } from '../../utils/types';
-import Actions from '../../services/actions';
+
+import Actions from '../../store/actions';
+import styles from './burger-constructor.module.css';
 
 export function BurgerConstructorIngredient({
   index, ingredient, onClick,
@@ -67,15 +69,15 @@ export function BurgerConstructorIngredient({
 
   return (
     <div
-      className={classNames(burgerConstructorStyles.basketListElem, isDragging ? burgerConstructorStyles.basketListElemDragging : null, burgerConstructorStyles.basketListElemDraggable, 'ml-4')}
+      className={classNames(styles.basketListElem, isDragging ? styles.basketListElemDragging : null, styles.basketListElemDraggable, 'ml-4')}
       ref={ref}
       data-handler-id={handlerId}
     >
-      <div className={burgerConstructorStyles.basketListDragIcon}>
+      <div className={styles.basketListDragIcon}>
         <DragIcon type="primary" />
       </div>
       <div
-        className={classNames(burgerConstructorStyles.bullet, 'ml-2')}
+        className={classNames(styles.bullet, 'ml-2')}
         onClick={(e) => onClick(e, ingredient._uid)}
 
       >

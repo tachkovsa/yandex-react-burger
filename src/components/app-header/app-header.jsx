@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import {
-  NavLink, matchPath, useLocation,
+  NavLink, matchPath, useLocation, Link,
 } from 'react-router-dom';
 
 import {
@@ -51,7 +51,9 @@ function AppHeader() {
           </NavLink>
         </div>
         <div className={`${styles.side} ${styles.middleSide}`}>
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
         </div>
       </nav>
     </header>

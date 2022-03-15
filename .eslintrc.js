@@ -1,10 +1,14 @@
 module.exports = {
   extends: [
     'airbnb',
+    'airbnb-typescript',
     'airbnb/hooks',
   ],
   env: {
     browser: true,
+  },
+  parserOptions: {
+    project: './tsconfig.json',
   },
   rules: {
     'no-plusplus': 'off',

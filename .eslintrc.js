@@ -30,5 +30,6 @@ module.exports = {
     'import/no-cycle': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/no-children-prop': 'off',
+    '@typescript-eslint/no-shadow': 'off'
   },
 };

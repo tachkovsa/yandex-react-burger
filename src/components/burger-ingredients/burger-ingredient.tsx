@@ -1,15 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 
 import Actions from '../../store/actions';
-import { ingredientsPropTypes } from '../../utils/types';
 import styles from './burger-ingredients.module.css';
 
-function BurgerIngredient({ ingredient, inBasketCount }) {
+export interface IBurgerIngredientProps {
+  ingredient: IIngredient,
+  inBasketCount: number
+}
+
+export const BurgerIngredient: FC<IBurgerIngredientProps> = ({ ingredient, inBasketCount }) => {
   const dispatch = useDispatch();
   const didMount = useRef(false);
 
@@ -50,11 +54,6 @@ function BurgerIngredient({ ingredient, inBasketCount }) {
       </div>
     </div>
   );
-}
-
-BurgerIngredient.propTypes = {
-  ingredient: ingredientsPropTypes.isRequired,
-  inBasketCount: PropTypes.number.isRequired,
 };
 
 export default BurgerIngredient;

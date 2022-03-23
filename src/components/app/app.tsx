@@ -13,10 +13,10 @@ function App() {
 
   const [loadingText, setLoadingText] = useState('');
 
-  const isLoading = useSelector<any>((state) => state.ingredients.loading) as boolean;
-  const isLoaded = useSelector<any>((state) => state.ingredients.loaded) as boolean;
-  const ingredientsErrorText = useSelector<any>((state) => state.ingredients.error) as string | null;
-  const orderErrorText = useSelector<any>((state) => state.order.error) as string | null;
+  const isLoading = useSelector((state: any) => state.ingredients.loading);
+  const isLoaded = useSelector((state: any) => state.ingredients.loaded);
+  const ingredientsErrorText = useSelector((state: any) => state.ingredients.error);
+  const orderErrorText = useSelector((state: any) => state.order.error);
 
   const hasError = useCallback(
     () => ingredientsErrorText || orderErrorText,

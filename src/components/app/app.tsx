@@ -11,13 +11,12 @@ import commonStyles from '../../pages/common.module.css';
 function App() {
   const dispatch = useDispatch();
 
-  const [activeTab, setActiveTab] = useState('constructor');
   const [loadingText, setLoadingText] = useState('');
 
-  const isLoading = useSelector((state) => state.ingredients.loading);
-  const isLoaded = useSelector((state) => state.ingredients.loaded);
-  const ingredientsErrorText = useSelector((state) => state.ingredients.error);
-  const orderErrorText = useSelector((state) => state.order.error);
+  const isLoading = useSelector<any>((state) => state.ingredients.loading) as boolean;
+  const isLoaded = useSelector<any>((state) => state.ingredients.loaded) as boolean;
+  const ingredientsErrorText = useSelector<any>((state) => state.ingredients.error) as string | null;
+  const orderErrorText = useSelector<any>((state) => state.order.error) as string | null;
 
   const hasError = useCallback(
     () => ingredientsErrorText || orderErrorText,
@@ -25,8 +24,8 @@ function App() {
   );
 
   useEffect(() => {
-    let interval; let
-      tick = 0;
+    let interval: ReturnType<typeof setInterval>;
+    let tick = 0;
     if (isLoading) {
       interval = setInterval(() => {
         setLoadingText(`Верстаем меню${'.'.repeat(tick)}`);
@@ -43,7 +42,7 @@ function App() {
 
   return (
     <>
-      <AppHeader activeTab={activeTab} selectTab={setActiveTab} />
+      <AppHeader />
       {isLoading && (
         <div className={classNames(commonStyles.loader, 'text', 'text_type_main-default')}>{loadingText}</div>
       )}

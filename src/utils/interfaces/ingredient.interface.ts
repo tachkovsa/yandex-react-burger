@@ -1,7 +1,7 @@
 export interface IIngredient {
   _id: string;
   name: string;
-  type: Array<'bun' | 'main' | 'sauce'>;
+  type: 'bun' | 'main' | 'sauce';
   proteins?: number;
   fat?: number;
   carbohydrates?: number;

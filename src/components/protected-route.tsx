@@ -13,7 +13,8 @@ export type TRouterAccessTypes = 'anonymous' | 'authorized' | 'unauthorized';
 
 export interface IExpandedLocation extends Location {
   state: {
-    from: Location
+    from?: Location,
+    ingredientModal?: Location
   }
 }
 
@@ -21,7 +22,7 @@ interface IProtectedRouteProps {
   accessType: TRouterAccessTypes;
 }
 
-export const ProtectedRoute: FC<IProtectedRouteProps> = ({
+export const ProtectedRoute: FC<IProtectedRouteProps & { [key: string]: any }> = ({
   children,
   accessType = 'anonymous',
   ...rest
@@ -66,7 +67,7 @@ export const ProtectedRoute: FC<IProtectedRouteProps> = ({
       case 'authorized':
         if (!isAuth()) {
           elementToRender = (
-            <Route render={({ location }: { location: IExpandedLocation }) => (
+            <Route render={({ location }) => (
               <Redirect
                 to={{
                   pathname: '/login',
@@ -81,16 +82,20 @@ export const ProtectedRoute: FC<IProtectedRouteProps> = ({
       case 'unauthorized':
         if (isAuth()) {
           elementToRender = (
-            <Route render={({ location }: { location: IExpandedLocation }) => (
-              <Redirect
-                to={{
-                  pathname: (location.pathname === '/login' && location.state)
-                    ? location.state.from.pathname
-                    : '/',
-                  state: { from: location },
-                }}
-              />
-            )}
+            <Route render={({ location }) => {
+              const definedLocation = location as IExpandedLocation;
+
+              return (
+                <Redirect
+                  to={{
+                    pathname: (definedLocation.pathname === '/login' && !!definedLocation.state)
+                      ? definedLocation.state.from?.pathname
+                      : '/',
+                    state: { from: definedLocation },
+                  }}
+                />
+              );
+            }}
             />
           );
         }

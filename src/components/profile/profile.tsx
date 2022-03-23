@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect, useRef, useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  EmailInput, Input, PasswordInput, EditIcon, Button,
+  EmailInput, Input, Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import classNames from 'classnames';
@@ -14,16 +16,20 @@ const PASSWORD_PLACEHOLDER_VALUE = '******';
 export function Profile() {
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.auth);
+  const { user, loading } = useSelector((state: any) => state.auth);
 
-  const [form, setForm] = useState({ email: user.email, name: user.name, password: PASSWORD_PLACEHOLDER_VALUE });
-  const [isDirty, setIsDirty] = useState(false);
+  const [form, setForm] = useState<{
+    email: string,
+    name: string,
+    password: string
+  }>({ email: user.email, name: user.name, password: PASSWORD_PLACEHOLDER_VALUE });
+  const [isDirty, setIsDirty] = useState<boolean>(false);
 
-  const inputNameRef = useRef(null);
-  const inputPasswordRef = useRef(null);
+  const inputNameRef = useRef<HTMLInputElement>(null);
+  const inputPasswordRef = useRef<HTMLInputElement>(null);
 
-  const [isNameEdit, setIsNameEdit] = useState(false);
-  const [isPasswordEdit, setIsPasswordEdit] = useState(false);
+  const [isNameEdit, setIsNameEdit] = useState<boolean>(false);
+  const [isPasswordEdit, setIsPasswordEdit] = useState<boolean>(false);
 
   const onToggleNameEdit = () => {
     setIsNameEdit(!isNameEdit);
@@ -51,7 +57,7 @@ export function Profile() {
     }, 0);
   };
 
-  const onChangeFormValue = (e) => {
+  const onChangeFormValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setForm({ ...form, [name]: value });
@@ -85,7 +91,10 @@ export function Profile() {
 
   return (
     <>
-      <form onSubmit={(e) => e.preventDefault()} className={classNames(styles.form, 'form-fields_width_100')}>
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className={classNames(styles.form, 'form-fields_width_100')}
+      >
         <div className={classNames(styles.formInput)}>
           <Input
             value={form.name}

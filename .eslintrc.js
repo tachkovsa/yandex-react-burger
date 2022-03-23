@@ -1,10 +1,14 @@
 module.exports = {
   extends: [
     'airbnb',
+    'airbnb-typescript',
     'airbnb/hooks',
   ],
   env: {
     browser: true,
+  },
+  parserOptions: {
+    project: './tsconfig.json',
   },
   rules: {
     'no-plusplus': 'off',
@@ -26,5 +30,9 @@ module.exports = {
     'import/no-cycle': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/no-children-prop': 'off',
+    'react/function-component-definition': 'off',
+    '@typescript-eslint/no-shadow': 'off',
+    '@typescript-eslint/naming-convention': 'off',
+    '@typescript-eslint/default-param-last': 'off',
   },
 };

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
@@ -15,19 +15,20 @@ import { loginUser } from '../../store/actions/auth';
 export function LoginPage() {
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state: any) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
   const isFormValid = useCallback(() => isEmailValid() && password !== '', [isEmailValid, password]);
 
-  const login = (e) => {
+  const login = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
   };
 
+  // @ts-ignore
   return (
     <div className={commonStyles.content}>
       <div className={styles.loginContainer}>
@@ -48,10 +49,10 @@ export function LoginPage() {
           <div className={classNames('mb-6')}>
             <PasswordInput
               onChange={(e) => setPassword(e.target.value)}
-              disabled={loading}
+              // disabled={loading}
               value={password}
               name="password"
-              className="mb-6"
+              // className="mb-6"
             />
           </div>
           <div className="text_align_center">

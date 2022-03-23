@@ -10,7 +10,7 @@ import {
 
 import styles from './app-header.module.css';
 
-function AppHeader() {
+export function AppHeader() {
   const location = useLocation();
 
   const matchedMain = matchPath(location.pathname, { path: '/', exact: true });
@@ -59,5 +59,3 @@ function AppHeader() {
     </header>
   );
 }
-
-export default AppHeader;

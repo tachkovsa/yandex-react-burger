@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
-import AppHeader from '../app-header/app-header';
+import { AppHeader } from '../app-header/app-header';
 import { Routes } from '../../routes';
 import { getIngredients } from '../../store/actions/ingredients';
 
@@ -11,13 +11,12 @@ import commonStyles from '../../pages/common.module.css';
 function App() {
   const dispatch = useDispatch();
 
-  const [activeTab, setActiveTab] = useState('constructor');
   const [loadingText, setLoadingText] = useState('');
 
-  const isLoading = useSelector((state) => state.ingredients.loading);
-  const isLoaded = useSelector((state) => state.ingredients.loaded);
-  const ingredientsErrorText = useSelector((state) => state.ingredients.error);
-  const orderErrorText = useSelector((state) => state.order.error);
+  const isLoading = useSelector((state: any) => state.ingredients.loading);
+  const isLoaded = useSelector((state: any) => state.ingredients.loaded);
+  const ingredientsErrorText = useSelector((state: any) => state.ingredients.error);
+  const orderErrorText = useSelector((state: any) => state.order.error);
 
   const hasError = useCallback(
     () => ingredientsErrorText || orderErrorText,
@@ -25,8 +24,8 @@ function App() {
   );
 
   useEffect(() => {
-    let interval; let
-      tick = 0;
+    let interval: ReturnType<typeof setInterval>;
+    let tick = 0;
     if (isLoading) {
       interval = setInterval(() => {
         setLoadingText(`Верстаем меню${'.'.repeat(tick)}`);
@@ -43,7 +42,7 @@ function App() {
 
   return (
     <>
-      <AppHeader activeTab={activeTab} selectTab={setActiveTab} />
+      <AppHeader />
       {isLoading && (
         <div className={classNames(commonStyles.loader, 'text', 'text_type_main-default')}>{loadingText}</div>
       )}

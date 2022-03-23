@@ -1,10 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-
 import { getCookie, setCookie } from '../utils/cookie';
 import { AUTH_TOKEN_ALIVE_TIME } from '../utils/constants';
 
-export const setTokens = ({ accessToken, refreshToken }) => {
+export const setTokens = ({ accessToken, refreshToken }: { accessToken: string, refreshToken: string }) => {
   const expirationAt = new Date(new Date().getTime() + AUTH_TOKEN_ALIVE_TIME);
 
   setCookie('accessToken', accessToken, { expires: expirationAt });

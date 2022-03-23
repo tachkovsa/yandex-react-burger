@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-
 import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
@@ -18,32 +16,33 @@ import Actions from '../../store/actions';
 import styles from './burger-constructor.module.css';
 import 'simplebar/dist/simplebar.min.css';
 import { auth } from '../../services/auth';
+import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 
-function BurgerConstructor() {
+export function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { accessToken, refreshToken } = auth();
 
-  const { ingredientDragged } = useSelector((state) => state.ingredients);
-  const { basket } = useSelector((state) => state.constructorIngredients);
-  const isWaitingForOrderNumber = useSelector((state) => state.order.loading);
+  const { ingredientDragged } = useSelector((state: any) => state.ingredients);
+  const { basket } = useSelector((state: any) => state.constructorIngredients);
+  const isWaitingForOrderNumber = useSelector((state: any) => state.order.loading);
 
-  const totalPrice = useSelector((state) => (state.constructorIngredients.basket.length > 0
+  const totalPrice = useSelector((state: any) => (state.constructorIngredients.basket.length > 0
     ? state.constructorIngredients.basket
       .map((ingredient) => ingredient.price * (ingredient.type === 'bun' ? 2 : 1))
       .reduce((acc, price) => acc + price)
     : 0));
 
-  const burgerBun = useSelector((state) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
-  const burgerStuffing = useSelector((state) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
+  const burgerBun = useSelector((state: any) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
+  const burgerStuffing = useSelector((state: any) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
 
-  const isReadyForOrder = useCallback(() => (
+  const isReadyForOrder = useCallback((): boolean => (
     basket.find((ingredient) => ingredient.type === 'bun')
       && basket.find((ingredient) => ingredient.type !== 'bun')
       && !isWaitingForOrderNumber
   ), [basket, isWaitingForOrderNumber]);
 
-  const onDropIngredient = (ingredient) => {
+  const onDropIngredient = (ingredient: IIngredient) => {
     if (ingredient.type === 'bun') {
       dispatch({ type: Actions.ADD_BUN_TO_CONSTRUCTOR, payload: { _uid: uuidv4(), ...ingredient } });
     } else {
@@ -51,8 +50,10 @@ function BurgerConstructor() {
     }
   };
 
-  const onClickOnConstructorElement = (e, uid) => {
-    if (e.target.closest('.constructor-element__action')) {
+  const onClickOnConstructorElement = (e: React.MouseEvent<HTMLElement>, uid: string) => {
+    const target = e.target as Element;
+
+    if (target.closest('.constructor-element__action')) {
       dispatch({ type: Actions.REMOVE_INGREDIENT_FROM_CONSTRUCTOR, payload: uid });
     }
   };
@@ -62,7 +63,7 @@ function BurgerConstructor() {
     collect: (monitor) => ({
       isHoverIngredient: monitor.isOver(),
     }),
-    drop: (ingredient) => onDropIngredient(ingredient),
+    drop: (ingredient: IIngredient) => onDropIngredient(ingredient),
   });
 
   const makeOrder = async () => {
@@ -155,5 +156,3 @@ function BurgerConstructor() {
     </>
   );
 }
-
-export default BurgerConstructor;

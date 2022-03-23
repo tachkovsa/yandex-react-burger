@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 
 import {
-  matchPath, NavLink, Route, Switch, useLocation, useRouteMatch,
+  matchPath, NavLink, Route, Switch, useLocation,
 } from 'react-router-dom';
 import classNames from 'classnames';
 import commonStyles from '../common.module.css';

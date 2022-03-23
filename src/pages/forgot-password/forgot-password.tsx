@@ -17,10 +17,10 @@ export function ForgotPasswordPage() {
   const history = useHistory();
 
   const [email, setEmail] = useState('');
-  const { loading, error, resetPasswordCodeRequested } = useSelector((state) => state.auth);
+  const { loading, resetPasswordCodeRequested } = useSelector((state: any) => state.auth);
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
-  const restorePassword = (e) => {
+  const restorePassword = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(requestPasswordResetCode(email));
   };

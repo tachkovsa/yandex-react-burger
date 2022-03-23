@@ -1,26 +1,44 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React, {
+  FC, useCallback, useEffect, useState,
+} from 'react';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 import { auth } from '../services/auth';
 import { fetchUser } from '../store/actions/auth';
 import commonStyles from '../pages/common.module.css';
 
-export function ProtectedRoute({ children, accessType = 'anonymous', ...rest }) {
+export type TRouterAccessTypes = 'anonymous' | 'authorized' | 'unauthorized';
+
+export interface IExpandedLocation extends Location {
+  state: {
+    from?: Location,
+    ingredientModal?: Location
+  }
+}
+
+interface IProtectedRouteProps {
+  accessType: TRouterAccessTypes;
+}
+
+export const ProtectedRoute: FC<IProtectedRouteProps & RouteProps> = ({
+  children,
+  accessType = 'anonymous',
+  ...rest
+}) => {
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.auth);
+  const { user, loading } = useSelector((state: any) => state.auth);
   const { accessToken, refreshToken } = auth();
 
-  const [loadingText, setLoadingText] = useState('Проверяем авторизацию...');
-  const isAuth = useCallback(() => !!((accessToken || refreshToken) && user), [accessToken, refreshToken, user]);
+  const [loadingText, setLoadingText] = useState<string>('Проверяем авторизацию...');
+  const isAuth = useCallback((): boolean => !!((accessToken || refreshToken) && user), [accessToken, refreshToken, user]);
 
   // TODO: Move this code to helper
   useEffect(() => {
-    let interval; let
-      tick = 0;
+    let interval: ReturnType<typeof setInterval>;
+    let tick: number = 0;
     if (loading) {
       interval = setInterval(() => {
         setLoadingText(`Проверяем авторизацию${'.'.repeat(tick)}`);
@@ -64,16 +82,20 @@ export function ProtectedRoute({ children, accessType = 'anonymous', ...rest }) 
       case 'unauthorized':
         if (isAuth()) {
           elementToRender = (
-            <Route render={({ location }) => (
-              <Redirect
-                to={{
-                  pathname: (location.pathname === '/login' && location.state)
-                    ? location.state.from.pathname
-                    : '/',
-                  state: { from: location },
-                }}
-              />
-            )}
+            <Route render={({ location }) => {
+              const definedLocation = location as IExpandedLocation;
+
+              return (
+                <Redirect
+                  to={{
+                    pathname: (definedLocation.pathname === '/login' && !!definedLocation.state)
+                      ? definedLocation.state.from?.pathname
+                      : '/',
+                    state: { from: definedLocation },
+                  }}
+                />
+              );
+            }}
             />
           );
         }
@@ -86,12 +108,4 @@ export function ProtectedRoute({ children, accessType = 'anonymous', ...rest }) 
   };
 
   return render();
-}
-
-ProtectedRoute.propTypes = {
-  accessType: PropTypes.oneOf(['authorized', 'anonymous', 'unauthorized']),
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
 };

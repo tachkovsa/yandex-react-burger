@@ -13,10 +13,10 @@ export function ResetPasswordPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const email = useSelector((state) => state.auth.resetPasswordCodeEmail);
+  const email = useSelector((state: any) => state.auth.resetPasswordCodeEmail);
 
-  const [token, setToken] = useState('');
-  const [password, setPassword] = useState('');
+  const [token, setToken] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   useEffect(() => {
     if (!email) {
@@ -24,7 +24,7 @@ export function ResetPasswordPage() {
     }
   }, [history, email]);
 
-  const onSubmitResetPasswordForm = (e) => {
+  const onSubmitResetPasswordForm = (e: React.FormEvent) => {
     e.preventDefault();
 
     dispatch(resetPassword({ email, password, token }));
@@ -42,7 +42,7 @@ export function ResetPasswordPage() {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               name="password"
-              className="mb-6"
+              // className="mb-6"
               icon="ShowIcon"
             />
           </div>

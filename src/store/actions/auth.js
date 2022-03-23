@@ -1,5 +1,3 @@
-import { domainURL } from '../../utils/constants';
-
 import Actions from './index';
 import { setCookie } from '../../utils/cookie';
 import { getTokens, setTokens } from '../../services/auth';

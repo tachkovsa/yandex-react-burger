@@ -55,5 +55,3 @@ export const BurgerIngredient: FC<IBurgerIngredientProps> = ({ ingredient, inBas
     </div>
   );
 };
-
-export default BurgerIngredient;

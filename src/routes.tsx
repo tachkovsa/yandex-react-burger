@@ -2,22 +2,27 @@ import React from 'react';
 import {
   Route, Switch, useHistory, useLocation,
 } from 'react-router-dom';
+import * as H from 'history';
 import {
   MainPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientsPage, ProfilePage,
 } from './pages';
-import { ProtectedRoute } from './components/protected-route';
-import Modal from './components/modal/modal';
-import IngredientDetails from './components/ingredient-details/ingredient-details';
+import { IExpandedLocation, ProtectedRoute } from './components/protected-route';
+import { Modal } from './components/modal/modal';
+import { IngredientDetails } from './components/ingredient-details/ingredient-details';
+import { objectHasKeys } from './utils/validation';
 
 export function Routes() {
   const history = useHistory();
   const location = useLocation();
 
-  const ingredientModal = location.state && location.state.ingredientModal;
+  const definedLocation = typeof location?.state === 'object'
+    && objectHasKeys(location?.state, ['ingredientModal']) ? location as unknown as IExpandedLocation : undefined;
+  const ingredientModal = definedLocation ? definedLocation.state?.ingredientModal : undefined;
+  const switchLocation = (ingredientModal || location) as H.Location;
 
   return (
     <>
-      <Switch location={ingredientModal || location}>
+      <Switch location={switchLocation}>
         {/* Главная страница, конструктор бургеров */}
         <Route exact path="/" component={MainPage} />
         {/* Страница авторизации */}

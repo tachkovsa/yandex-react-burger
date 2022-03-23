@@ -20,7 +20,7 @@ export const Modal: FC<IModalProps> = ({
   header,
   onClose,
 }) => {
-  const reactModalsPlaceholder = document.getElementById('react-modals') || document.createElement('div');
+  const reactModalsPlaceholder = document.getElementById('react-modals');
 
   useEffect(() => {
     const closeModal = (e: KeyboardEvent) => {
@@ -35,7 +35,7 @@ export const Modal: FC<IModalProps> = ({
     };
   }, [onClose]);
 
-  return ReactDOM.createPortal(
+  return reactModalsPlaceholder && ReactDOM.createPortal(
     (
       <>
         <div className={classNames(styles.modal, 'p-10')}>

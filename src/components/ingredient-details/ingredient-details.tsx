@@ -16,7 +16,7 @@ export function IngredientDetails() {
 
   useEffect(() => {
     if (loaded) {
-      const foundIngredient = ingredients.find((_ingredient: IIngredient) => _ingredient._id === id) as IIngredient;
+      const foundIngredient = ingredients.find((_ingredient: IIngredient) => _ingredient._id === id) as IIngredient | undefined;
 
       if (!foundIngredient) {
         setIngredient(null);

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,15 +15,15 @@ import styles from './register.module.css';
 export function RegisterPage() {
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [name, setName] = useState<string>('');
 
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state: any) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
-  const submitRegistrationForm = (e) => {
+  const submitRegistrationForm = (e: React.FormEvent) => {
     e.preventDefault();
 
     dispatch(registerUser({ email, password, name }));
@@ -59,7 +59,7 @@ export function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               name="password"
-              className="mb-6"
+              // className="mb-6"
             />
           </div>
           <div className="text_align_center">

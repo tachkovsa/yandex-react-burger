@@ -18,7 +18,7 @@ import 'simplebar/dist/simplebar.min.css';
 import { auth } from '../../services/auth';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 
-function BurgerConstructor() {
+export function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { accessToken, refreshToken } = auth();
@@ -156,5 +156,3 @@ function BurgerConstructor() {
     </>
   );
 }
-
-export default BurgerConstructor;

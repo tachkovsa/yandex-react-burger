@@ -6,12 +6,12 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './modal.module.css';
 
-import ModalOverlay from '../modal-overlay/modal-overlay';
+import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
 const ESC_KEYCODE = 27;
 
 export interface IModalProps {
-  header: string;
+  header?: string;
   onClose: () => void;
 }
 

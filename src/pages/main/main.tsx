@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { BurgerIngredients } from '../../components/burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
-import Modal from '../../components/modal/modal';
-import OrderDetails from '../../components/order-details/order-details';
+import { BurgerConstructor } from '../../components/burger-constructor/burger-constructor';
+import { Modal } from '../../components/modal/modal';
+import { OrderDetails } from '../../components/order-details/order-details';
 import { IngredientDetails } from '../../components/ingredient-details/ingredient-details';
 
 import Actions from '../../store/actions';

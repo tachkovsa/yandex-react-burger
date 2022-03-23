@@ -1,7 +1,7 @@
 import React, {
   FC, useCallback, useEffect, useState,
 } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import classNames from 'classnames';
@@ -22,7 +22,7 @@ interface IProtectedRouteProps {
   accessType: TRouterAccessTypes;
 }
 
-export const ProtectedRoute: FC<IProtectedRouteProps & { [key: string]: any }> = ({
+export const ProtectedRoute: FC<IProtectedRouteProps & RouteProps> = ({
   children,
   accessType = 'anonymous',
   ...rest

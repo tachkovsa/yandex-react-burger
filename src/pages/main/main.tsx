@@ -8,7 +8,7 @@ import { BurgerIngredients } from '../../components/burger-ingredients/burger-in
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 import Modal from '../../components/modal/modal';
 import OrderDetails from '../../components/order-details/order-details';
-import IngredientDetails from '../../components/ingredient-details/ingredient-details';
+import { IngredientDetails } from '../../components/ingredient-details/ingredient-details';
 
 import Actions from '../../store/actions';
 import commonStyles from '../common.module.css';

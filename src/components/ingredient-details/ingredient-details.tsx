@@ -4,18 +4,19 @@ import classNames from 'classnames';
 
 import { useHistory, useParams } from 'react-router-dom';
 import styles from './ingredient-details.module.css';
+import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 
-function IngredientDetails() {
+export function IngredientDetails() {
   const history = useHistory();
 
-  const { id } = useParams();
-  const [ingredient, setIngredient] = useState(null);
+  const { id } = useParams<{ id?: string }>();
+  const [ingredient, setIngredient] = useState<IIngredient | null>(null);
 
-  const { ingredients, loaded } = useSelector((state) => state.ingredients);
+  const { ingredients, loaded } = useSelector((state: any) => state.ingredients);
 
   useEffect(() => {
     if (loaded) {
-      const foundIngredient = ingredients.find((_ingredient) => _ingredient._id === id);
+      const foundIngredient = ingredients.find((_ingredient: IIngredient) => _ingredient._id === id) as IIngredient;
 
       if (!foundIngredient) {
         setIngredient(null);
@@ -54,5 +55,3 @@ function IngredientDetails() {
   </div>
   );
 }
-
-export default IngredientDetails;

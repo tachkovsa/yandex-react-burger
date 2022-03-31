@@ -5,7 +5,7 @@ export interface ICookieProps {
 
 export function setCookie(
   name: string,
-  value: string | number | boolean,
+  value: string | number | boolean | null,
   props: ICookieProps = {},
 ) {
   let exp = props.expires;
@@ -19,7 +19,7 @@ export function setCookie(
     props.expires = exp.toUTCString();
   }
 
-  value = encodeURIComponent(value);
+  value = value !== null ? encodeURIComponent(value) : null;
   let updatedCookie = `${name}=${value}`;
   for (const propName in props) {
     updatedCookie += `; ${propName}`;

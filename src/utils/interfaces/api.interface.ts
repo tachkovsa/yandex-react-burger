@@ -13,3 +13,9 @@ export interface ITokenResponse extends ICommonResponse {
 export interface IRegisterResponse extends ITokenResponse {
   user: IUser;
 }
+
+export interface ILoginResponse extends IRegisterResponse {}
+
+export interface IFetchUserInfoResponse extends ICommonResponse {
+  user: IUser;
+}

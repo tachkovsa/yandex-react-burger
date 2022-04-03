@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import Actions from '../../store/actions';
 import styles from './burger-constructor.module.css';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 import { objectHasKeys } from '../../utils/validation';
+import { changeConstructorIngredientPosition } from '../../store/actions/constructor-ingredients';
 
 interface IBurgerConstructorIngredientProps {
   index: number,
@@ -67,13 +67,12 @@ export const BurgerConstructorIngredient: FC<IBurgerConstructorIngredientProps> 
         return;
       }
 
-      dispatch({
-        type: Actions.CHANGE_CONSTRUCTOR_INGREDIENT_POSITION,
-        payload: {
+      dispatch(
+        changeConstructorIngredientPosition({
           whichIngredientDroppedId: definedItem.ingredient._uid,
           onWhichIngredientDroppedId: ingredient._uid,
-        },
-      });
+        }),
+      );
     },
   });
 

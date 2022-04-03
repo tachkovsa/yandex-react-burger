@@ -48,7 +48,7 @@ function App() {
       )}
       {ingredientsErrorText && (
         <div className={classNames(commonStyles.error, 'text', 'text_type_main-default')}>
-          При загрузке ингредиетов произошла ошибка... 😞
+          При загрузке ингредиентов произошла ошибка... 😞
           <span className={classNames('mt-2', 'text', 'text_type_main-default', 'text_color_inactive')}>{ingredientsErrorText}</span>
         </div>
       )}

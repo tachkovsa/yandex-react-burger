@@ -50,3 +50,5 @@ export const getIngredients = () => (dispatch) => {
     })
     .catch((err) => dispatch(getIngredientsError(err.toLocaleString())));
 };
+export const dragIngredient = () => ({ type: Actions.DRAG_INGREDIENT });
+export const dropIngredient = () => ({ type: Actions.DROP_INGREDIENT });

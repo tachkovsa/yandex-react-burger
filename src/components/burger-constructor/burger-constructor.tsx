@@ -11,12 +11,16 @@ import {
 import { useHistory } from 'react-router-dom';
 import { postOrder } from '../../store/actions/order';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient';
-import Actions from '../../store/actions';
 
 import styles from './burger-constructor.module.css';
 import 'simplebar/dist/simplebar.min.css';
 import { auth } from '../../services/auth';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
+import {
+  addBunToConstructor,
+  addIngredientToConstructor,
+  removeIngredientFromConstructor,
+} from '../../store/actions/constructor-ingredients';
 
 export function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -44,9 +48,9 @@ export function BurgerConstructor() {
 
   const onDropIngredient = (ingredient: IIngredient) => {
     if (ingredient.type === 'bun') {
-      dispatch({ type: Actions.ADD_BUN_TO_CONSTRUCTOR, payload: { _uid: uuidv4(), ...ingredient } });
+      dispatch(addBunToConstructor({ _uid: uuidv4(), ...ingredient }));
     } else {
-      dispatch({ type: Actions.ADD_INGREDIENT_TO_CONSTRUCTOR, payload: { _uid: uuidv4(), ...ingredient } });
+      dispatch(addIngredientToConstructor({ _uid: uuidv4(), ...ingredient }));
     }
   };
 
@@ -54,7 +58,7 @@ export function BurgerConstructor() {
     const target = e.target as Element;
 
     if (target.closest('.constructor-element__action')) {
-      dispatch({ type: Actions.REMOVE_INGREDIENT_FROM_CONSTRUCTOR, payload: uid });
+      dispatch(removeIngredientFromConstructor(uid));
     }
   };
 

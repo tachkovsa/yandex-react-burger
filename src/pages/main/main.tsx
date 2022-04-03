@@ -10,10 +10,11 @@ import { Modal } from '../../components/modal/modal';
 import { OrderDetails } from '../../components/order-details/order-details';
 import { IngredientDetails } from '../../components/ingredient-details/ingredient-details';
 
-import Actions from '../../store/actions';
 import commonStyles from '../common.module.css';
 import styles from './main.module.css';
 import { resetDetailedIngredient } from '../../store/actions/detailed-ingredient';
+import { resetConstructorIngredients } from '../../store/actions/constructor-ingredients';
+import { resetOrderNumber } from '../../store/actions/order';
 
 export function MainPage() {
   const dispatch = useDispatch();
@@ -25,8 +26,8 @@ export function MainPage() {
   const isLoading = useSelector((state: any) => state.ingredients.loading);
 
   const handleCloseOrderModal = () => {
-    dispatch({ type: Actions.RESET_CONSTRUCTOR_INGREDIENTS });
-    dispatch({ type: Actions.RESET_ORDER_NUMBER });
+    dispatch(resetConstructorIngredients());
+    dispatch(resetOrderNumber());
   };
   const handleCloseDetailedIngredientModal = () => dispatch(resetDetailedIngredient());
 

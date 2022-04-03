@@ -8,8 +8,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import classNames from 'classnames';
-import styles from './profile.module.css';
 import { patchUser } from '../../store/actions/auth';
+import styles from './profile.module.css';
 
 const PASSWORD_PLACEHOLDER_VALUE = '******';
 
@@ -68,7 +68,7 @@ export function Profile() {
     dispatch(patchUser({
       email: form.email,
       name: form.name,
-      password: form.password !== PASSWORD_PLACEHOLDER_VALUE ? form.password : null,
+      password: form.password !== PASSWORD_PLACEHOLDER_VALUE ? form.password : undefined,
     }));
   };
 

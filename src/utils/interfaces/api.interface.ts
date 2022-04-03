@@ -1,4 +1,5 @@
 import { IUser } from './user.interface';
+import { IIngredient } from './ingredient.interface';
 
 export interface ICommonResponse {
   success: boolean;
@@ -18,4 +19,8 @@ export interface ILoginResponse extends IRegisterResponse {}
 
 export interface IFetchUserInfoResponse extends ICommonResponse {
   user: IUser;
+}
+
+export interface IIngredientsResponse extends ICommonResponse {
+  data: IIngredient[];
 }

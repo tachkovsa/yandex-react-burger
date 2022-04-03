@@ -1,6 +1,16 @@
-import Actions from '../actions';
+import * as Actions from '../constants/ingredients';
+import { IIngredient } from '../../utils/interfaces/ingredient.interface';
+import { TIngredientsActionTypes } from '../actions/ingredients';
 
-const initialState = {
+export type TIngredientsState = {
+  loading: boolean | null;
+  loaded: boolean;
+  error: string | null;
+  ingredients: IIngredient[];
+  ingredientDragged: boolean
+};
+
+const initialState: TIngredientsState = {
   loading: null,
   loaded: false,
   error: null,
@@ -8,7 +18,10 @@ const initialState = {
   ingredientDragged: false,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+  state: TIngredientsState = initialState,
+  action: TIngredientsActionTypes,
+) => {
   switch (action.type) {
     case Actions.GET_INGREDIENTS:
       return {

@@ -1,6 +1,17 @@
-import Actions from '../actions';
+import * as Actions from '../constants/auth';
+import { IUser } from '../../utils/interfaces/user.interface';
+import { TAuthActionTypes } from '../actions/auth';
 
-const initialState = {
+export type TAuthState = {
+  user: IUser | null;
+  loading: boolean | null;
+  error: string | null;
+  tokenExpired: string | null;
+  resetPasswordCodeRequested: boolean;
+  resetPasswordCodeEmail: string | null;
+};
+
+const initialState: TAuthState = {
   user: null,
   loading: null,
   error: null,
@@ -9,7 +20,10 @@ const initialState = {
   resetPasswordCodeEmail: null,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (
+  state: TAuthState = initialState,
+  action: TAuthActionTypes,
+) => {
   switch (action.type) {
     case Actions.PATCH_USER_INFO:
       return {

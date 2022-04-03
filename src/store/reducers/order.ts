@@ -1,13 +1,24 @@
-import Actions from '../actions';
+import * as Actions from '../constants/order';
+import { TOrderActionTypes } from '../actions/order';
 
-const initialState = {
+export type TOrderState = {
+  loading: boolean;
+  error: string | null;
+  orderNumber: number | null;
+  burgerName: string | null;
+};
+
+const initialState: TOrderState = {
   loading: false,
   error: null,
   orderNumber: null,
   burgerName: null,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (
+  state: TOrderState = initialState,
+  action: TOrderActionTypes,
+) => {
   switch (action.type) {
     case Actions.POST_ORDER:
       return {

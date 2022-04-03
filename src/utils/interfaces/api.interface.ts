@@ -24,3 +24,10 @@ export interface IFetchUserInfoResponse extends ICommonResponse {
 export interface IIngredientsResponse extends ICommonResponse {
   data: IIngredient[];
 }
+
+export interface IPostOrderResponse extends ICommonResponse {
+  order: {
+    number: number;
+    name: string;
+  }
+}

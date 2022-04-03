@@ -1,0 +1,55 @@
+import { request } from '../../services/api';
+import { objectHasKeys } from '../../utils/validation';
+import { IPostOrderResponse } from '../../utils/interfaces/api.interface';
+import { IOrder } from '../../utils/interfaces/order.interface';
+import * as Actions from '../constants/order';
+
+export interface TPostOrder {
+  readonly type: typeof Actions.POST_ORDER;
+}
+export interface TPostOrderSuccess {
+  readonly type: typeof Actions.POST_ORDER_SUCCESS;
+  readonly payload: IOrder;
+}
+export interface TPostOrderError {
+  readonly type: typeof Actions.POST_ORDER_ERROR;
+  readonly payload: string;
+}
+
+export interface TResetOrderNumber {
+  readonly type: typeof Actions.RESET_ORDER_NUMBER;
+}
+
+export type TOrderActionTypes =
+    | TPostOrder | TPostOrderSuccess | TPostOrderError
+    | TResetOrderNumber;
+
+type TPostOrderParams = { orderNumber: number, burgerName: string };
+export const postOrderSuccess = ({ orderNumber, burgerName }: TPostOrderParams) => ({ type: Actions.POST_ORDER_SUCCESS, payload: { orderNumber, burgerName } });
+export const postOrderError = (error: string) => ({ type: Actions.POST_ORDER_ERROR, payload: error });
+export const postOrder = (ingredients: string[]) => (dispatch) => {
+  dispatch({ type: Actions.POST_ORDER });
+
+  request({
+    url: 'orders',
+    method: 'POST',
+    body: JSON.stringify({ ingredients }),
+  })
+    .then((parsedResponse) => {
+      if (objectHasKeys(parsedResponse, ['order'])) {
+        const { order } = parsedResponse as IPostOrderResponse;
+        if (objectHasKeys(order, ['number', 'name'])) {
+          const { number, name } = order;
+
+          dispatch(postOrderSuccess({ orderNumber: number, burgerName: name }));
+
+          return;
+        }
+      }
+
+      return Promise.reject(new Error('Unknown response'));
+    })
+    .catch((err) => dispatch(postOrderError(err.toLocaleString())));
+};
+
+export const resetOrederNumber = () => ({ type: Actions.RESET_ORDER_NUMBER });

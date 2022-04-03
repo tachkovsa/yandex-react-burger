@@ -21,26 +21,27 @@ import {
   addIngredientToConstructor,
   removeIngredientFromConstructor,
 } from '../../store/actions/constructor-ingredients';
+import { TRootState } from '../../utils/types';
 
 export function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { accessToken, refreshToken } = auth();
 
-  const { ingredientDragged } = useSelector((state: any) => state.ingredients);
-  const { basket } = useSelector((state: any) => state.constructorIngredients);
-  const isWaitingForOrderNumber = useSelector((state: any) => state.order.loading);
+  const { ingredientDragged } = useSelector((state: TRootState) => state.ingredients);
+  const { basket } = useSelector((state: TRootState) => state.constructorIngredients);
+  const isWaitingForOrderNumber = useSelector((state: TRootState) => state.order.loading);
 
-  const totalPrice = useSelector((state: any) => (state.constructorIngredients.basket.length > 0
+  const totalPrice = useSelector((state: TRootState) => (state.constructorIngredients.basket.length > 0
     ? state.constructorIngredients.basket
       .map((ingredient) => ingredient.price * (ingredient.type === 'bun' ? 2 : 1))
       .reduce((acc, price) => acc + price)
     : 0));
 
-  const burgerBun = useSelector((state: any) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
-  const burgerStuffing = useSelector((state: any) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
+  const burgerBun = useSelector((state: TRootState) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
+  const burgerStuffing = useSelector((state: TRootState) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
 
-  const isReadyForOrder = useCallback((): boolean => (
+  const isReadyForOrder = useCallback((): boolean => !!(
     basket.find((ingredient) => ingredient.type === 'bun')
       && basket.find((ingredient) => ingredient.type !== 'bun')
       && !isWaitingForOrderNumber

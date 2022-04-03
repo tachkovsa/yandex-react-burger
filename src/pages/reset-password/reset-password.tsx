@@ -8,12 +8,13 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import commonStyles from '../common.module.css';
 import styles from './reset-password.module.css';
 import { resetPassword } from '../../store/actions/auth';
+import { TRootState } from '../../utils/types';
 
 export function ResetPasswordPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const email = useSelector((state: any) => state.auth.resetPasswordCodeEmail);
+  const email = useSelector((state: TRootState) => state.auth.resetPasswordCodeEmail);
 
   const [token, setToken] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -27,7 +28,9 @@ export function ResetPasswordPage() {
   const onSubmitResetPasswordForm = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(resetPassword({ email, password, token }));
+    if (email !== null) {
+      dispatch(resetPassword({ email, password, token }));
+    }
   };
 
   return (

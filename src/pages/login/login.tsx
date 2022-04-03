@@ -11,6 +11,7 @@ import { validateEmail } from '../../utils/validation';
 import commonStyles from '../common.module.css';
 import styles from './login.module.css';
 import { loginUser } from '../../store/actions/auth';
+import { TRootState } from '../../utils/types';
 
 export function LoginPage() {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export function LoginPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const { loading, error } = useSelector((state: any) => state.auth);
+  const { loading, error } = useSelector((state: TRootState) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
   const isFormValid = useCallback(() => isEmailValid() && password !== '', [isEmailValid, password]);
@@ -42,7 +43,7 @@ export function LoginPage() {
               placeholder="Укажите e-mail"
               error={email !== '' && !isEmailValid()}
               errorText="Введён некорректный email"
-              disabled={loading}
+              disabled={!!loading}
               success={isEmailValid()}
             />
           </div>
@@ -57,7 +58,7 @@ export function LoginPage() {
           </div>
           <div className="text_align_center">
             {error && <p className="text text_type_main-default text_color_inactive text_color_error mb-6">{error}</p>}
-            <Button type="primary" size="large" disabled={!isFormValid() || loading}>
+            <Button type="primary" size="large" disabled={!isFormValid() || !!loading}>
               Войти
             </Button>
           </div>

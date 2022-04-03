@@ -5,8 +5,8 @@ import { TAuthActionTypes } from '../actions/auth';
 export type TAuthState = {
   user: IUser | null;
   loading: boolean | null;
-  error: string | null;
-  tokenExpired: string | null;
+  error: string | boolean | null;
+  tokenExpired: boolean | null;
   resetPasswordCodeRequested: boolean;
   resetPasswordCodeEmail: string | null;
 };
@@ -23,7 +23,7 @@ const initialState: TAuthState = {
 export const authReducer = (
   state: TAuthState = initialState,
   action: TAuthActionTypes,
-) => {
+): TAuthState => {
   switch (action.type) {
     case Actions.PATCH_USER_INFO:
       return {

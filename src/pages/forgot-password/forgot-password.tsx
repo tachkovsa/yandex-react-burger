@@ -10,6 +10,7 @@ import { validateEmail } from '../../utils/validation';
 
 import commonStyles from '../common.module.css';
 import styles from './forgot-password.module.css';
+import { TRootState } from '../../utils/types';
 
 // TODO: Add error handler
 export function ForgotPasswordPage() {
@@ -17,7 +18,7 @@ export function ForgotPasswordPage() {
   const history = useHistory();
 
   const [email, setEmail] = useState('');
-  const { loading, resetPasswordCodeRequested } = useSelector((state: any) => state.auth);
+  const { loading, resetPasswordCodeRequested } = useSelector((state: TRootState) => state.auth);
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
   const restorePassword = (e: React.FormEvent) => {
@@ -50,7 +51,7 @@ export function ForgotPasswordPage() {
               placeholder="Укажите e-mail"
               error={email !== '' && !isEmailValid()}
               errorText="Введён некорректный email"
-              disabled={loading}
+              disabled={!!loading}
               success={isEmailValid()}
             />
           </div>
@@ -58,7 +59,7 @@ export function ForgotPasswordPage() {
             <Button
               type="primary"
               size="large"
-              disabled={loading || !isEmailValid()}
+              disabled={!!loading || !isEmailValid()}
             >
               Восстановить
             </Button>

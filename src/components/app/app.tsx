@@ -7,16 +7,17 @@ import { Routes } from '../../routes';
 import { getIngredients } from '../../store/actions/ingredients';
 
 import commonStyles from '../../pages/common.module.css';
+import { TRootState } from '../../utils/types';
 
 function App() {
   const dispatch = useDispatch();
 
   const [loadingText, setLoadingText] = useState('');
 
-  const isLoading = useSelector((state: any) => state.ingredients.loading);
-  const isLoaded = useSelector((state: any) => state.ingredients.loaded);
-  const ingredientsErrorText = useSelector((state: any) => state.ingredients.error);
-  const orderErrorText = useSelector((state: any) => state.order.error);
+  const isLoading = useSelector((state: TRootState) => state.ingredients.loading);
+  const isLoaded = useSelector((state: TRootState) => state.ingredients.loaded);
+  const ingredientsErrorText = useSelector((state: TRootState) => state.ingredients.error);
+  const orderErrorText = useSelector((state: TRootState) => state.order.error);
 
   const hasError = useCallback(
     () => ingredientsErrorText || orderErrorText,

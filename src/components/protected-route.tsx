@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { auth } from '../services/auth';
 import { fetchUser } from '../store/actions/auth';
+import { TRootState } from '../utils/types';
+
 import commonStyles from '../pages/common.module.css';
 
 export type TRouterAccessTypes = 'anonymous' | 'authorized' | 'unauthorized';
@@ -29,7 +31,7 @@ export const ProtectedRoute: FC<IProtectedRouteProps & RouteProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state: any) => state.auth);
+  const { user, loading } = useSelector((state: TRootState) => state.auth);
   const { accessToken, refreshToken } = auth();
 
   const [loadingText, setLoadingText] = useState<string>('Проверяем авторизацию...');

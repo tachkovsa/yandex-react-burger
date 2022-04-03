@@ -10,19 +10,20 @@ import {
 import classNames from 'classnames';
 import { patchUser } from '../../store/actions/auth';
 import styles from './profile.module.css';
+import { TRootState } from '../../utils/types';
 
 const PASSWORD_PLACEHOLDER_VALUE = '******';
 
 export function Profile() {
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state: any) => state.auth);
+  const { user, loading } = useSelector((state: TRootState) => state.auth);
 
   const [form, setForm] = useState<{
-    email: string,
-    name: string,
-    password: string
-  }>({ email: user.email, name: user.name, password: PASSWORD_PLACEHOLDER_VALUE });
+    email?: string,
+    name?: string,
+    password?: string
+  }>({ email: user?.email, name: user?.name, password: PASSWORD_PLACEHOLDER_VALUE });
   const [isDirty, setIsDirty] = useState<boolean>(false);
 
   const inputNameRef = useRef<HTMLInputElement>(null);
@@ -74,7 +75,7 @@ export function Profile() {
 
   const onCancelForm = () => {
     setIsDirty(false);
-    setForm({ email: user.email, name: user.name, password: PASSWORD_PLACEHOLDER_VALUE });
+    setForm({ email: user?.email, name: user?.name, password: PASSWORD_PLACEHOLDER_VALUE });
   };
 
   useEffect(() => {
@@ -97,7 +98,7 @@ export function Profile() {
       >
         <div className={classNames(styles.formInput)}>
           <Input
-            value={form.name}
+            value={form.name || ''}
             icon="EditIcon"
             name="name"
             placeholder="Имя"
@@ -109,11 +110,11 @@ export function Profile() {
           />
         </div>
         <div className={classNames('mt-6', styles.formInput)}>
-          <EmailInput value={form.email} name="email" onChange={onChangeFormValue} />
+          <EmailInput value={form.email || ''} name="email" onChange={onChangeFormValue} />
         </div>
         <div className={classNames('mt-6', styles.formInput)}>
           <Input
-            value={form.password}
+            value={form.password || PASSWORD_PLACEHOLDER_VALUE}
             type="password"
             icon="EditIcon"
             name="password"
@@ -129,11 +130,11 @@ export function Profile() {
       </form>
       {isDirty && (
       <div className={classNames(styles.actions, 'mt-10')}>
-        <Button type="primary" size="small" disabled={!isDirty || loading} onClick={onSubmitForm}>
+        <Button type="primary" size="small" disabled={!isDirty || !!loading} onClick={onSubmitForm}>
           Сохранить
         </Button>
         <div className="mt-4" />
-        <Button type="secondary" size="small" disabled={loading} onClick={onCancelForm}>
+        <Button type="secondary" size="small" disabled={!!loading} onClick={onCancelForm}>
           Отменить изменения
         </Button>
       </div>

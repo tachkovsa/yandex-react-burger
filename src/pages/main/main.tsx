@@ -9,21 +9,22 @@ import { BurgerConstructor } from '../../components/burger-constructor/burger-co
 import { Modal } from '../../components/modal/modal';
 import { OrderDetails } from '../../components/order-details/order-details';
 import { IngredientDetails } from '../../components/ingredient-details/ingredient-details';
-
-import commonStyles from '../common.module.css';
-import styles from './main.module.css';
 import { resetDetailedIngredient } from '../../store/actions/detailed-ingredient';
 import { resetConstructorIngredients } from '../../store/actions/constructor-ingredients';
 import { resetOrderNumber } from '../../store/actions/order';
+import { TRootState } from '../../utils/types';
+
+import commonStyles from '../common.module.css';
+import styles from './main.module.css';
 
 export function MainPage() {
   const dispatch = useDispatch();
 
-  const orderNumber = useSelector((state: any) => state.order.orderNumber);
-  const detailedIngredient = useSelector((state: any) => state.currentIngredient.detailedIngredient);
+  const orderNumber = useSelector((state: TRootState) => state.order.orderNumber);
+  const detailedIngredient = useSelector((state: TRootState) => state.detailedIngredient.detailedIngredient);
 
-  const ingredients = useSelector((state: any) => state.ingredients.ingredients);
-  const isLoading = useSelector((state: any) => state.ingredients.loading);
+  const ingredients = useSelector((state: TRootState) => state.ingredients.ingredients);
+  const isLoading = useSelector((state: TRootState) => state.ingredients.loading);
 
   const handleCloseOrderModal = () => {
     dispatch(resetConstructorIngredients());

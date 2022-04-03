@@ -11,6 +11,7 @@ import { registerUser } from '../../store/actions/auth';
 
 import commonStyles from '../common.module.css';
 import styles from './register.module.css';
+import { TRootState } from '../../utils/types';
 
 export function RegisterPage() {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export function RegisterPage() {
   const [password, setPassword] = useState<string>('');
   const [name, setName] = useState<string>('');
 
-  const { loading, error } = useSelector((state: any) => state.auth);
+  const { loading, error } = useSelector((state: TRootState) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
@@ -49,8 +50,8 @@ export function RegisterPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               error={!!error || (email !== '' && !isEmailValid())}
-              errorText={error || 'Введён некорректный email'}
-              disabled={loading}
+              errorText={typeof error === 'string' ? error : 'Введён некорректный email'}
+              disabled={!!loading}
               success={isEmailValid()}
             />
           </div>
@@ -63,7 +64,7 @@ export function RegisterPage() {
             />
           </div>
           <div className="text_align_center">
-            <Button type="primary" size="large" disabled={loading}>
+            <Button type="primary" size="large" disabled={!!loading}>
               Зарегистрироваться
             </Button>
           </div>

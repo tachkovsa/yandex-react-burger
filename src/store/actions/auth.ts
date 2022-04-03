@@ -176,7 +176,7 @@ export const loginUser = ({ email, password }: TLoginUserParams) => (dispatch) =
     .catch((err) => dispatch(loginUserError(err.toLocaleString())));
 };
 
-type TPatchUserInfoParams = { email: string, name: string, password?: string };
+type TPatchUserInfoParams = { email?: string, name?: string, password?: string };
 export const patchUserInfoSuccess = (user: IUser) => ({ type: Actions.PATCH_USER_INFO_SUCCESS, payload: user });
 export const patchUserInfoError = (error: string) => ({ type: Actions.PATCH_USER_INFO_ERROR, payload: error });
 export const patchUser = ({ name, email, password }: TPatchUserInfoParams) => (dispatch) => {

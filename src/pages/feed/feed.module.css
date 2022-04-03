@@ -1,0 +1,22 @@
+.feedPage {
+    flex-direction: column;
+}
+
+.neighboringBlocks {
+    display: flex;
+}
+
+.neighboringBlocks > * {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.doneOrdersList,
+.inProgressOrdersList {
+    padding: 0;
+    list-style: none;
+}
+
+.doneOrder {
+    color: var(--text-success);
+}

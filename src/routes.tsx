@@ -10,6 +10,7 @@ import { IExpandedLocation, ProtectedRoute } from './components/protected-route'
 import { Modal } from './components/modal/modal';
 import { IngredientDetails } from './components/ingredient-details/ingredient-details';
 import { objectHasKeys } from './utils/validation';
+import { FeedPage } from './pages/feed';
 
 export function Routes() {
   const history = useHistory();
@@ -25,6 +26,8 @@ export function Routes() {
       <Switch location={switchLocation}>
         {/* Главная страница, конструктор бургеров */}
         <Route exact path="/" component={MainPage} />
+        {/* Страница ленты заказов */}
+        <Route exact path="/feed" component={FeedPage} />
         {/* Страница авторизации */}
         <ProtectedRoute exact path="/login" accessType="unauthorized">
           <LoginPage />

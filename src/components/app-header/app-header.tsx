@@ -14,7 +14,7 @@ export function AppHeader() {
   const location = useLocation();
 
   const matchedMain = matchPath(location.pathname, { path: '/', exact: true });
-  const matchedOrders = matchPath(location.pathname, { path: '/orders', exact: true });
+  const matchedFeed = matchPath(location.pathname, { path: '/feed', exact: true });
   const matchedProfile = matchPath(location.pathname, { path: '/profile' });
 
   return (
@@ -34,9 +34,9 @@ export function AppHeader() {
           <NavLink
             className={classNames(styles.menuBtn, 'pt-4 pr-5 pb-4 pl-5')}
             activeClassName={styles.menuBtnActive}
-            to="/orders"
+            to="/feed"
           >
-            <ListIcon type={matchedOrders ? 'primary' : 'secondary'} />
+            <ListIcon type={matchedFeed ? 'primary' : 'secondary'} />
             <span className={classNames('text', 'text_type_main-default', 'ml-2')}>Лист заказов</span>
           </NavLink>
         </div>

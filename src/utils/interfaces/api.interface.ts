@@ -1,5 +1,6 @@
 import { IUser } from './user.interface';
 import { IIngredient } from './ingredient.interface';
+import { IOrderDetails } from './order.interface';
 
 export interface ICommonResponse {
   success: boolean;
@@ -30,4 +31,10 @@ export interface IPostOrderResponse extends ICommonResponse {
     number: number;
     name: string;
   }
+}
+
+export interface IWSOrdersMessage extends ICommonResponse {
+  orders: IOrderDetails[];
+  total: number;
+  totalToday: number;
 }

@@ -4,25 +4,25 @@ import { IPostOrderResponse } from '../../utils/interfaces/api.interface';
 import { IOrder } from '../../utils/interfaces/order.interface';
 import * as Actions from '../constants/order';
 
-export interface TPostOrder {
+export interface IPostOrder {
   readonly type: typeof Actions.POST_ORDER;
 }
-export interface TPostOrderSuccess {
+export interface IPostOrderSuccess {
   readonly type: typeof Actions.POST_ORDER_SUCCESS;
   readonly payload: IOrder;
 }
-export interface TPostOrderError {
+export interface IPostOrderError {
   readonly type: typeof Actions.POST_ORDER_ERROR;
   readonly payload: string;
 }
 
-export interface TResetOrderNumber {
+export interface IResetOrderNumber {
   readonly type: typeof Actions.RESET_ORDER_NUMBER;
 }
 
 export type TOrderActionTypes =
-    | TPostOrder | TPostOrderSuccess | TPostOrderError
-    | TResetOrderNumber;
+    | IPostOrder | IPostOrderSuccess | IPostOrderError
+    | IResetOrderNumber;
 
 type TPostOrderParams = { orderNumber: number, burgerName: string };
 export const postOrderSuccess = ({ orderNumber, burgerName }: TPostOrderParams) => ({ type: Actions.POST_ORDER_SUCCESS, payload: { orderNumber, burgerName } });

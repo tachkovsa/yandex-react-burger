@@ -13,6 +13,7 @@ import { IngredientDetails } from '../../components/ingredient-details/ingredien
 import Actions from '../../store/actions';
 import commonStyles from '../common.module.css';
 import styles from './main.module.css';
+import { resetDetailedIngredient } from '../../store/actions/detailed-ingredient';
 
 export function MainPage() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export function MainPage() {
     dispatch({ type: Actions.RESET_CONSTRUCTOR_INGREDIENTS });
     dispatch({ type: Actions.RESET_ORDER_NUMBER });
   };
-  const handleCloseDetailedIngredientModal = () => dispatch({ type: Actions.RESET_DETAILED_INGREDIENT });
+  const handleCloseDetailedIngredientModal = () => dispatch(resetDetailedIngredient());
 
   return (
     <>

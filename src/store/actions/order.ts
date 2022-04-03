@@ -52,4 +52,4 @@ export const postOrder = (ingredients: string[]) => (dispatch) => {
     .catch((err) => dispatch(postOrderError(err.toLocaleString())));
 };
 
-export const resetOrederNumber = () => ({ type: Actions.RESET_ORDER_NUMBER });
+export const resetOrderNumber = () => ({ type: Actions.RESET_ORDER_NUMBER });

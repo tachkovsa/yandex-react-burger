@@ -1,10 +1,19 @@
-import Actions from '../actions';
+import * as Actions from '../constants/constructor-ingredients';
+import { IConstructorIngredient } from '../../utils/interfaces/constructor-ingredients.interface';
+import { TConstructorIngredientsActionTypes } from '../actions/constructor-ingredients';
 
-const initialState = {
+export type TConstructorIngredientsState = {
+  basket: IConstructorIngredient[];
+};
+
+const initialState: TConstructorIngredientsState = {
   basket: [],
 };
 
-export const constructorIngredientsReducer = (state = initialState, action) => {
+export const constructorIngredientsReducer = (
+  state:TConstructorIngredientsState = initialState,
+  action: TConstructorIngredientsActionTypes,
+) => {
   switch (action.type) {
     case Actions.ADD_BUN_TO_CONSTRUCTOR: {
       const bunIndex = state.basket.findIndex((b) => b.type === 'bun');

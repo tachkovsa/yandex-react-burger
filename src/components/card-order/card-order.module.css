@@ -1,0 +1,106 @@
+.cardOrder {
+    background-color: var(--i-modal-bg);
+    border-radius: calc(var(--offset-base-size) * 10);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04),
+                0 0 2px rgba(0, 0, 0, 0.06),
+                0 0 1px rgba(0, 0, 0, 0.04);
+    padding: calc(var(--offset-base-size) * 6);
+    transition: all ease-in-out 0.15s;
+}
+.cardOrder:not(:last-child) {
+    margin-bottom: calc(var(--offset-base-size) * 4);
+}
+.cardOrder:hover {
+    cursor: pointer;
+    box-shadow: 0 0 8px 4px rgb(51 51 255 / 25%),
+                0 0 4px 4px rgb(51 51 255 / 25%);
+}
+
+.header {
+    display: flex;
+}
+
+.createDate {
+    margin-left: auto;
+}
+
+
+.footer {
+    display: flex;
+    align-items: center;
+}
+
+.ingredientsPreview {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    max-width: 436px;
+    width: 436px;
+    list-style: none;
+    padding: 0;
+}
+
+.ingredientPreview {
+    cursor: pointer;
+}
+
+.ingredientPreviewImage {
+    background-position: center;
+    background-size: cover;
+    width: 58px;
+    height: 58px;
+    border-radius: 100%;
+    background-color: #131316;
+}
+
+.ingredientPreviewImageTranslucent {
+    opacity: 0.6;
+}
+
+.ingredientPreviewOverflow {
+    position: absolute;
+}
+
+.ingredientPreview {
+    /* This property is not working in Chrome, but has working in Figma - idk why? */
+    /* border-image-source: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%); */
+    /* Workaround in the next line */
+    background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
+}
+
+.ingredientPreview:nth-child(1) {
+    z-index: 10;
+}
+.ingredientPreview:nth-child(2) {
+    z-index: 9;
+    transform: translateX(calc(-16px));
+}
+.ingredientPreview:nth-child(3) {
+    z-index: 8;
+    transform: translateX(calc(-16px * 2));
+}
+.ingredientPreview:nth-child(4) {
+    z-index: 7;
+    transform: translateX(calc(-16px * 3));
+}
+.ingredientPreview:nth-child(5) {
+    z-index: 6;
+    transform: translateX(calc(-16px * 4));
+}
+.ingredientPreview:nth-child(6) {
+    z-index: 5;
+    transform: translateX(calc(-16px * 5));
+}
+
+.orderPrice {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}

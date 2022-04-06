@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { SECONDS_IN_DAY } from './constants';
 
 export const digitDecl = (digit: number, declensions: [string, string, string]) => {
@@ -29,25 +31,29 @@ export const daysBetweenDates = (firstDate: Date, secondDate: Date) => {
 export const humanizationDate = (dateUTC: string) => {
   const now = new Date();
   const processedUTCDate = new Date(dateUTC);
+  const dayJsDate = dayjs(processedUTCDate);
+  const processedUTCTime = dayJsDate.format('HH:mm');
   const normalizedNowDate = new Date(now.setUTCHours(0, 0, 0));
+  const timeZone = dayJsDate.format('Z');
+  const gmtValue = `i-GMT${timeZone[0]}${parseInt(timeZone.slice(1, 3), 10)}`;
 
   const datesDifference = daysBetweenDates(normalizedNowDate, processedUTCDate);
   if (datesDifference === 1) {
-    return `Сегодня, ${processedUTCDate.toLocaleTimeString()}`;
+    return `Сегодня, ${processedUTCTime} ${gmtValue}`;
   }
 
   if (datesDifference === 2) {
-    return `Вчера, ${processedUTCDate.toLocaleTimeString()}`;
+    return `Вчера, ${processedUTCTime} ${gmtValue}`;
   }
 
   if (datesDifference === 3) {
-    return `Позавчера, ${processedUTCDate.toLocaleTimeString()}`;
+    return `Позавчера, ${processedUTCTime} ${gmtValue}`;
   }
 
   if (datesDifference <= 6) {
     const normalizedDays = (datesDifference - 1);
-    return `${normalizedDays} ${digitDecl(normalizedDays, ['день', 'дня', 'дней'])} назад, ${processedUTCDate.toLocaleTimeString()}`;
+    return `${normalizedDays} ${digitDecl(normalizedDays, ['день', 'дня', 'дней'])} назад, ${processedUTCTime} ${gmtValue}`;
   }
 
-  return `${processedUTCDate.toLocaleDateString()} ${processedUTCDate.toLocaleTimeString()}`;
+  return `${dayJsDate.format('DD.MM.YYYY')} ${processedUTCTime} ${gmtValue}`;
 };

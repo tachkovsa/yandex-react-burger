@@ -11,6 +11,12 @@
     flex-shrink: 0;
 }
 
+.feed {
+    height: calc(100vh - var(--header-height) - 120px);
+    padding: 8px 16px 8px 8px;
+    flex-basis: 584px;
+}
+
 .doneOrdersList,
 .inProgressOrdersList {
     padding: 0;

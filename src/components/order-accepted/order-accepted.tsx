@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 
-import styles from './order-details.module.css';
+import styles from './order-accepted.module.css';
 import doneImg from '../../images/done.svg';
 
-interface IOrderDetailsProps {
+interface IOrderAcceptedProps {
   orderNumber: number;
 }
 
-export const OrderDetails: FC<IOrderDetailsProps> = ({ orderNumber }) => (
+export const OrderAccepted: FC<IOrderAcceptedProps> = ({ orderNumber }) => (
   <div className={styles.modal}>
     <div className={classNames(styles.orderNumber, 'mb-8', 'text', 'text_type_digits-large')}>
       {orderNumber}

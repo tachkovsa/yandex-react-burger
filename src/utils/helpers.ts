@@ -57,3 +57,38 @@ export const humanizationDate = (dateUTC: string) => {
 
   return `${dayJsDate.format('DD.MM.YYYY')} ${processedUTCTime} ${gmtValue}`;
 };
+
+export const humanizationOrderStatus = (status: string) => {
+  switch (status) {
+    case 'done':
+      return {
+        status,
+        name: 'Выполнен',
+        fontClass: 'text_color_success',
+      };
+    case 'created':
+      return {
+        status,
+        name: 'Создан',
+        fontClass: '',
+      };
+    case 'pending':
+      return {
+        status,
+        name: 'Готовится',
+        fontClass: '',
+      };
+    case 'canceled':
+      return {
+        status,
+        name: 'Отменен',
+        fontClass: 'text_color_error',
+      };
+    default:
+      return {
+        status,
+        name: 'Не определен',
+        fontClass: 'text_color_error',
+      };
+  }
+};

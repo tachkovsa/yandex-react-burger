@@ -21,6 +21,7 @@
 .inProgressOrdersList {
     padding: 0;
     list-style: none;
+    height: 152px;
 }
 
 .doneOrder {

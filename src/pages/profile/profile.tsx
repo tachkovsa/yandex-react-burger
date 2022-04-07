@@ -7,12 +7,13 @@ import { useDispatch } from 'react-redux';
 
 import classNames from 'classnames';
 
-import { wsConnect } from '../../store/actions/websockets';
+import { wsConnect, wsDisconnect } from '../../store/actions/websockets';
 import { Profile } from '../../components/profile/profile';
 import { MyOrders } from '../../components/my-orders';
 
 import commonStyles from '../common.module.css';
 import styles from './profile.module.css';
+import { setType } from '../../store/actions/feed';
 
 export function ProfilePage() {
   const dispatch = useDispatch();
@@ -21,7 +22,12 @@ export function ProfilePage() {
   const matchedOrders = matchPath(location.pathname, { path: '/profile/orders', exact: true });
 
   useEffect(() => {
-    dispatch(wsConnect('my'));
+    dispatch(setType('my'));
+    dispatch(wsConnect());
+
+    return () => {
+      dispatch(wsDisconnect());
+    };
   }, [dispatch]);
 
   return (

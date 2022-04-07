@@ -1,6 +1,10 @@
 .profile {
+    /* TODO: Need ref... :-( */
+    --profile-height: calc(100vh - calc(var(--header-height) - (var(--offset-base-size) * 30)) - 256px);
+
     display: flex;
     margin-top: calc(var(--offset-base-size) * 30);
+    height: var(--profile-height);
 }
 
 .navigation {
@@ -38,4 +42,5 @@
 .content {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 }

@@ -16,7 +16,8 @@ export type TRouterAccessTypes = 'anonymous' | 'authorized' | 'unauthorized';
 export interface IExpandedLocation extends Location {
   state: {
     from?: Location,
-    ingredientModal?: Location
+    ingredientModal?: Location,
+    feedModal?: Location
   }
 }
 

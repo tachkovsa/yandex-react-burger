@@ -4,3 +4,5 @@ export const AUTH_TOKEN_ALIVE_TIME: number = (20 * 60) * 1000;
 
 export const SECONDS_IN_HOUR = 3600;
 export const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24;
+
+export const MAX_ORDERS_ON_FEED_PAGE = 10;

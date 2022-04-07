@@ -84,7 +84,7 @@ export const OrderDetails: FC = () => {
           </p>
           <SimpleBar className={classNames(styles.ingredients, 'mt-6')}>
             {orderIngredients.map((ingredient) => (
-              <div className={classNames(styles.ingredient)}>
+              <div className={classNames(styles.ingredient)} key={ingredient._id}>
                 <div className={classNames(styles.ingredientPreview, 'mr-4')}>
                   <div
                     className={classNames(styles.ingredientPreviewImage)}

@@ -36,7 +36,14 @@ export const CardOrder: FC<CardOrderProps> = ({
     [orderIngredients],
   );
 
-  const openOrderDetails = () => history.push(`${location.pathname}/${orderDetails._id}`);
+  const openOrderDetails = useCallback(() => {
+    const { _id: id } = orderDetails;
+
+    history.push({
+      pathname: `${location.pathname}/${id}`,
+      state: { feedModal: location },
+    });
+  }, [history, location, orderDetails]);
 
   const orderStatus = useMemo(() => {
     const { status } = orderDetails;

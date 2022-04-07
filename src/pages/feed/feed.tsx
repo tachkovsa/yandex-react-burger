@@ -39,7 +39,7 @@ export const FeedPage: FC = () => {
       <div className={classNames(styles.neighboringBlocks, 'mt-5')}>
         <SimpleBar className={classNames(styles.feed)}>
           {allOrders && allOrders.map((order: IOrderDetails) => (
-            <CardOrder orderDetails={order} />
+            <CardOrder orderDetails={order} key={order._id} />
           ))}
         </SimpleBar>
         <section className={classNames(styles.dashboard, 'ml-15')}>

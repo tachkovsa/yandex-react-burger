@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
@@ -9,8 +10,11 @@ import { CardOrder } from '../../components/card-order';
 import 'simplebar/dist/simplebar.min.css';
 import styles from './feed.module.css';
 import commonStyles from '../common.module.css';
+import { wsConnect } from '../../store/actions/websockets';
 
 export const FeedPage: FC = () => {
+  const dispatch = useDispatch();
+
   const doneOrders = ['034533', '034532', '034530', '034527', '034525'];
   const inProgressOrders = ['034538', '034541', '034542'];
   // TODO: Add helper and change type to number
@@ -196,8 +200,8 @@ export const FeedPage: FC = () => {
   ];
 
   useEffect(() => {
-    console.log('ready');
-  }, []);
+    dispatch(wsConnect('all'));
+  }, [dispatch]);
 
   return (
     <div className={classNames(commonStyles.content, styles.feedPage)}>

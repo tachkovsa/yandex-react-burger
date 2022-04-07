@@ -4,13 +4,13 @@ import { constructorIngredientsReducer } from './constructor-ingredients';
 import { detailedIngredientReducer } from './detailed-ingredient';
 import { orderReducer } from './order';
 import { authReducer } from './auth';
+import { websocketsReducer } from './websockets';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   constructorIngredients: constructorIngredientsReducer,
   detailedIngredient: detailedIngredientReducer,
   order: orderReducer,
   auth: authReducer,
+  websockets: websocketsReducer,
 });
-
-export default rootReducer;

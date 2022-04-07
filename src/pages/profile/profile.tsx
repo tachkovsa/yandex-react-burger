@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   matchPath, NavLink, Route, Switch, useLocation,
 } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import classNames from 'classnames';
-import commonStyles from '../common.module.css';
-import styles from './profile.module.css';
+
+import { wsConnect } from '../../store/actions/websockets';
 import { Profile } from '../../components/profile/profile';
 import { MyOrders } from '../../components/my-orders';
 
+import commonStyles from '../common.module.css';
+import styles from './profile.module.css';
+
 export function ProfilePage() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const matchedProfile = matchPath(location.pathname, { path: '/profile', exact: true });
   const matchedOrders = matchPath(location.pathname, { path: '/profile/orders', exact: true });
+
+  useEffect(() => {
+    dispatch(wsConnect('my'));
+  }, [dispatch]);
 
   return (
     <div className={classNames(commonStyles.content, styles.profile)}>

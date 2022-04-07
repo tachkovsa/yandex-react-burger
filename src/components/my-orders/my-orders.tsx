@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
@@ -186,11 +186,6 @@ export const MyOrders: FC = () => {
       updatedAt: '2021-06-23T14:43:22.603Z',
     },
   ], []);
-
-  useEffect(() => {
-    const { length } = ordersFeed;
-    console.log('my-orders ', length);
-  }, [ordersFeed]);
 
   return (
     <SimpleBar className={classNames(styles.feed)}>

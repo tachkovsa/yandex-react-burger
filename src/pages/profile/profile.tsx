@@ -1,34 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {
   matchPath, NavLink, Route, Switch, useLocation,
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import classNames from 'classnames';
 
-import { wsConnect, wsDisconnect } from '../../store/actions/websockets';
 import { Profile } from '../../components/profile/profile';
-import { MyOrders } from '../../components/my-orders';
+import { MyOrdersPage } from './my-orders';
 
 import commonStyles from '../common.module.css';
 import styles from './profile.module.css';
-import { setType } from '../../store/actions/feed';
 
 export function ProfilePage() {
-  const dispatch = useDispatch();
   const location = useLocation();
+
   const matchedProfile = matchPath(location.pathname, { path: '/profile', exact: true });
   const matchedOrders = matchPath(location.pathname, { path: '/profile/orders', exact: true });
-
-  useEffect(() => {
-    dispatch(setType('my'));
-    dispatch(wsConnect());
-
-    return () => {
-      dispatch(wsDisconnect());
-    };
-  }, [dispatch]);
 
   return (
     <div className={classNames(commonStyles.content, styles.profile)}>
@@ -76,7 +64,7 @@ export function ProfilePage() {
       <div className={classNames(styles.content, 'ml-15')}>
         <Switch>
           <Route path="/profile" exact component={Profile} />
-          <Route path="/profile/orders" exact component={MyOrders} />
+          <Route path="/profile/orders" exact component={MyOrdersPage} />
         </Switch>
       </div>
     </div>

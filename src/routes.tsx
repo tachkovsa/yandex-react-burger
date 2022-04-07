@@ -82,7 +82,18 @@ export function Routes() {
         />
       )}
       {!!feedModal && (
-      <>
+      <Switch>
+        <Route
+          path="/feed/:orderId"
+          children={(
+            <Modal
+              onClose={() => history.goBack()}
+              header=""
+            >
+              <OrderDetails />
+            </Modal>
+              )}
+        />
         <ProtectedRoute
           exact
           path="/profile/orders/:orderId"
@@ -94,20 +105,9 @@ export function Routes() {
             >
               <OrderDetails />
             </Modal>
-                            )}
+            )}
         />
-        <Route
-          path={['/feed/:orderId', '/profile/orders/:orderId']}
-          children={(
-            <Modal
-              onClose={() => history.goBack()}
-              header=""
-            >
-              <OrderDetails />
-            </Modal>
-              )}
-        />
-      </>
+      </Switch>
       )}
     </>
 

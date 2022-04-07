@@ -1,7 +1,9 @@
 import * as Actions from '../constants/websockets';
+import { TFeedTypes } from '../../utils/interfaces/feed.interfaces';
 
 export interface IWSConnectionRequest {
   readonly type: typeof Actions.WS_CONNECTION_REQUEST
+  readonly payload: TFeedTypes;
 }
 
 export interface IWSConnectionSuccess {
@@ -24,7 +26,7 @@ export interface IWSConnectionClosed {
 
 export interface IWSOnMessage {
   readonly type: typeof Actions.WS_ON_MESSAGE;
-  readonly payload: string;
+  readonly payload: { data: string, type: TFeedTypes };
 }
 
 export interface IWSSendMessage {
@@ -37,5 +39,5 @@ export type TWSActionTypes =
     | IWSOnMessage | IWSSendMessage
     | IWSClose | IWSConnectionClosed;
 
-export const wsConnect = () => ({ type: Actions.WS_CONNECTION_REQUEST });
+export const wsConnect = (type: TFeedTypes) => ({ type: Actions.WS_CONNECTION_REQUEST, payload: type });
 export const wsDisconnect = () => ({ type: Actions.WS_CONNECTION_CLOSE });

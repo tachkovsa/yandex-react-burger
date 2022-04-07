@@ -36,6 +36,9 @@ html {
 .text_color_error {
     color: var(--colors-interface-error);
 }
+.text_color_success {
+    color: var(--colors-interface-success);
+}
 .form-fields_width_100 .input__container,
 .form-fields_width_100 .input {
     width: 100%;

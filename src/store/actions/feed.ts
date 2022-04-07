@@ -1,9 +1,13 @@
 import * as Actions from '../constants/feed';
 import { TFeedTypes, TServerFeedMessage } from '../../utils/interfaces/feed.interfaces';
 
+interface IProcessOrdersPayload {
+  data: TServerFeedMessage,
+  type: TFeedTypes
+}
 export interface IProcessOrders {
   readonly type: typeof Actions.PROCESS_ORDERS;
-  readonly payload: TServerFeedMessage;
+  readonly payload: IProcessOrdersPayload;
 }
 
 export interface ISetType {
@@ -15,5 +19,5 @@ export type TFeedActionTypes =
     | IProcessOrders
     | ISetType;
 
-export const processOrders = (feedMessage: TServerFeedMessage) => ({ type: Actions.PROCESS_ORDERS, payload: feedMessage });
+export const processOrders = ({ data, type }: IProcessOrdersPayload) => ({ type: Actions.PROCESS_ORDERS, payload: { data, type } });
 export const setType = (type: TFeedTypes) => ({ type: Actions.SET_TYPE, payload: type });

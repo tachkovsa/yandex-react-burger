@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import classNames from 'classnames';
@@ -12,7 +12,9 @@ import 'simplebar/dist/simplebar.min.css';
 import styles from './my-orders.module.css';
 
 export const MyOrders: FC = () => {
-  const { myOrders } = useSelector((state: TRootState) => state.feed);
+  const { orders } = useSelector((state: TRootState) => state.feed);
+
+  const myOrders = useMemo(() => orders?.filter((order) => !!order._isOwn), [orders]);
 
   return (
     <SimpleBar className={classNames(styles.feed)}>

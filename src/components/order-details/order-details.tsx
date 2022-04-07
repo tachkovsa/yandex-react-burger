@@ -14,19 +14,21 @@ import { TRootState } from '../../utils/types';
 
 import styles from './order-details.module.css';
 import 'simplebar/dist/simplebar.min.css';
+import { useWebSocket } from '../../hooks/useWebSocket';
 
 export const OrderDetails: FC = () => {
+  useWebSocket();
+
   const { orderId } = useParams<{ orderId?: string }>();
   const ingredients = useSelector((state: TRootState) => state.ingredients.ingredients);
-  const { allOrders, myOrders } = useSelector((state: TRootState) => state.feed);
+  const { orders } = useSelector((state: TRootState) => state.feed);
 
   const [orderIngredients, setOrderIngredients] = useState<(IIngredient & { _count?: number })[]>([]);
 
   const orderDetails = useMemo(
-    () => allOrders?.find((order) => order._id === orderId)
-      || myOrders?.find((order) => order._id === orderId)
+    () => orders?.find((order) => order._id === orderId)
       || null,
-    [allOrders, myOrders, orderId],
+    [orders, orderId],
   );
 
   useEffect(() => {

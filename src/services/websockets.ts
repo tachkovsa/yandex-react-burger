@@ -13,11 +13,11 @@ export const wsMiddleware: Middleware<{}, ReturnType<typeof rootReducer>> = (sto
 
   switch (action.type) {
     case wsActions.WS_CONNECTION_REQUEST: {
-      const { dispatch, getState } = store;
-      const { feed } = getState();
+      const { dispatch } = store;
+      const type = action.payload;
 
       let wsUrl = `${webSocketURL}/orders`;
-      switch (feed.type) {
+      switch (type) {
         case 'all':
           wsUrl += '/all';
           break;
@@ -44,7 +44,7 @@ export const wsMiddleware: Middleware<{}, ReturnType<typeof rootReducer>> = (sto
             payload: parsedData,
           });
 
-          dispatch(processOrders(parsedData));
+          dispatch(processOrders({ data: parsedData, type }));
         };
 
         ws.onclose = () => dispatch({ type: wsActions.WS_CONNECTION_CLOSED });

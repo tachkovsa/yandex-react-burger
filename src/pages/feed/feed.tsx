@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
@@ -10,26 +10,17 @@ import { CardOrder } from '../../components/card-order';
 import 'simplebar/dist/simplebar.min.css';
 import styles from './feed.module.css';
 import commonStyles from '../common.module.css';
-import { setType } from '../../store/actions/feed';
-import { wsConnect, wsDisconnect } from '../../store/actions/websockets';
 import { TRootState } from '../../utils/types';
+import { useWebSocket } from '../../hooks/useWebSocket';
 
 export const FeedPage: FC = () => {
-  const dispatch = useDispatch();
+  useWebSocket();
 
-  const { total, totalToday, allOrders } = useSelector((state: TRootState) => state.feed);
+  const { total, totalToday, orders } = useSelector((state: TRootState) => state.feed);
 
-  const doneOrders = useMemo(() => allOrders?.filter((order) => order.status === 'done').map((order) => order.number) || [], [allOrders]);
-  const inProgressOrders = useMemo(() => allOrders?.filter((order) => order.status === 'pending').map((order) => order.number) || [], [allOrders]);
-
-  useEffect(() => {
-    dispatch(setType('all'));
-    dispatch(wsConnect());
-
-    return () => {
-      dispatch(wsDisconnect());
-    };
-  }, [dispatch]);
+  const foreignOrders = useMemo(() => orders?.filter((order) => !order._isOwn) || null, [orders]);
+  const doneOrders = useMemo(() => foreignOrders?.filter((order) => order.status === 'done').map((order) => order.number) || [], [foreignOrders]);
+  const inProgressOrders = useMemo(() => foreignOrders?.filter((order) => order.status === 'pending').map((order) => order.number) || [], [foreignOrders]);
 
   return (
     <div className={classNames(commonStyles.content, styles.feedPage)}>
@@ -38,7 +29,7 @@ export const FeedPage: FC = () => {
       </p>
       <div className={classNames(styles.neighboringBlocks, 'mt-5')}>
         <SimpleBar className={classNames(styles.feed)}>
-          {allOrders && allOrders.map((order: IOrderDetails) => (
+          {foreignOrders && foreignOrders.map((order: IOrderDetails) => (
             <CardOrder orderDetails={order} key={order._id} />
           ))}
         </SimpleBar>

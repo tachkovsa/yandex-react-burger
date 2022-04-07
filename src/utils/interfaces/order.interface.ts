@@ -13,4 +13,5 @@ export interface IOrderDetails {
   number: number;
   createdAt: string;
   updatedAt: string;
+  _isOwn?: boolean;
 }

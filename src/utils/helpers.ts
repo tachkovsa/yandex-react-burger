@@ -38,7 +38,7 @@ export const humanizationDate = (dateUTC: string) => {
   const gmtValue = `i-GMT${timeZone[0]}${parseInt(timeZone.slice(1, 3), 10)}`;
 
   const datesDifference = daysBetweenDates(normalizedNowDate, processedUTCDate);
-  if (datesDifference === 1) {
+  if (datesDifference === 1 || datesDifference <= 0) {
     return `Сегодня, ${processedUTCTime} ${gmtValue}`;
   }
 

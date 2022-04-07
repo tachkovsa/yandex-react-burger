@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { BurgerIngredients } from '../../components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../../components/burger-constructor/burger-constructor';
 import { Modal } from '../../components/modal/modal';
-import { OrderDetails } from '../../components/order-details/order-details';
+import { OrderAccepted } from '../../components/order-accepted/order-accepted';
 import { IngredientDetails } from '../../components/ingredient-details/ingredient-details';
 import { resetDetailedIngredient } from '../../store/actions/detailed-ingredient';
 import { resetConstructorIngredients } from '../../store/actions/constructor-ingredients';
@@ -48,7 +48,7 @@ export function MainPage() {
       )}
       {orderNumber && (
         <Modal onClose={handleCloseOrderModal}>
-          <OrderDetails orderNumber={orderNumber} />
+          <OrderAccepted orderNumber={orderNumber} />
         </Modal>
       )}
       {detailedIngredient && (

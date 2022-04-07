@@ -11,6 +11,7 @@ import { Modal } from './components/modal/modal';
 import { IngredientDetails } from './components/ingredient-details/ingredient-details';
 import { objectHasKeys } from './utils/validation';
 import { FeedPage } from './pages/feed';
+import { OrderDetailsPage } from './pages/order-details';
 
 export function Routes() {
   const history = useHistory();
@@ -45,8 +46,12 @@ export function Routes() {
           <ResetPasswordPage />
         </ProtectedRoute>
         {/* Страница с настройками профиля пользователя */}
-        <ProtectedRoute exact path={['/profile', '/profile/orders', '/profile/orders/:id']} accessType="authorized">
+        <ProtectedRoute exact path={['/profile', '/profile/orders', '/profile/orders']} accessType="authorized">
           <ProfilePage />
+        </ProtectedRoute>
+        {/* Страница с деталями заказа */}
+        <ProtectedRoute exact path={['/profile/orders/:orderId', '/feed/:orderId']} accessType="authorized">
+          <OrderDetailsPage />
         </ProtectedRoute>
         {/* Страница ингредиента */}
         <Route exact path="/ingredients/:id" component={IngredientsPage} />

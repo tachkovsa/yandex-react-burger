@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
@@ -10,197 +10,25 @@ import { CardOrder } from '../../components/card-order';
 import 'simplebar/dist/simplebar.min.css';
 import styles from './feed.module.css';
 import commonStyles from '../common.module.css';
-import { wsConnect } from '../../store/actions/websockets';
+import { setType } from '../../store/actions/feed';
+import { wsConnect, wsDisconnect } from '../../store/actions/websockets';
+import { TRootState } from '../../utils/types';
 
 export const FeedPage: FC = () => {
   const dispatch = useDispatch();
 
-  const doneOrders = ['034533', '034532', '034530', '034527', '034525'];
-  const inProgressOrders = ['034538', '034541', '034542'];
-  // TODO: Add helper and change type to number
-  const doneForAllTime = '28 752';
-  const doneForToday = '138';
+  const { total, totalToday, allOrders } = useSelector((state: TRootState) => state.feed);
 
-  const ordersFeed: IOrderDetails[] = [
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-        '60d3b41abdacab0026a733d3',
-        '60d3b41abdacab0026a733d4',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d3',
-      ],
-      _id: '034535',
-      name: 'Death Star Starship Main бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2021-06-23T14:43:22.587Z',
-      updatedAt: '2021-06-23T14:43:22.603Z',
-    },
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-      ],
-      _id: '034535',
-      name: 'Interstellar бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2022-04-01T14:43:22.587Z',
-      updatedAt: '2022-04-01T14:43:22.603Z',
-    },
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-        '60d3b41abdacab0026a733d3',
-        '60d3b41abdacab0026a733d4',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d3',
-      ],
-      _id: '034535',
-      name: 'Death Star Starship Main бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2021-06-23T14:43:22.587Z',
-      updatedAt: '2021-06-23T14:43:22.603Z',
-    },
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-        '60d3b41abdacab0026a733d3',
-        '60d3b41abdacab0026a733d4',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d3',
-      ],
-      _id: '034535',
-      name: 'Death Star Starship Main бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2021-06-23T14:43:22.587Z',
-      updatedAt: '2021-06-23T14:43:22.603Z',
-    },
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-        '60d3b41abdacab0026a733d3',
-        '60d3b41abdacab0026a733d4',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d3',
-      ],
-      _id: '034535',
-      name: 'Death Star Starship Main бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2021-06-23T14:43:22.587Z',
-      updatedAt: '2021-06-23T14:43:22.603Z',
-    },
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-        '60d3b41abdacab0026a733d3',
-        '60d3b41abdacab0026a733d4',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d3',
-      ],
-      _id: '034535',
-      name: 'Death Star Starship Main бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2021-06-23T14:43:22.587Z',
-      updatedAt: '2021-06-23T14:43:22.603Z',
-    },
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-        '60d3b41abdacab0026a733d3',
-        '60d3b41abdacab0026a733d4',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d3',
-      ],
-      _id: '034535',
-      name: 'Death Star Starship Main бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2021-06-23T14:43:22.587Z',
-      updatedAt: '2021-06-23T14:43:22.603Z',
-    },
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-        '60d3b41abdacab0026a733d3',
-        '60d3b41abdacab0026a733d4',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d3',
-      ],
-      _id: '034535',
-      name: 'Death Star Starship Main бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2021-06-23T14:43:22.587Z',
-      updatedAt: '2021-06-23T14:43:22.603Z',
-    },
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-        '60d3b41abdacab0026a733d3',
-        '60d3b41abdacab0026a733d4',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d3',
-      ],
-      _id: '034535',
-      name: 'Death Star Starship Main бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2021-06-23T14:43:22.587Z',
-      updatedAt: '2021-06-23T14:43:22.603Z',
-    },
-    {
-      ingredients: [
-        '60d3b41abdacab0026a733ca',
-        '60d3b41abdacab0026a733ce',
-        '60d3b41abdacab0026a733d0',
-        '60d3b41abdacab0026a733d3',
-        '60d3b41abdacab0026a733d4',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d1',
-        '60d3b41abdacab0026a733d3',
-      ],
-      _id: '034535',
-      name: 'Death Star Starship Main бургер',
-      status: 'done',
-      number: 34535,
-      createdAt: '2021-06-23T14:43:22.587Z',
-      updatedAt: '2021-06-23T14:43:22.603Z',
-    },
-  ];
+  const doneOrders = useMemo(() => allOrders?.filter((order) => order.status === 'done').map((order) => order.number) || [], [allOrders]);
+  const inProgressOrders = useMemo(() => allOrders?.filter((order) => order.status === 'pending').map((order) => order.number) || [], [allOrders]);
 
   useEffect(() => {
-    dispatch(wsConnect('all'));
+    dispatch(setType('all'));
+    dispatch(wsConnect());
+
+    return () => {
+      dispatch(wsDisconnect());
+    };
   }, [dispatch]);
 
   return (
@@ -210,7 +38,7 @@ export const FeedPage: FC = () => {
       </p>
       <div className={classNames(styles.neighboringBlocks, 'mt-5')}>
         <SimpleBar className={classNames(styles.feed)}>
-          {ordersFeed.map((order: IOrderDetails) => (
+          {allOrders && allOrders.map((order: IOrderDetails) => (
             <CardOrder orderDetails={order} />
           ))}
         </SimpleBar>
@@ -218,28 +46,28 @@ export const FeedPage: FC = () => {
           <div className={styles.neighboringBlocks}>
             <div className={styles.doneContainer}>
               <p className="text text_type_main-medium pb-6">Готовы:</p>
-              <ul className={styles.doneOrdersList}>
+              <SimpleBar className={styles.doneOrdersList}>
                 {doneOrders.map((orderNumber) => (
-                  <li className={classNames(styles.doneOrder, 'text text_type_digits-default')} key={orderNumber}>{orderNumber}</li>
+                  <div className={classNames(styles.doneOrder, 'text text_type_digits-default')} key={orderNumber}>{orderNumber}</div>
                 ))}
-              </ul>
+              </SimpleBar>
             </div>
             <div className={classNames(styles.inProgressContainer, 'ml-9')}>
               <p className="text text_type_main-medium pb-6">В работе:</p>
-              <ul className={styles.inProgressOrdersList}>
+              <SimpleBar className={styles.inProgressOrdersList}>
                 {inProgressOrders.map((orderNumber) => (
-                  <li className={classNames(styles.inProgressOrder, 'text text_type_digits-default')} key={orderNumber}>{orderNumber}</li>
+                  <div className={classNames(styles.inProgressOrder, 'text text_type_digits-default')} key={orderNumber}>{orderNumber}</div>
                 ))}
-              </ul>
+              </SimpleBar>
             </div>
           </div>
           <div className={classNames(styles.doneForAllTime, 'mt-15')}>
             <p className="text text_type_main-medium">Выполнено за всё время:</p>
-            <p className={classNames(commonStyles.highlightedText, 'text text_type_digits-large')}>{doneForAllTime}</p>
+            <p className={classNames(commonStyles.highlightedText, 'text text_type_digits-large')}>{total}</p>
           </div>
           <div className={classNames(styles.doneForToday, 'mt-15')}>
             <p className="text text_type_main-medium">Выполнено за сегодня:</p>
-            <p className={classNames(commonStyles.highlightedText, 'text text_type_digits-large')}>{doneForToday}</p>
+            <p className={classNames(commonStyles.highlightedText, 'text text_type_digits-large')}>{totalToday}</p>
           </div>
         </section>
       </div>

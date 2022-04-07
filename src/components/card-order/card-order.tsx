@@ -1,22 +1,32 @@
 import React, {
-  FC, useCallback, useEffect, useState,
+  FC, useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
+import { v4 as uuidv4 } from 'uuid';
 
 import { IOrderDetails } from '../../utils/interfaces/order.interface';
-import { humanizationDate } from '../../utils/helpers';
+import { humanizationDate, humanizationOrderStatus } from '../../utils/helpers';
 import { TRootState } from '../../utils/types';
 
 import styles from './card-order.module.css';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 
-type CardOrderProps = { orderDetails: IOrderDetails, maxIngredientsOnPreview?: number };
-export const CardOrder: FC<CardOrderProps> = ({ orderDetails, maxIngredientsOnPreview = 4 }) => {
+type CardOrderProps = {
+  orderDetails: IOrderDetails,
+  maxIngredientsOnPreview?: number,
+  showOrderStatus?: boolean
+};
+export const CardOrder: FC<CardOrderProps> = ({
+  orderDetails,
+  maxIngredientsOnPreview = 4,
+  showOrderStatus = false,
+}) => {
   const history = useHistory();
+  const location = useLocation();
   const ingredients = useSelector((state: TRootState) => state.ingredients.ingredients);
   const [orderIngredients, setOrderIngredients] = useState<IIngredient[]>([]);
 
@@ -26,7 +36,12 @@ export const CardOrder: FC<CardOrderProps> = ({ orderDetails, maxIngredientsOnPr
     [orderIngredients],
   );
 
-  const openOrderDetails = () => history.push(`/feed/${orderDetails._id}`);
+  const openOrderDetails = () => history.push(`${location.pathname}/${orderDetails._id}`);
+
+  const orderStatus = useMemo(() => {
+    const { status } = orderDetails;
+    return humanizationOrderStatus(status);
+  }, [orderDetails]);
 
   useEffect(() => {
     const { ingredients: orderIngredients } = orderDetails;
@@ -55,13 +70,18 @@ export const CardOrder: FC<CardOrderProps> = ({ orderDetails, maxIngredientsOnPr
       <p className="text text_type_main-medium mt-6">
         {orderDetails.name}
       </p>
-      <div className={styles.footer}>
+      {showOrderStatus && (
+      <p className={classNames(orderStatus.fontClass, 'text text_type_main-default mt-2')}>
+        {orderStatus.name}
+      </p>
+      )}
+      <div className={classNames(styles.footer, 'mt-6')}>
         <ul className={styles.ingredientsPreview}>
           {orderIngredients.slice(0, maxIngredientsOnPreview).map((ingredient, index) => {
             const isLast = index === maxIngredientsOnPreview - 1;
 
             return (
-              <li className={classNames(styles.ingredientPreview, styles.ingredientPreviewLast)}>
+              <li className={classNames(styles.ingredientPreview, styles.ingredientPreviewLast)} key={uuidv4()}>
                 <div
                   className={classNames(styles.ingredientPreviewImage, isLast ? styles.ingredientPreviewImageTranslucent : null)}
                   style={{ backgroundImage: `url(${ingredient.image})` }}
@@ -88,4 +108,5 @@ export const CardOrder: FC<CardOrderProps> = ({ orderDetails, maxIngredientsOnPr
 
 CardOrder.defaultProps = {
   maxIngredientsOnPreview: 6,
+  showOrderStatus: false,
 };

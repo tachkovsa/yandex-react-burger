@@ -6,7 +6,7 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 import classNames from 'classnames';
 import { auth } from '../services/auth';
 import { fetchUser } from '../store/actions/auth';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useDispatch, useSelector } from '../hooks';
 
 import commonStyles from '../pages/common.module.css';
 
@@ -29,9 +29,9 @@ export const ProtectedRoute: FC<IProtectedRouteProps & RouteProps> = ({
   accessType = 'anonymous',
   ...rest
 }) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
-  const { user, loading } = useAppSelector((state) => state.auth);
+  const { user, loading } = useSelector((state) => state.auth);
   const { accessToken, refreshToken } = auth();
 
   const [loadingText, setLoadingText] = useState<string>('Проверяем авторизацию...');

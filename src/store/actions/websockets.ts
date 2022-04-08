@@ -1,5 +1,6 @@
 import * as Actions from '../constants/websockets';
 import { TFeedTypes } from '../../utils/interfaces/feed.interfaces';
+import { AppDispatch, AppThunk } from '../../utils/types';
 
 export interface IWSConnectionRequest {
   readonly type: typeof Actions.WS_CONNECTION_REQUEST
@@ -39,5 +40,5 @@ export type TWSActionTypes =
     | IWSOnMessage | IWSSendMessage
     | IWSClose | IWSConnectionClosed;
 
-export const wsConnect = (type: TFeedTypes) => ({ type: Actions.WS_CONNECTION_REQUEST, payload: type });
-export const wsDisconnect = () => ({ type: Actions.WS_CONNECTION_CLOSE });
+export const wsConnect: AppThunk<IWSConnectionRequest> = (type: TFeedTypes) => (dispatch: AppDispatch) => dispatch({ type: Actions.WS_CONNECTION_REQUEST, payload: type });
+export const wsDisconnect: AppThunk<IWSClose> = () => (dispatch: AppDispatch) => dispatch({ type: Actions.WS_CONNECTION_CLOSE });

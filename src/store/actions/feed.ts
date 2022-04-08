@@ -1,5 +1,6 @@
 import * as Actions from '../constants/feed';
 import { TFeedTypes, TServerFeedMessage } from '../../utils/interfaces/feed.interfaces';
+import { AppDispatch, AppThunk } from '../../utils/types';
 
 interface IProcessOrdersPayload {
   data: TServerFeedMessage,
@@ -19,5 +20,5 @@ export type TFeedActionTypes =
     | IProcessOrders
     | ISetType;
 
-export const processOrders = ({ data, type }: IProcessOrdersPayload) => ({ type: Actions.PROCESS_ORDERS, payload: { data, type } });
-export const setType = (type: TFeedTypes) => ({ type: Actions.SET_TYPE, payload: type });
+export const processOrders: AppThunk<IProcessOrders> = ({ data, type }: IProcessOrdersPayload) => (dispatch: AppDispatch) => dispatch({ type: Actions.PROCESS_ORDERS, payload: { data, type } });
+export const setType: AppThunk<ISetType> = (type: TFeedTypes) => (dispatch: AppDispatch) => dispatch({ type: Actions.SET_TYPE, payload: type });

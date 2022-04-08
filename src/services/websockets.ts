@@ -2,13 +2,13 @@ import { Middleware } from 'redux';
 
 import { rootReducer } from '../store/reducers';
 import * as wsActions from '../store/constants/websockets';
-import { TAppActionTypes } from '../utils/types';
+import { TApplicationActions } from '../utils/types';
 import { webSocketURL } from '../utils/constants';
 import { TServerFeedMessage } from '../utils/interfaces/feed.interfaces';
 import { getTokens } from './auth';
 import { processOrders } from '../store/actions/feed';
 
-export const wsMiddleware: Middleware<{}, ReturnType<typeof rootReducer>> = (store) => (next) => async (action: TAppActionTypes) => {
+export const wsMiddleware: Middleware<{}, ReturnType<typeof rootReducer>> = (store) => (next) => async (action: TApplicationActions) => {
   let ws: WebSocket | undefined;
 
   switch (action.type) {

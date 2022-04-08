@@ -1,4 +1,5 @@
 import * as Actions from '../constants/detailed-ingredient';
+import { AppDispatch, AppThunk } from '../../utils/types';
 
 export interface ISetDetailedIngredient {
   readonly type: typeof Actions.SET_DETAILED_INGREDIENT;
@@ -9,5 +10,5 @@ export interface IResetDetailedIngredient {
 }
 export type TDetailedIngredientActionTypes = ISetDetailedIngredient | IResetDetailedIngredient;
 
-export const setDetailedIngredient = (ingredientId: string) => ({ type: Actions.SET_DETAILED_INGREDIENT, payload: ingredientId });
-export const resetDetailedIngredient = () => ({ type: Actions.RESET_DETAILED_INGREDIENT });
+export const setDetailedIngredient: AppThunk<ISetDetailedIngredient> = (ingredientId: string) => (dispatch: AppDispatch) => dispatch({ type: Actions.SET_DETAILED_INGREDIENT, payload: ingredientId });
+export const resetDetailedIngredient: AppThunk<IResetDetailedIngredient> = () => (dispatch: AppDispatch) => dispatch({ type: Actions.RESET_DETAILED_INGREDIENT });

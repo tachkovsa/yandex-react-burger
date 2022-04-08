@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { wsConnect, wsDisconnect } from '../store/actions/websockets';
-import { useAppDispatch } from './index';
+import { useDispatch } from './index';
 
 export const useWebSocket = () => {
   const location = useLocation();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const { pathname } = location;

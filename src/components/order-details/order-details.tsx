@@ -10,7 +10,7 @@ import SimpleBar from 'simplebar-react';
 import { humanizationDate, humanizationOrderStatus } from '../../utils/helpers';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 import { useWebSocket } from '../../hooks/useWebSocket';
-import { useAppSelector } from '../../hooks';
+import { useSelector } from '../../hooks';
 
 import styles from './order-details.module.css';
 import 'simplebar/dist/simplebar.min.css';
@@ -19,8 +19,8 @@ export const OrderDetails: FC = () => {
   useWebSocket();
 
   const { orderId } = useParams<{ orderId?: string }>();
-  const ingredients = useAppSelector((state) => state.ingredients.ingredients);
-  const { orders } = useAppSelector((state) => state.feed);
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const { orders } = useSelector((state) => state.feed);
 
   const [orderIngredients, setOrderIngredients] = useState<(IIngredient & { _count?: number })[]>([]);
 

@@ -10,7 +10,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import { postOrder } from '../../store/actions/order';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks';
 import { auth } from '../../services/auth';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 
@@ -23,22 +23,22 @@ import {
 } from '../../store/actions/constructor-ingredients';
 
 export function BurgerConstructor() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const history = useHistory();
   const { accessToken, refreshToken } = auth();
 
-  const { ingredientDragged } = useAppSelector((state) => state.ingredients);
-  const { basket } = useAppSelector((state) => state.constructorIngredients);
-  const isWaitingForOrderNumber = useAppSelector((state) => state.order.loading);
+  const { ingredientDragged } = useSelector((state) => state.ingredients);
+  const { basket } = useSelector((state) => state.constructorIngredients);
+  const isWaitingForOrderNumber = useSelector((state) => state.order.loading);
 
-  const totalPrice = useAppSelector((state) => (state.constructorIngredients.basket.length > 0
+  const totalPrice = useSelector((state) => (state.constructorIngredients.basket.length > 0
     ? state.constructorIngredients.basket
       .map((ingredient) => ingredient.price * (ingredient.type === 'bun' ? 2 : 1))
       .reduce((acc, price) => acc + price)
     : 0));
 
-  const burgerBun = useAppSelector((state) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
-  const burgerStuffing = useAppSelector((state) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
+  const burgerBun = useSelector((state) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
+  const burgerStuffing = useSelector((state) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
 
   const isReadyForOrder = useCallback((): boolean => !!(
     basket.find((ingredient) => ingredient.type === 'bun')

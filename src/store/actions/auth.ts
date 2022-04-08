@@ -1,10 +1,10 @@
-import { setCookie } from '../../utils/cookie';
 import { getTokens, setTokens } from '../../services/auth';
 import { request } from '../../services/api';
 import { objectHasKeys } from '../../utils/validation';
 import { ILoginResponse, IFetchUserInfoResponse, IRegisterResponse } from '../../utils/interfaces/api.interface';
 import { IUser } from '../../utils/interfaces/user.interface';
 import * as Actions from '../constants/auth';
+import { AppDispatch, AppThunk } from '../../utils/types';
 
 export interface IResetAuth {
   readonly type: typeof Actions.RESET_AUTH;
@@ -95,21 +95,22 @@ export type TAuthActionTypes =
     | IResetPassword | IResetPasswordSuccess | IResetPasswordError
     | IRequestPasswordResetCode | IRequestPasswordResetCodeSuccess | IRequestPasswordResetCodeError;
 
-export const resetAuth = (reason: string) => (dispatch) => {
-  // eslint-disable-next-line no-console
-  console.error(`Authentication reset cause ${reason}`);
-
-  const selfDestructiveExpiration = new Date('1970-01-01');
-  setCookie('accessToken', null, { expires: selfDestructiveExpiration });
-  setCookie('refreshToken', null, { expires: selfDestructiveExpiration });
-
-  dispatch({ type: Actions.RESET_AUTH });
-};
+// TODO: Rework that mechanism
+// export const resetAuth = (reason: string) => (dispatch: AppDispatch) => {
+//   // eslint-disable-next-line no-console
+//   console.error(`Authentication reset cause ${reason}`);
+//
+//   const selfDestructiveExpiration = new Date('1970-01-01');
+//   setCookie('accessToken', null, { expires: selfDestructiveExpiration });
+//   setCookie('refreshToken', null, { expires: selfDestructiveExpiration });
+//
+//   dispatch({ type: Actions.RESET_AUTH });
+// };
 
 type TRegisterUserParams = { email: string, name: string, password: string };
-export const registerUserSuccess = (user: IUser) => ({ type: Actions.REGISTER_USER_SUCCESS, payload: user });
-export const registerUserError = (error: string) => ({ type: Actions.REGISTER_USER_ERROR, payload: error });
-export const registerUser = ({ email, name, password }: TRegisterUserParams) => (dispatch) => {
+export const registerUserSuccess: AppThunk<IRegisterUserSuccess> = (user: IUser) => (dispatch: AppDispatch) => dispatch({ type: Actions.REGISTER_USER_SUCCESS, payload: user });
+export const registerUserError: AppThunk<IRegisterUserError> = (error: string) => (dispatch: AppDispatch) => dispatch({ type: Actions.REGISTER_USER_ERROR, payload: error });
+export const registerUser: AppThunk = ({ email, name, password }: TRegisterUserParams) => (dispatch: AppDispatch) => {
   dispatch({ type: Actions.REGISTER_USER });
 
   request({
@@ -132,9 +133,9 @@ export const registerUser = ({ email, name, password }: TRegisterUserParams) => 
     .catch((err) => dispatch(registerUserError(err.toLocaleString())));
 };
 
-export const logoutUserSuccess = () => ({ type: Actions.LOGOUT_SUCCESS });
-export const logoutUserError = (error: string) => ({ type: Actions.LOGOUT_ERROR, payload: error });
-export const logoutUser = () => (dispatch) => {
+export const logoutUserSuccess: AppThunk<ILogoutUserSuccess> = () => (dispatch: AppDispatch) => dispatch({ type: Actions.LOGOUT_SUCCESS });
+export const logoutUserError: AppThunk<ILogoutUserError> = (error: string) => (dispatch: AppDispatch) => dispatch({ type: Actions.LOGOUT_ERROR, payload: error });
+export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch({ type: Actions.LOGOUT });
 
   const { refreshToken } = getTokens();
@@ -151,9 +152,9 @@ export const logoutUser = () => (dispatch) => {
 };
 
 type TLoginUserParams = { email: string, password: string };
-export const loginUserSuccess = (user: IUser) => ({ type: Actions.LOGIN_SUCCESS, payload: user });
-export const loginUserError = (error: string) => ({ type: Actions.LOGIN_ERROR, payload: error });
-export const loginUser = ({ email, password }: TLoginUserParams) => (dispatch) => {
+export const loginUserSuccess: AppThunk<ILoginUserSuccess> = (user: IUser) => (dispatch: AppDispatch) => dispatch({ type: Actions.LOGIN_SUCCESS, payload: user });
+export const loginUserError: AppThunk<ILoginUserError> = (error: string) => (dispatch: AppDispatch) => dispatch({ type: Actions.LOGIN_ERROR, payload: error });
+export const loginUser: AppThunk = ({ email, password }: TLoginUserParams) => (dispatch: AppDispatch) => {
   dispatch({ type: Actions.LOGIN });
 
   request({
@@ -177,9 +178,9 @@ export const loginUser = ({ email, password }: TLoginUserParams) => (dispatch) =
 };
 
 type TPatchUserInfoParams = { email?: string, name?: string, password?: string };
-export const patchUserInfoSuccess = (user: IUser) => ({ type: Actions.PATCH_USER_INFO_SUCCESS, payload: user });
-export const patchUserInfoError = (error: string) => ({ type: Actions.PATCH_USER_INFO_ERROR, payload: error });
-export const patchUser = ({ name, email, password }: TPatchUserInfoParams) => (dispatch) => {
+export const patchUserInfoSuccess: AppThunk<IPatchUserInfoSuccess> = (user: IUser) => (dispatch: AppDispatch) => dispatch({ type: Actions.PATCH_USER_INFO_SUCCESS, payload: user });
+export const patchUserInfoError: AppThunk<IPatchUserInfoError> = (error: string) => (dispatch: AppDispatch) => dispatch({ type: Actions.PATCH_USER_INFO_ERROR, payload: error });
+export const patchUser: AppThunk = ({ name, email, password }: TPatchUserInfoParams) => (dispatch: AppDispatch) => {
   dispatch({ type: Actions.PATCH_USER_INFO });
 
   request({
@@ -201,9 +202,9 @@ export const patchUser = ({ name, email, password }: TPatchUserInfoParams) => (d
     .catch((err) => dispatch(patchUserInfoError(err.toLocaleString())));
 };
 
-export const fetchUserInfoSuccess = (user: IUser) => ({ type: Actions.FETCH_USER_INFO_SUCCESS, payload: user });
-export const fetchUserInfoError = (error: string) => ({ type: Actions.FETCH_USER_INFO_ERROR, payload: error });
-export const fetchUser = () => (dispatch) => {
+export const fetchUserInfoSuccess: AppThunk<IFetchUserInfoSuccess> = (user: IUser) => (dispatch: AppDispatch) => dispatch({ type: Actions.FETCH_USER_INFO_SUCCESS, payload: user });
+export const fetchUserInfoError: AppThunk<IFetchUserInfoError> = (error: string) => (dispatch: AppDispatch) => dispatch({ type: Actions.FETCH_USER_INFO_ERROR, payload: error });
+export const fetchUser: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch({ type: Actions.FETCH_USER_INFO });
 
   request({
@@ -225,9 +226,9 @@ export const fetchUser = () => (dispatch) => {
 };
 
 type TResetPasswordParams = { email: string, password: string, token: string };
-export const resetPasswordSuccess = () => ({ type: Actions.PASSWORD_RESET_SUCCESS });
-export const resetPasswordError = (error: string) => ({ type: Actions.PASSWORD_RESET_ERROR, payload: error });
-export const resetPassword = ({ email, password, token }: TResetPasswordParams) => (dispatch) => {
+export const resetPasswordSuccess: AppThunk<IResetPasswordSuccess> = () => (dispatch: AppDispatch) => dispatch({ type: Actions.PASSWORD_RESET_SUCCESS });
+export const resetPasswordError: AppThunk<IResetPasswordError> = (error: string) => (dispatch: AppDispatch) => dispatch({ type: Actions.PASSWORD_RESET_ERROR, payload: error });
+export const resetPassword: AppThunk = ({ email, password, token }: TResetPasswordParams) => (dispatch: AppDispatch) => {
   dispatch({ type: Actions.PASSWORD_RESET });
 
   request({
@@ -242,9 +243,9 @@ export const resetPassword = ({ email, password, token }: TResetPasswordParams) 
     .catch((err) => dispatch(resetPasswordError(err.toLocaleString())));
 };
 
-export const requestPasswordResetCodeSuccess = () => ({ type: Actions.REQUEST_PASSWORD_RESET_CODE_SUCCESS });
-export const requestPasswordResetCodeError = (error: string) => ({ type: Actions.REQUEST_PASSWORD_RESET_CODE_ERROR, payload: error });
-export const requestPasswordResetCode = (email: string) => (dispatch) => {
+export const requestPasswordResetCodeSuccess: AppThunk<IRequestPasswordResetCodeSuccess> = () => (dispatch: AppDispatch) => dispatch({ type: Actions.REQUEST_PASSWORD_RESET_CODE_SUCCESS });
+export const requestPasswordResetCodeError: AppThunk<IRequestPasswordResetCodeError> = (error: string) => (dispatch: AppDispatch) => dispatch({ type: Actions.REQUEST_PASSWORD_RESET_CODE_ERROR, payload: error });
+export const requestPasswordResetCode: AppThunk = (email: string) => (dispatch: AppDispatch) => {
   dispatch({ type: Actions.REQUEST_PASSWORD_RESET_CODE, payload: email });
 
   request({

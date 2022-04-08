@@ -7,13 +7,13 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import commonStyles from '../common.module.css';
 import styles from './reset-password.module.css';
 import { resetPassword } from '../../store/actions/auth';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks';
 
 export function ResetPasswordPage() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const history = useHistory();
 
-  const email = useAppSelector((state) => state.auth.resetPasswordCodeEmail);
+  const email = useSelector((state) => state.auth.resetPasswordCodeEmail);
 
   const [token, setToken] = useState<string>('');
   const [password, setPassword] = useState<string>('');

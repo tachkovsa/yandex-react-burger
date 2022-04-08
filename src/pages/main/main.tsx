@@ -14,16 +14,16 @@ import { resetOrderNumber } from '../../store/actions/order';
 
 import commonStyles from '../common.module.css';
 import styles from './main.module.css';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks';
 
 export function MainPage() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
-  const orderNumber = useAppSelector((state) => state.order.orderNumber);
-  const detailedIngredient = useAppSelector((state) => state.detailedIngredient.detailedIngredient);
+  const orderNumber = useSelector((state) => state.order.orderNumber);
+  const detailedIngredient = useSelector((state) => state.detailedIngredient.detailedIngredient);
 
-  const ingredients = useAppSelector((state) => state.ingredients.ingredients);
-  const isLoading = useAppSelector((state) => state.ingredients.loading);
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const isLoading = useSelector((state) => state.ingredients.loading);
 
   const handleCloseOrderModal = () => {
     dispatch(resetConstructorIngredients());

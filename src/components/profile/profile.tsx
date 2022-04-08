@@ -9,15 +9,15 @@ import {
 import classNames from 'classnames';
 import { patchUser } from '../../store/actions/auth';
 import styles from './profile.module.css';
-import { TRootState } from '../../utils/types';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { RootState } from '../../utils/types';
+import { useDispatch, useSelector } from '../../hooks';
 
 const PASSWORD_PLACEHOLDER_VALUE = '******';
 
 export function Profile() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
-  const { user, loading } = useAppSelector((state) => state.auth);
+  const { user, loading } = useSelector((state) => state.auth);
 
   const [form, setForm] = useState<{
     email?: string,

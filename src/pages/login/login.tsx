@@ -6,19 +6,19 @@ import {
   PasswordInput, Button, Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { validateEmail } from '../../utils/validation';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks';
 
 import commonStyles from '../common.module.css';
 import styles from './login.module.css';
 import { loginUser } from '../../store/actions/auth';
 
 export function LoginPage() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const { loading, error } = useAppSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
   const isFormValid = useCallback(() => isEmailValid() && password !== '', [isEmailValid, password]);

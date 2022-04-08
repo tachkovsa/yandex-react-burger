@@ -19,5 +19,5 @@ export type TFeedActionTypes =
     | IProcessOrders
     | ISetType;
 
-export const processOrders = ({ data, type }: IProcessOrdersPayload) => ({ type: Actions.PROCESS_ORDERS, payload: { data, type } });
-export const setType = (type: TFeedTypes) => ({ type: Actions.SET_TYPE, payload: type });
+export const processOrders = ({ data, type }: IProcessOrdersPayload): IProcessOrders => ({ type: Actions.PROCESS_ORDERS, payload: { data, type } });
+export const setType = (type: TFeedTypes): ISetType => ({ type: Actions.SET_TYPE, payload: type });

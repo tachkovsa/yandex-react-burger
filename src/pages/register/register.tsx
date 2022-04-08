@@ -10,16 +10,16 @@ import { registerUser } from '../../store/actions/auth';
 
 import commonStyles from '../common.module.css';
 import styles from './register.module.css';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks';
 
 export function RegisterPage() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [name, setName] = useState<string>('');
 
-  const { loading, error } = useAppSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 

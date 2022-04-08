@@ -6,18 +6,18 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 
 import { requestPasswordResetCode } from '../../store/actions/auth';
 import { validateEmail } from '../../utils/validation';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks';
 
 import commonStyles from '../common.module.css';
 import styles from './forgot-password.module.css';
 
 // TODO: Add error handler
 export function ForgotPasswordPage() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [email, setEmail] = useState('');
-  const { loading, resetPasswordCodeRequested } = useAppSelector((state) => state.auth);
+  const { loading, resetPasswordCodeRequested } = useSelector((state) => state.auth);
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
   const restorePassword = (e: React.FormEvent) => {

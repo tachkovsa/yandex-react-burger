@@ -4,19 +4,19 @@ import classNames from 'classnames';
 import { AppHeader } from '../app-header/app-header';
 import { Routes } from '../../routes';
 import { getIngredients } from '../../store/actions/ingredients';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks';
 
 import commonStyles from '../../pages/common.module.css';
 
 function App() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const [loadingText, setLoadingText] = useState('');
 
-  const isLoading = useAppSelector((state) => state.ingredients.loading);
-  const isLoaded = useAppSelector((state) => state.ingredients.loaded);
-  const ingredientsErrorText = useAppSelector((state) => state.ingredients.error);
-  const orderErrorText = useAppSelector((state) => state.order.error);
+  const isLoading = useSelector((state) => state.ingredients.loading);
+  const isLoaded = useSelector((state) => state.ingredients.loaded);
+  const ingredientsErrorText = useSelector((state) => state.ingredients.error);
+  const orderErrorText = useSelector((state) => state.order.error);
 
   const hasError = useCallback(
     () => ingredientsErrorText || orderErrorText,

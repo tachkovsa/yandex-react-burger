@@ -1,62 +1,47 @@
-import { Middleware } from 'redux';
+import { Middleware, MiddlewareAPI } from 'redux';
 
-import { rootReducer } from '../store/reducers';
-import * as wsActions from '../store/constants/websockets';
-import { TAppActionTypes } from '../utils/types';
-import { webSocketURL } from '../utils/constants';
+import {
+  AppDispatch, RootState, TApplicationActions, TWSMiddlewareActions,
+} from '../utils/types';
 import { TServerFeedMessage } from '../utils/interfaces/feed.interfaces';
-import { getTokens } from './auth';
 import { processOrders } from '../store/actions/feed';
 
-export const wsMiddleware: Middleware<{}, ReturnType<typeof rootReducer>> = (store) => (next) => async (action: TAppActionTypes) => {
+import {
+  wsConnectionClosed, wsConnectionError, wsConnectionSuccess, wsOnMessage,
+} from '../store/actions/websockets';
+
+export const socketMiddleware = (wsActions: TWSMiddlewareActions): Middleware => (store: MiddlewareAPI<AppDispatch, RootState>) => (next) => async (action: TApplicationActions) => {
   let ws: WebSocket | undefined;
 
   switch (action.type) {
-    case wsActions.WS_CONNECTION_REQUEST: {
+    case wsActions.onInit: {
       const { dispatch } = store;
-      const type = action.payload;
+      const { url, type } = action.payload;
 
-      let wsUrl = `${webSocketURL}/orders`;
-      switch (type) {
-        case 'all':
-          wsUrl += '/all';
-          break;
-        case 'my': {
-          const { accessToken } = getTokens();
-          wsUrl += `?token=${accessToken?.split(' ')[1]}`;
-          break;
-        }
-        default:
-      }
-
-      ws = new WebSocket(wsUrl);
+      ws = new WebSocket(url);
 
       if (ws) {
-        ws.onopen = () => dispatch({ type: wsActions.WS_CONNECTION_SUCCESS });
-        ws.onerror = (event) => dispatch({ type: wsActions.WS_CONNECTION_ERROR, payload: event.type });
+        ws.onopen = () => dispatch(wsConnectionSuccess());
+        ws.onerror = (event) => dispatch(wsConnectionError(event.type));
 
         ws.onmessage = (event) => {
           const { data } = event;
           const parsedData: TServerFeedMessage = JSON.parse(data);
 
-          dispatch({
-            type: wsActions.WS_ON_MESSAGE,
-            payload: parsedData,
-          });
-
+          dispatch(wsOnMessage(parsedData));
           dispatch(processOrders({ data: parsedData, type }));
         };
 
-        ws.onclose = () => dispatch({ type: wsActions.WS_CONNECTION_CLOSED });
+        ws.onclose = (event) => dispatch(wsConnectionClosed(event));
       }
       break;
     }
-    case wsActions.WS_SEND_MESSAGE:
+    case wsActions.onSend:
       if (ws) {
         ws.send(JSON.stringify(action.payload));
       }
       break;
-    case wsActions.WS_CONNECTION_CLOSE:
+    case wsActions.onClose:
       if (ws) {
         ws.close();
       }

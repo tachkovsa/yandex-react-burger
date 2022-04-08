@@ -7,7 +7,7 @@ import styles from './burger-constructor.module.css';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 import { objectHasKeys } from '../../utils/validation';
 import { changeConstructorIngredientPosition } from '../../store/actions/constructor-ingredients';
-import { useAppDispatch } from '../../hooks';
+import { useDispatch } from '../../hooks';
 
 interface IBurgerConstructorIngredientProps {
   index: number,
@@ -19,7 +19,7 @@ export const BurgerConstructorIngredient: FC<IBurgerConstructorIngredientProps> 
   index, ingredient, onClick,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const [{ handlerId }, drop] = useDrop({
     accept: 'constructorIngredients',

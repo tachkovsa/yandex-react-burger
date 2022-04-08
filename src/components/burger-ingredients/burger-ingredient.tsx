@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 import { dragIngredient, dropIngredient } from '../../store/actions/ingredients';
-import { useAppDispatch } from '../../hooks';
+import { useDispatch } from '../../hooks';
 
 import styles from './burger-ingredients.module.css';
 
@@ -14,7 +14,7 @@ export interface IBurgerIngredientProps {
 }
 
 export const BurgerIngredient: FC<IBurgerIngredientProps> = ({ ingredient, inBasketCount }) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const didMount = useRef(false);
 
   const [{ isDrag }, drag] = useDrag({

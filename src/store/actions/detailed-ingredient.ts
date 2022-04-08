@@ -9,5 +9,5 @@ export interface IResetDetailedIngredient {
 }
 export type TDetailedIngredientActionTypes = ISetDetailedIngredient | IResetDetailedIngredient;
 
-export const setDetailedIngredient = (ingredientId: string) => ({ type: Actions.SET_DETAILED_INGREDIENT, payload: ingredientId });
-export const resetDetailedIngredient = () => ({ type: Actions.RESET_DETAILED_INGREDIENT });
+export const setDetailedIngredient = (ingredientId: string): ISetDetailedIngredient => ({ type: Actions.SET_DETAILED_INGREDIENT, payload: ingredientId });
+export const resetDetailedIngredient = ():IResetDetailedIngredient => ({ type: Actions.RESET_DETAILED_INGREDIENT });

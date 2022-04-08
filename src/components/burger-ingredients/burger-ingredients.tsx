@@ -7,7 +7,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
-import { useAppSelector } from '../../hooks';
+import { useSelector } from '../../hooks';
 import { BurgerIngredient } from './burger-ingredient';
 
 import styles from './burger-ingredients.module.css';
@@ -19,8 +19,8 @@ export const BurgerIngredients = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const basket = useAppSelector((state) => state.constructorIngredients.basket);
-  const { ingredients } = useAppSelector((state) => state.ingredients);
+  const basket = useSelector((state) => state.constructorIngredients.basket);
+  const { ingredients } = useSelector((state) => state.ingredients);
 
   const [tab, setTab] = useState<TTabs>('buns');
 

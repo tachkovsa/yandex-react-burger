@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { IngredientDetails } from '../../components/ingredient-details/ingredient-details';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
-import { useAppSelector } from '../../hooks';
+import { useSelector } from '../../hooks';
 
 import commonStyles from '../common.module.css';
 
@@ -11,7 +11,7 @@ export function IngredientsPage() {
   const history = useHistory();
   const { id } = useParams<{ id?: string }>();
 
-  const ingredients = useAppSelector((state) => state.ingredients.ingredients);
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
   const [ingredient, setIngredient] = useState<IIngredient | null>(null);
 
   const redirectToMainPage = useCallback((): void => history.replace('/'), [history]);

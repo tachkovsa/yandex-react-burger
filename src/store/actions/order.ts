@@ -3,6 +3,7 @@ import { objectHasKeys } from '../../utils/validation';
 import { IPostOrderResponse } from '../../utils/interfaces/api.interface';
 import { IOrder } from '../../utils/interfaces/order.interface';
 import * as Actions from '../constants/order';
+import { AppDispatch, AppThunk } from '../../utils/types';
 
 export interface IPostOrder {
   readonly type: typeof Actions.POST_ORDER;
@@ -25,9 +26,9 @@ export type TOrderActionTypes =
     | IResetOrderNumber;
 
 type TPostOrderParams = { orderNumber: number, burgerName: string };
-export const postOrderSuccess = ({ orderNumber, burgerName }: TPostOrderParams) => ({ type: Actions.POST_ORDER_SUCCESS, payload: { orderNumber, burgerName } });
-export const postOrderError = (error: string) => ({ type: Actions.POST_ORDER_ERROR, payload: error });
-export const postOrder = (ingredients: string[]) => (dispatch) => {
+export const postOrderSuccess = ({ orderNumber, burgerName }: TPostOrderParams): IPostOrderSuccess => ({ type: Actions.POST_ORDER_SUCCESS, payload: { orderNumber, burgerName } });
+export const postOrderError = (error: string): IPostOrderError => ({ type: Actions.POST_ORDER_ERROR, payload: error });
+export const postOrder: AppThunk = (ingredients: string[]) => (dispatch: AppDispatch) => {
   dispatch({ type: Actions.POST_ORDER });
 
   request({
@@ -42,7 +43,6 @@ export const postOrder = (ingredients: string[]) => (dispatch) => {
           const { number, name } = order;
 
           dispatch(postOrderSuccess({ orderNumber: number, burgerName: name }));
-
           return;
         }
       }
@@ -52,4 +52,4 @@ export const postOrder = (ingredients: string[]) => (dispatch) => {
     .catch((err) => dispatch(postOrderError(err.toLocaleString())));
 };
 
-export const resetOrderNumber = () => ({ type: Actions.RESET_ORDER_NUMBER });
+export const resetOrderNumber = (): IResetOrderNumber => ({ type: Actions.RESET_ORDER_NUMBER });

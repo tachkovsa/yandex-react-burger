@@ -1,23 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { AppHeader } from '../app-header/app-header';
 import { Routes } from '../../routes';
 import { getIngredients } from '../../store/actions/ingredients';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import commonStyles from '../../pages/common.module.css';
-import { TRootState } from '../../utils/types';
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [loadingText, setLoadingText] = useState('');
 
-  const isLoading = useSelector((state: TRootState) => state.ingredients.loading);
-  const isLoaded = useSelector((state: TRootState) => state.ingredients.loaded);
-  const ingredientsErrorText = useSelector((state: TRootState) => state.ingredients.error);
-  const orderErrorText = useSelector((state: TRootState) => state.order.error);
+  const isLoading = useAppSelector((state) => state.ingredients.loading);
+  const isLoaded = useAppSelector((state) => state.ingredients.loaded);
+  const ingredientsErrorText = useAppSelector((state) => state.ingredients.error);
+  const orderErrorText = useAppSelector((state) => state.order.error);
 
   const hasError = useCallback(
     () => ingredientsErrorText || orderErrorText,

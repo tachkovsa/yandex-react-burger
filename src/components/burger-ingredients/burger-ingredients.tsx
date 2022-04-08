@@ -1,18 +1,17 @@
 import React, {
   useCallback, useState, useRef, useEffect, RefObject,
 } from 'react';
-import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import { IIngredient } from '../../utils/interfaces/ingredient.interface';
+import { useAppSelector } from '../../hooks';
 import { BurgerIngredient } from './burger-ingredient';
 
 import styles from './burger-ingredients.module.css';
 import 'simplebar/dist/simplebar.min.css';
-import { IIngredient } from '../../utils/interfaces/ingredient.interface';
-import { TRootState } from '../../utils/types';
 
 type TTabs = 'buns' | 'sauces' | 'stuffings';
 
@@ -20,8 +19,8 @@ export const BurgerIngredients = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const basket = useSelector((state: TRootState) => state.constructorIngredients.basket);
-  const { ingredients } = useSelector((state: TRootState) => state.ingredients);
+  const basket = useAppSelector((state) => state.constructorIngredients.basket);
+  const { ingredients } = useAppSelector((state) => state.ingredients);
 
   const [tab, setTab] = useState<TTabs>('buns');
 

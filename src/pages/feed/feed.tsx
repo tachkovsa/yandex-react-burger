@@ -1,17 +1,16 @@
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 
 import classNames from 'classnames';
 
-import { TRootState } from '../../utils/types';
 import { OrdersList } from '../../components/orders-list';
+import { FEED_PAGE_MAX_ORDERS } from '../../utils/constants';
+import { useAppSelector } from '../../hooks';
 
 import styles from './feed.module.css';
 import commonStyles from '../common.module.css';
-import { FEED_PAGE_MAX_ORDERS } from '../../utils/constants';
 
 export const FeedPage: FC = () => {
-  const { total, totalToday, orders } = useSelector((state: TRootState) => state.feed);
+  const { total, totalToday, orders } = useAppSelector((state) => state.feed);
 
   const foreignOrders = useMemo(() => orders?.filter((order) => !order._isOwn) || null, [orders]);
   const doneOrders = useMemo(() => foreignOrders?.filter((order) => order.status === 'done').slice(0, FEED_PAGE_MAX_ORDERS).map((order) => order.number) || [], [foreignOrders]);

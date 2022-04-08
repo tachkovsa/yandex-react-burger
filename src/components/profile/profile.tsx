@@ -1,7 +1,6 @@
 import React, {
   useEffect, useRef, useState,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import {
   EmailInput, Input, Button,
@@ -11,13 +10,14 @@ import classNames from 'classnames';
 import { patchUser } from '../../store/actions/auth';
 import styles from './profile.module.css';
 import { TRootState } from '../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const PASSWORD_PLACEHOLDER_VALUE = '******';
 
 export function Profile() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { user, loading } = useSelector((state: TRootState) => state.auth);
+  const { user, loading } = useAppSelector((state) => state.auth);
 
   const [form, setForm] = useState<{
     email?: string,

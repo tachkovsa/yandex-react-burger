@@ -18,5 +18,7 @@ export type TAppActionTypes =
     | TWSActionTypes;
 
 export type TRootState = ReturnType<typeof rootReducer>;
-export type TAppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, TRootState, TAppActionTypes>>;
+export type TAppThunk<TReturn = void> = ActionCreator<
+ThunkAction<TReturn, Action, TRootState, TAppActionTypes>
+>;
 export type TAppDispatch = Dispatch<TAppActionTypes>;

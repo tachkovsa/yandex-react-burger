@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
 
 import {
   PasswordInput, Input, Button,
@@ -11,16 +10,16 @@ import { registerUser } from '../../store/actions/auth';
 
 import commonStyles from '../common.module.css';
 import styles from './register.module.css';
-import { TRootState } from '../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 export function RegisterPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [name, setName] = useState<string>('');
 
-  const { loading, error } = useSelector((state: TRootState) => state.auth);
+  const { loading, error } = useAppSelector((state) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 

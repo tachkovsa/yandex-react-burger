@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,13 +7,13 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import commonStyles from '../common.module.css';
 import styles from './reset-password.module.css';
 import { resetPassword } from '../../store/actions/auth';
-import { TRootState } from '../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 export function ResetPasswordPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
-  const email = useSelector((state: TRootState) => state.auth.resetPasswordCodeEmail);
+  const email = useAppSelector((state) => state.auth.resetPasswordCodeEmail);
 
   const [token, setToken] = useState<string>('');
   const [password, setPassword] = useState<string>('');

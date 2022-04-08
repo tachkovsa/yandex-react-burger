@@ -1,24 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { requestPasswordResetCode } from '../../store/actions/auth';
 import { validateEmail } from '../../utils/validation';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import commonStyles from '../common.module.css';
 import styles from './forgot-password.module.css';
-import { TRootState } from '../../utils/types';
 
 // TODO: Add error handler
 export function ForgotPasswordPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
   const [email, setEmail] = useState('');
-  const { loading, resetPasswordCodeRequested } = useSelector((state: TRootState) => state.auth);
+  const { loading, resetPasswordCodeRequested } = useAppSelector((state) => state.auth);
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
   const restorePassword = (e: React.FormEvent) => {

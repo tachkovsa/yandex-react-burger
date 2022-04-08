@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import classNames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 import { dragIngredient, dropIngredient } from '../../store/actions/ingredients';
+import { useAppDispatch } from '../../hooks';
 
 import styles from './burger-ingredients.module.css';
 
@@ -14,7 +14,7 @@ export interface IBurgerIngredientProps {
 }
 
 export const BurgerIngredient: FC<IBurgerIngredientProps> = ({ ingredient, inBasketCount }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const didMount = useRef(false);
 
   const [{ isDrag }, drag] = useDrag({

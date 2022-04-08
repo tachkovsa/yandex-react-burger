@@ -2,12 +2,11 @@ import React, {
   FC, useCallback, useEffect, useState,
 } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import classNames from 'classnames';
 import { auth } from '../services/auth';
 import { fetchUser } from '../store/actions/auth';
-import { TRootState } from '../utils/types';
+import { useAppDispatch, useAppSelector } from '../hooks';
 
 import commonStyles from '../pages/common.module.css';
 
@@ -30,9 +29,9 @@ export const ProtectedRoute: FC<IProtectedRouteProps & RouteProps> = ({
   accessType = 'anonymous',
   ...rest
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { user, loading } = useSelector((state: TRootState) => state.auth);
+  const { user, loading } = useAppSelector((state) => state.auth);
   const { accessToken, refreshToken } = auth();
 
   const [loadingText, setLoadingText] = useState<string>('Проверяем авторизацию...');

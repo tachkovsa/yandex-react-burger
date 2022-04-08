@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
 import { useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import {
   ConstructorElement, CurrencyIcon, Button,
@@ -11,35 +10,35 @@ import {
 import { useHistory } from 'react-router-dom';
 import { postOrder } from '../../store/actions/order';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { auth } from '../../services/auth';
+import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 
 import styles from './burger-constructor.module.css';
 import 'simplebar/dist/simplebar.min.css';
-import { auth } from '../../services/auth';
-import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 import {
   addBunToConstructor,
   addIngredientToConstructor,
   removeIngredientFromConstructor,
 } from '../../store/actions/constructor-ingredients';
-import { TRootState } from '../../utils/types';
 
 export function BurgerConstructor() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const { accessToken, refreshToken } = auth();
 
-  const { ingredientDragged } = useSelector((state: TRootState) => state.ingredients);
-  const { basket } = useSelector((state: TRootState) => state.constructorIngredients);
-  const isWaitingForOrderNumber = useSelector((state: TRootState) => state.order.loading);
+  const { ingredientDragged } = useAppSelector((state) => state.ingredients);
+  const { basket } = useAppSelector((state) => state.constructorIngredients);
+  const isWaitingForOrderNumber = useAppSelector((state) => state.order.loading);
 
-  const totalPrice = useSelector((state: TRootState) => (state.constructorIngredients.basket.length > 0
+  const totalPrice = useAppSelector((state) => (state.constructorIngredients.basket.length > 0
     ? state.constructorIngredients.basket
       .map((ingredient) => ingredient.price * (ingredient.type === 'bun' ? 2 : 1))
       .reduce((acc, price) => acc + price)
     : 0));
 
-  const burgerBun = useSelector((state: TRootState) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
-  const burgerStuffing = useSelector((state: TRootState) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
+  const burgerBun = useAppSelector((state) => state.constructorIngredients.basket.find((ingredient) => ingredient.type === 'bun') || null);
+  const burgerStuffing = useAppSelector((state) => state.constructorIngredients.basket.filter((ingredient) => ingredient.type !== 'bun') || null);
 
   const isReadyForOrder = useCallback((): boolean => !!(
     basket.find((ingredient) => ingredient.type === 'bun')

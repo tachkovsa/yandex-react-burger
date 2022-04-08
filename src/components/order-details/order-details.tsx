@@ -2,7 +2,6 @@ import React, {
   FC, useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import classNames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,18 +9,18 @@ import SimpleBar from 'simplebar-react';
 
 import { humanizationDate, humanizationOrderStatus } from '../../utils/helpers';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
-import { TRootState } from '../../utils/types';
+import { useWebSocket } from '../../hooks/useWebSocket';
+import { useAppSelector } from '../../hooks';
 
 import styles from './order-details.module.css';
 import 'simplebar/dist/simplebar.min.css';
-import { useWebSocket } from '../../hooks/useWebSocket';
 
 export const OrderDetails: FC = () => {
   useWebSocket();
 
   const { orderId } = useParams<{ orderId?: string }>();
-  const ingredients = useSelector((state: TRootState) => state.ingredients.ingredients);
-  const { orders } = useSelector((state: TRootState) => state.feed);
+  const ingredients = useAppSelector((state) => state.ingredients.ingredients);
+  const { orders } = useAppSelector((state) => state.feed);
 
   const [orderIngredients, setOrderIngredients] = useState<(IIngredient & { _count?: number })[]>([]);
 

@@ -1,25 +1,24 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import {
   PasswordInput, Button, Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { validateEmail } from '../../utils/validation';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import commonStyles from '../common.module.css';
 import styles from './login.module.css';
 import { loginUser } from '../../store/actions/auth';
-import { TRootState } from '../../utils/types';
 
 export function LoginPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const { loading, error } = useSelector((state: TRootState) => state.auth);
+  const { loading, error } = useAppSelector((state) => state.auth);
 
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
   const isFormValid = useCallback(() => isEmailValid() && password !== '', [isEmailValid, password]);

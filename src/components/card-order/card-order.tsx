@@ -1,7 +1,6 @@
 import React, {
   FC, useCallback, useEffect, useMemo, useState,
 } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { IOrderDetails } from '../../utils/interfaces/order.interface';
 import { humanizationDate, humanizationOrderStatus } from '../../utils/helpers';
-import { TRootState } from '../../utils/types';
+import { useAppSelector } from '../../hooks';
 
 import styles from './card-order.module.css';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
@@ -27,7 +26,7 @@ export const CardOrder: FC<CardOrderProps> = ({
 }) => {
   const history = useHistory();
   const location = useLocation();
-  const ingredients = useSelector((state: TRootState) => state.ingredients.ingredients);
+  const ingredients = useAppSelector((state) => state.ingredients.ingredients);
   const [orderIngredients, setOrderIngredients] = useState<IIngredient[]>([]);
 
   const orderPrice = useCallback(

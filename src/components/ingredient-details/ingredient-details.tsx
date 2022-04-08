@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { useHistory, useParams } from 'react-router-dom';
-import styles from './ingredient-details.module.css';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
-import { TRootState } from '../../utils/types';
+import { useAppSelector } from '../../hooks';
+
+import styles from './ingredient-details.module.css';
 
 export function IngredientDetails() {
   const history = useHistory();
@@ -13,7 +13,7 @@ export function IngredientDetails() {
   const { id } = useParams<{ id?: string }>();
   const [ingredient, setIngredient] = useState<IIngredient | null>(null);
 
-  const { ingredients, loaded } = useSelector((state: TRootState) => state.ingredients);
+  const { ingredients, loaded } = useAppSelector((state) => state.ingredients);
 
   useEffect(() => {
     if (loaded) {

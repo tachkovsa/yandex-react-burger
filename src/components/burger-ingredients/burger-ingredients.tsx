@@ -39,7 +39,7 @@ export const BurgerIngredients = () => {
 
   const getInBasketCount = useCallback((ingredient: IIngredient): number => {
     const { _id, type } = ingredient;
-    const ingredientsCount: number = basket.filter((b: IIngredient) => b._id === _id).length;
+    const ingredientsCount: number = basket.filter((b) => b._id === _id).length;
 
     return type === 'bun' ? ingredientsCount * 2 : ingredientsCount;
   }, [basket]);
@@ -115,7 +115,7 @@ export const BurgerIngredients = () => {
             Булки
           </p>
           <ul className={classNames(styles.ingredientsList, 'mt-6')}>
-            {ingredients.filter((i: IIngredient) => i.type === 'bun').map((ingredient: IIngredient) => (
+            {ingredients.filter((i) => i.type === 'bun').map((ingredient: IIngredient) => (
               <li
                 className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}

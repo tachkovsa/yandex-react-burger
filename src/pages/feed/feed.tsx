@@ -2,21 +2,20 @@ import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import classNames from 'classnames';
-import SimpleBar from 'simplebar-react';
 
 import { TRootState } from '../../utils/types';
 import { OrdersList } from '../../components/orders-list';
 
-import 'simplebar/dist/simplebar.min.css';
 import styles from './feed.module.css';
 import commonStyles from '../common.module.css';
+import { FEED_PAGE_MAX_ORDERS } from '../../utils/constants';
 
 export const FeedPage: FC = () => {
   const { total, totalToday, orders } = useSelector((state: TRootState) => state.feed);
 
   const foreignOrders = useMemo(() => orders?.filter((order) => !order._isOwn) || null, [orders]);
-  const doneOrders = useMemo(() => foreignOrders?.filter((order) => order.status === 'done').map((order) => order.number) || [], [foreignOrders]);
-  const inProgressOrders = useMemo(() => foreignOrders?.filter((order) => order.status === 'pending').map((order) => order.number) || [], [foreignOrders]);
+  const doneOrders = useMemo(() => foreignOrders?.filter((order) => order.status === 'done').slice(0, FEED_PAGE_MAX_ORDERS).map((order) => order.number) || [], [foreignOrders]);
+  const inProgressOrders = useMemo(() => foreignOrders?.filter((order) => order.status === 'pending').slice(0, FEED_PAGE_MAX_ORDERS).map((order) => order.number) || [], [foreignOrders]);
 
   return (
     <div className={classNames(commonStyles.content, styles.feedPage)}>
@@ -29,19 +28,19 @@ export const FeedPage: FC = () => {
           <div className={styles.neighboringBlocks}>
             <div className={styles.doneContainer}>
               <p className="text text_type_main-medium pb-6">Готовы:</p>
-              <SimpleBar className={styles.doneOrdersList}>
+              <div className={classNames(styles.ordersList, styles.doneOrdersList)}>
                 {doneOrders.map((orderNumber) => (
-                  <div className={classNames(styles.doneOrder, 'text text_type_digits-default')} key={orderNumber}>{orderNumber}</div>
+                  <div className={classNames(styles.listOrder, styles.doneOrder, 'text text_type_digits-default')} key={orderNumber}>{orderNumber}</div>
                 ))}
-              </SimpleBar>
+              </div>
             </div>
             <div className={classNames(styles.inProgressContainer, 'ml-9')}>
               <p className="text text_type_main-medium pb-6">В работе:</p>
-              <SimpleBar className={styles.inProgressOrdersList}>
+              <div className={classNames(styles.ordersList, styles.inProgressOrdersList)}>
                 {inProgressOrders.map((orderNumber) => (
-                  <div className={classNames(styles.inProgressOrder, 'text text_type_digits-default')} key={orderNumber}>{orderNumber}</div>
+                  <div className={classNames(styles.listOrder, styles.inProgressOrder, 'text text_type_digits-default')} key={orderNumber}>{orderNumber}</div>
                 ))}
-              </SimpleBar>
+              </div>
             </div>
           </div>
           <div className={classNames(styles.doneForAllTime, 'mt-15')}>

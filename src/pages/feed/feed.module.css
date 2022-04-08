@@ -27,3 +27,16 @@
 .doneOrder {
     color: var(--text-success);
 }
+
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: calc((32px * 10) + 1px);
+    width: 272px;
+    box-sizing: border-box;
+}
+
+.listOrder {
+    margin-bottom: calc(var(--offset-base-size) * 2);
+}

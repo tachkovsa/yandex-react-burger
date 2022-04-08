@@ -38,11 +38,18 @@ export const CardOrder: FC<CardOrderProps> = ({
   const openOrderDetails = useCallback(() => {
     const { _id: id } = orderDetails;
 
+    let state;
+    if (showOrderStatus) {
+      state = { profileFeedModal: location };
+    } else {
+      state = { feedModal: location };
+    }
+
     history.push({
       pathname: `${location.pathname}/${id}`,
-      state: { feedModal: location },
+      state,
     });
-  }, [history, location, orderDetails]);
+  }, [history, location, orderDetails, showOrderStatus]);
 
   const orderStatus = useMemo(() => {
     const { status } = orderDetails;

@@ -22,6 +22,7 @@ export function Routes() {
     if (typeof location?.state === 'object') {
       if (objectHasKeys(location?.state, ['ingredientModal'])
           || objectHasKeys(location?.state, ['feedModal'])
+          || objectHasKeys(location?.state, ['profileFeedModal'])
       ) {
         return location as IExpandedLocation;
       }
@@ -31,6 +32,7 @@ export function Routes() {
   }, [location]);
   const ingredientModal = definedLocation?.state?.ingredientModal;
   const feedModal = definedLocation?.state?.feedModal;
+  const profileFeedModal = definedLocation?.state?.profileFeedModal;
   const switchLocation = (ingredientModal || feedModal || location) as H.Location;
 
   return (
@@ -64,7 +66,7 @@ export function Routes() {
         <ProtectedRoute exact path="/profile/orders/:orderId" accessType="authorized">
           <OrderDetailsPage />
         </ProtectedRoute>
-        <Route exact path="/feed/orderId" component={OrderDetailsPage} />
+        <Route exact path="/feed/:orderId" component={OrderDetailsPage} />
         {/* Страница ингредиента */}
         <Route exact path="/ingredients/:id" component={IngredientsPage} />
       </Switch>
@@ -81,19 +83,7 @@ export function Routes() {
           )}
         />
       )}
-      {!!feedModal && (
-      <Switch>
-        <Route
-          path="/feed/:orderId"
-          children={(
-            <Modal
-              onClose={() => history.goBack()}
-              header=""
-            >
-              <OrderDetails />
-            </Modal>
-              )}
-        />
+      {!!profileFeedModal && (
         <ProtectedRoute
           exact
           path="/profile/orders/:orderId"
@@ -105,9 +95,21 @@ export function Routes() {
             >
               <OrderDetails />
             </Modal>
-            )}
+                )}
         />
-      </Switch>
+      )}
+      {!!feedModal && (
+        <Route
+          path="/feed/:orderId"
+          children={(
+            <Modal
+              onClose={() => history.goBack()}
+              header=""
+            >
+              <OrderDetails />
+            </Modal>
+              )}
+        />
       )}
     </>
 

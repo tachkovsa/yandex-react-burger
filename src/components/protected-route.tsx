@@ -17,6 +17,7 @@ export interface IExpandedLocation extends Location {
     from?: Location,
     ingredientModal?: Location,
     feedModal?: Location
+    profileFeedModal?: Location;
   }
 }
 

@@ -1,16 +1,18 @@
 import { combineReducers } from 'redux';
 import { ingredientsReducer } from './ingredients';
 import { constructorIngredientsReducer } from './constructor-ingredients';
-import { currentIngredientReducer } from './current-ingredient';
+import { detailedIngredientReducer } from './detailed-ingredient';
 import { orderReducer } from './order';
 import { authReducer } from './auth';
+import { websocketsReducer } from './websockets';
+import { feedReducer } from './feed';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   constructorIngredients: constructorIngredientsReducer,
-  currentIngredient: currentIngredientReducer,
+  detailedIngredient: detailedIngredientReducer,
   order: orderReducer,
   auth: authReducer,
+  feed: feedReducer,
+  websockets: websocketsReducer,
 });
-
-export default rootReducer;

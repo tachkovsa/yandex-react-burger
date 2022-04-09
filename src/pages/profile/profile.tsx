@@ -3,14 +3,20 @@ import React from 'react';
 import {
   matchPath, NavLink, Route, Switch, useLocation,
 } from 'react-router-dom';
+
 import classNames from 'classnames';
+
+import { Profile } from '../../components/profile/profile';
+import { MyOrdersPage } from './my-orders';
+
 import commonStyles from '../common.module.css';
 import styles from './profile.module.css';
-import { Profile } from '../../components/profile/profile';
 
 export function ProfilePage() {
   const location = useLocation();
+
   const matchedProfile = matchPath(location.pathname, { path: '/profile', exact: true });
+  const matchedOrders = matchPath(location.pathname, { path: '/profile/orders', exact: true });
 
   return (
     <div className={classNames(commonStyles.content, styles.profile)}>
@@ -50,20 +56,15 @@ export function ProfilePage() {
             </NavLink>
           </div>
         </nav>
-        {matchedProfile && (
         <div className={classNames(styles.menuDesc, 'mt-20')}>
-          <Switch>
-            <Route path="/profile" exact>
-              <span className="text text_type_main-default text_color_inactive">В этом разделе вы можете изменить свои персональные данные</span>
-            </Route>
-          </Switch>
-
+          {matchedProfile && (<span className="text text_type_main-default text_color_inactive">В этом разделе вы можете изменить свои персональные данные</span>)}
+          {matchedOrders && (<span className="text text_type_main-default text_color_inactive">В этом разделе вы можете просмотреть свою историю заказов</span>)}
         </div>
-        )}
       </div>
       <div className={classNames(styles.content, 'ml-15')}>
         <Switch>
           <Route path="/profile" exact component={Profile} />
+          <Route path="/profile/orders" exact component={MyOrdersPage} />
         </Switch>
       </div>
     </div>

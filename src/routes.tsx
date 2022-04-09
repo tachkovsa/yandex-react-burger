@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Route, Switch, useHistory, useLocation,
 } from 'react-router-dom';
@@ -10,21 +10,38 @@ import { IExpandedLocation, ProtectedRoute } from './components/protected-route'
 import { Modal } from './components/modal/modal';
 import { IngredientDetails } from './components/ingredient-details/ingredient-details';
 import { objectHasKeys } from './utils/validation';
+import { FeedPage } from './pages/feed';
+import { OrderDetailsPage } from './pages/order-details';
+import { OrderDetails } from './components/order-details';
 
 export function Routes() {
   const history = useHistory();
   const location = useLocation();
 
-  const definedLocation = typeof location?.state === 'object'
-    && objectHasKeys(location?.state, ['ingredientModal']) ? location as unknown as IExpandedLocation : undefined;
-  const ingredientModal = definedLocation ? definedLocation.state?.ingredientModal : undefined;
-  const switchLocation = (ingredientModal || location) as H.Location;
+  const definedLocation = useMemo(() => {
+    if (typeof location?.state === 'object') {
+      if (objectHasKeys(location?.state, ['ingredientModal'])
+          || objectHasKeys(location?.state, ['feedModal'])
+          || objectHasKeys(location?.state, ['profileFeedModal'])
+      ) {
+        return location as IExpandedLocation;
+      }
+    }
+
+    return undefined;
+  }, [location]);
+  const ingredientModal = definedLocation?.state?.ingredientModal;
+  const feedModal = definedLocation?.state?.feedModal;
+  const profileFeedModal = definedLocation?.state?.profileFeedModal;
+  const switchLocation = (ingredientModal || feedModal || location) as H.Location;
 
   return (
     <>
       <Switch location={switchLocation}>
         {/* Главная страница, конструктор бургеров */}
         <Route exact path="/" component={MainPage} />
+        {/* Страница ленты заказов */}
+        <Route exact path="/feed" component={FeedPage} />
         {/* Страница авторизации */}
         <ProtectedRoute exact path="/login" accessType="unauthorized">
           <LoginPage />
@@ -42,9 +59,14 @@ export function Routes() {
           <ResetPasswordPage />
         </ProtectedRoute>
         {/* Страница с настройками профиля пользователя */}
-        <ProtectedRoute exact path={['/profile', '/profile/orders', '/profile/orders/:id']} accessType="authorized">
+        <ProtectedRoute exact path={['/profile', '/profile/orders', '/profile/orders']} accessType="authorized">
           <ProfilePage />
         </ProtectedRoute>
+        {/* Страница с деталями заказа */}
+        <ProtectedRoute exact path="/profile/orders/:orderId" accessType="authorized">
+          <OrderDetailsPage />
+        </ProtectedRoute>
+        <Route exact path="/feed/:orderId" component={OrderDetailsPage} />
         {/* Страница ингредиента */}
         <Route exact path="/ingredients/:id" component={IngredientsPage} />
       </Switch>
@@ -59,6 +81,34 @@ export function Routes() {
               <IngredientDetails />
             </Modal>
           )}
+        />
+      )}
+      {!!profileFeedModal && (
+        <ProtectedRoute
+          exact
+          path="/profile/orders/:orderId"
+          accessType="authorized"
+          children={(
+            <Modal
+              onClose={() => history.goBack()}
+              header=""
+            >
+              <OrderDetails />
+            </Modal>
+                )}
+        />
+      )}
+      {!!feedModal && (
+        <Route
+          path="/feed/:orderId"
+          children={(
+            <Modal
+              onClose={() => history.goBack()}
+              header=""
+            >
+              <OrderDetails />
+            </Modal>
+              )}
         />
       )}
     </>

@@ -1,21 +1,66 @@
-.modal {
+.orderDetails {
+    box-sizing: border-box;
+    max-height: 100%;
+}
+
+.ingredientPreview {
+    /* This property is not working in Chrome, but has working in Figma - idk why? */
+    /* border-image-source: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%); */
+    /* Workaround in the next line */
+    background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
+}
+
+.ingredientPreviewImage {
+    background-position: center;
+    background-size: cover;
+    width: 58px;
+    height: 58px;
+    border-radius: 100%;
+    background-color: #131316;
+}
+
+.header {
+    text-align: center;
+}
+
+.orderPrice {
+    display: flex;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ingredients {
+    box-sizing: border-box;
+    height: 366px;
+    padding-right: calc(var(--offset-base-size) * 6);
+}
+
+.ingredient {
+    display: flex;
     align-items: center;
 }
-
-.orderNumber {
-    color: var(--text-primary-light);
-    text-shadow:
-        0px 0px 16px rgba(51, 51, 255, 0.25),
-        0px 0px 8px rgba(51, 51, 255, 0.25),
-        0px 4px 32px rgba(51, 51, 255, 0.5);
+.ingredient:not(:last-child) {
+    margin-bottom: calc(var(--offset-base-size) * 4);
 }
 
-.orderSubtext {
-    color: var(--text-primary-light);
+.ingredientName {
+    box-sizing: border-box;
+    width: 414px;
 }
 
-.orderSubStatus {
-    color: var(--text-secondary-dark-grey);
+.ingredientCountNPrice {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    flex-shrink: 0;
 }

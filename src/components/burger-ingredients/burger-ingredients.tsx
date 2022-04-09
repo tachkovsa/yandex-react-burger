@@ -1,17 +1,17 @@
 import React, {
   useCallback, useState, useRef, useEffect, RefObject,
 } from 'react';
-import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import SimpleBar from 'simplebar-react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import { IIngredient } from '../../utils/interfaces/ingredient.interface';
+import { useSelector } from '../../hooks';
 import { BurgerIngredient } from './burger-ingredient';
 
 import styles from './burger-ingredients.module.css';
 import 'simplebar/dist/simplebar.min.css';
-import { IIngredient } from '../../utils/interfaces/ingredient.interface';
 
 type TTabs = 'buns' | 'sauces' | 'stuffings';
 
@@ -19,8 +19,8 @@ export const BurgerIngredients = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const basket = useSelector((state: any) => state.constructorIngredients.basket);
-  const { ingredients } = useSelector((state: any) => state.ingredients);
+  const basket = useSelector((state) => state.constructorIngredients.basket);
+  const { ingredients } = useSelector((state) => state.ingredients);
 
   const [tab, setTab] = useState<TTabs>('buns');
 
@@ -39,7 +39,7 @@ export const BurgerIngredients = () => {
 
   const getInBasketCount = useCallback((ingredient: IIngredient): number => {
     const { _id, type } = ingredient;
-    const ingredientsCount: number = basket.filter((b: IIngredient) => b._id === _id).length;
+    const ingredientsCount: number = basket.filter((b) => b._id === _id).length;
 
     return type === 'bun' ? ingredientsCount * 2 : ingredientsCount;
   }, [basket]);
@@ -115,7 +115,7 @@ export const BurgerIngredients = () => {
             Булки
           </p>
           <ul className={classNames(styles.ingredientsList, 'mt-6')}>
-            {ingredients.filter((i: IIngredient) => i.type === 'bun').map((ingredient: IIngredient) => (
+            {ingredients.filter((i) => i.type === 'bun').map((ingredient: IIngredient) => (
               <li
                 className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}

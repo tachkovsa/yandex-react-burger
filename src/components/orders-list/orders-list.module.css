@@ -1,0 +1,10 @@
+.feed {
+    width: 100%;
+    padding: 8px 16px 8px 8px;
+    max-height: 100%;
+}
+
+.waiting {
+    margin-top: 15%;
+    text-align: center;
+}

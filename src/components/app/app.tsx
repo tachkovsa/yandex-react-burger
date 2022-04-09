@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { AppHeader } from '../app-header/app-header';
 import { Routes } from '../../routes';
 import { getIngredients } from '../../store/actions/ingredients';
+import { useDispatch, useSelector } from '../../hooks';
 
 import commonStyles from '../../pages/common.module.css';
 
@@ -13,10 +13,10 @@ function App() {
 
   const [loadingText, setLoadingText] = useState('');
 
-  const isLoading = useSelector((state: any) => state.ingredients.loading);
-  const isLoaded = useSelector((state: any) => state.ingredients.loaded);
-  const ingredientsErrorText = useSelector((state: any) => state.ingredients.error);
-  const orderErrorText = useSelector((state: any) => state.order.error);
+  const isLoading = useSelector((state) => state.ingredients.loading);
+  const isLoaded = useSelector((state) => state.ingredients.loaded);
+  const ingredientsErrorText = useSelector((state) => state.ingredients.error);
+  const orderErrorText = useSelector((state) => state.order.error);
 
   const hasError = useCallback(
     () => ingredientsErrorText || orderErrorText,
@@ -48,7 +48,7 @@ function App() {
       )}
       {ingredientsErrorText && (
         <div className={classNames(commonStyles.error, 'text', 'text_type_main-default')}>
-          При загрузке ингредиетов произошла ошибка... 😞
+          При загрузке ингредиентов произошла ошибка... 😞
           <span className={classNames('mt-2', 'text', 'text_type_main-default', 'text_color_inactive')}>{ingredientsErrorText}</span>
         </div>
       )}

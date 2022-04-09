@@ -1,33 +1,35 @@
 import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { BurgerIngredients } from '../../components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../../components/burger-constructor/burger-constructor';
 import { Modal } from '../../components/modal/modal';
-import { OrderDetails } from '../../components/order-details/order-details';
+import { OrderAccepted } from '../../components/order-accepted/order-accepted';
 import { IngredientDetails } from '../../components/ingredient-details/ingredient-details';
+import { resetDetailedIngredient } from '../../store/actions/detailed-ingredient';
+import { resetConstructorIngredients } from '../../store/actions/constructor-ingredients';
+import { resetOrderNumber } from '../../store/actions/order';
 
-import Actions from '../../store/actions';
 import commonStyles from '../common.module.css';
 import styles from './main.module.css';
+import { useDispatch, useSelector } from '../../hooks';
 
 export function MainPage() {
   const dispatch = useDispatch();
 
-  const orderNumber = useSelector((state: any) => state.order.orderNumber);
-  const detailedIngredient = useSelector((state: any) => state.currentIngredient.detailedIngredient);
+  const orderNumber = useSelector((state) => state.order.orderNumber);
+  const detailedIngredient = useSelector((state) => state.detailedIngredient.detailedIngredient);
 
-  const ingredients = useSelector((state: any) => state.ingredients.ingredients);
-  const isLoading = useSelector((state: any) => state.ingredients.loading);
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const isLoading = useSelector((state) => state.ingredients.loading);
 
   const handleCloseOrderModal = () => {
-    dispatch({ type: Actions.RESET_CONSTRUCTOR_INGREDIENTS });
-    dispatch({ type: Actions.RESET_ORDER_NUMBER });
+    dispatch(resetConstructorIngredients());
+    dispatch(resetOrderNumber());
   };
-  const handleCloseDetailedIngredientModal = () => dispatch({ type: Actions.RESET_DETAILED_INGREDIENT });
+  const handleCloseDetailedIngredientModal = () => dispatch(resetDetailedIngredient());
 
   return (
     <>
@@ -45,7 +47,7 @@ export function MainPage() {
       )}
       {orderNumber && (
         <Modal onClose={handleCloseOrderModal}>
-          <OrderDetails orderNumber={orderNumber} />
+          <OrderAccepted orderNumber={orderNumber} />
         </Modal>
       )}
       {detailedIngredient && (

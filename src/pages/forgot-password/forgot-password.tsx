@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { requestPasswordResetCode } from '../../store/actions/auth';
 import { validateEmail } from '../../utils/validation';
+import { useDispatch, useSelector } from '../../hooks';
 
 import commonStyles from '../common.module.css';
 import styles from './forgot-password.module.css';
@@ -17,7 +17,7 @@ export function ForgotPasswordPage() {
   const history = useHistory();
 
   const [email, setEmail] = useState('');
-  const { loading, resetPasswordCodeRequested } = useSelector((state: any) => state.auth);
+  const { loading, resetPasswordCodeRequested } = useSelector((state) => state.auth);
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
   const restorePassword = (e: React.FormEvent) => {
@@ -50,7 +50,7 @@ export function ForgotPasswordPage() {
               placeholder="Укажите e-mail"
               error={email !== '' && !isEmailValid()}
               errorText="Введён некорректный email"
-              disabled={loading}
+              disabled={!!loading}
               success={isEmailValid()}
             />
           </div>
@@ -58,7 +58,7 @@ export function ForgotPasswordPage() {
             <Button
               type="primary"
               size="large"
-              disabled={loading || !isEmailValid()}
+              disabled={!!loading || !isEmailValid()}
             >
               Восстановить
             </Button>

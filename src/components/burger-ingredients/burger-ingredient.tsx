@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import classNames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IIngredient } from '../../utils/interfaces/ingredient.interface';
+import { dragIngredient, dropIngredient } from '../../store/actions/ingredients';
+import { useDispatch } from '../../hooks';
 
-import Actions from '../../store/actions';
 import styles from './burger-ingredients.module.css';
 
 export interface IBurgerIngredientProps {
@@ -28,9 +28,9 @@ export const BurgerIngredient: FC<IBurgerIngredientProps> = ({ ingredient, inBas
   useEffect(() => {
     if (didMount.current) {
       if (isDrag) {
-        dispatch({ type: Actions.DRAG_INGREDIENT });
+        dispatch(dragIngredient());
       } else {
-        dispatch({ type: Actions.DROP_INGREDIENT });
+        dispatch(dropIngredient());
       }
     } else {
       didMount.current = true;

@@ -32,7 +32,10 @@ describe('WebSockets reducer', () => {
   it('Should set refused connection', () => {
     const payload = '😥 Something went wrong...';
 
-    expect(websocketsReducer(initialState, {
+    expect(websocketsReducer({
+      ...initialState,
+      connected: true,
+    }, {
       type: constants.WS_CONNECTION_ERROR,
       payload,
     }))
@@ -44,7 +47,10 @@ describe('WebSockets reducer', () => {
   });
 
   it('Should close connection', () => {
-    expect(websocketsReducer(initialState, {
+    expect(websocketsReducer({
+      ...initialState,
+      connected: true,
+    }, {
       type: constants.WS_CONNECTION_CLOSED,
       payload: new CloseEvent('null'),
     }))

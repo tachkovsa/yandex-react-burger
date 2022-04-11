@@ -5,7 +5,7 @@ export type TDetailedIngredientState = {
   detailedIngredient: string | null;
 };
 
-const initialState = {
+export const initialState = {
   detailedIngredient: null,
 };
 

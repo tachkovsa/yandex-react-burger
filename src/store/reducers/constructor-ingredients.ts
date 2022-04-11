@@ -6,7 +6,7 @@ export type TConstructorIngredientsState = {
   basket: IConstructorIngredient[];
 };
 
-const initialState: TConstructorIngredientsState = {
+export const initialState: TConstructorIngredientsState = {
   basket: [],
 };
 
@@ -49,7 +49,6 @@ export const constructorIngredientsReducer = (
       return {
         ...state,
         basket: [],
-        readyForOrder: false,
       };
     case Actions.CHANGE_CONSTRUCTOR_INGREDIENT_POSITION: {
       const { whichIngredientDroppedId, onWhichIngredientDroppedId } = action.payload;

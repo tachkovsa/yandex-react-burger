@@ -11,7 +11,7 @@ export type TAuthState = {
   resetPasswordCodeEmail: string | null;
 };
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
   user: null,
   loading: null,
   error: null,
@@ -161,6 +161,7 @@ export const authReducer = (
         ...state,
         loading: false,
         resetPasswordCodeRequested: false,
+        error: action.payload,
       };
     }
     default:

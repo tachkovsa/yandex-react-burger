@@ -1,7 +1,7 @@
 import * as Actions from '../constants/feed';
 import { TFeedTypes, TServerFeedMessage } from '../../utils/interfaces/feed.interfaces';
 
-interface IProcessOrdersPayload {
+export interface IProcessOrdersPayload {
   data: TServerFeedMessage,
   type: TFeedTypes
 }

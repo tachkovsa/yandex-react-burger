@@ -8,7 +8,7 @@ export type TFeedState = {
   totalToday: number | null;
 };
 
-const initialState: TFeedState = {
+export const initialState: TFeedState = {
   orders: null,
   total: null,
   totalToday: null,

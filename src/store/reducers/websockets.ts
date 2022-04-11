@@ -1,16 +1,13 @@
 import * as Actions from '../constants/websockets';
 import { TWSActionTypes } from '../actions/websockets';
-// import { TFeedTypes } from '../../utils/interfaces/feed.interfaces';
 
 export type TWebSocketsState = {
-  // type: TFeedTypes | null;
   connected: boolean;
   error: string | null;
   messages: string[];
 };
 
-const initialState: TWebSocketsState = {
-  // type: null,
+export const initialState: TWebSocketsState = {
   connected: false,
   error: null,
   messages: [],

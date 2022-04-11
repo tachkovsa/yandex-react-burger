@@ -3,6 +3,7 @@ module.exports = {
     'airbnb',
     'airbnb-typescript',
     'airbnb/hooks',
+    "plugin:cypress/recommended",
   ],
   env: {
     browser: true,
@@ -10,6 +11,9 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
+  plugins: [
+    "cypress"
+  ],
   rules: {
     'no-plusplus': 'off',
     'no-unused-vars': 'off',

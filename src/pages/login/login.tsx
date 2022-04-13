@@ -32,7 +32,11 @@ export function LoginPage() {
   return (
     <div className={commonStyles.content}>
       <div className={styles.loginContainer}>
-        <form className={classNames('form-fields_width_100', 'mb-20')} onSubmit={login}>
+        <form
+          className={classNames('form-fields_width_100', 'mb-20')}
+          onSubmit={login}
+          data-test="login-form"
+        >
           <div className={classNames('text', 'text_type_main-medium', 'mb-6', 'text_align_center')}>Вход</div>
           <div className={classNames('mb-6')}>
             <Input

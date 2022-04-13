@@ -10,5 +10,6 @@ export const ModalOverlay: FC<IModalOverlayProps> = ({ onClose }) => (
     className={styles.overlay}
     onClick={onClose}
     title="Закрыть модальное окно"
+    data-test="modal-overlay"
   />
 );

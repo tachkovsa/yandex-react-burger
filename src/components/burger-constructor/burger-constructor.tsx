@@ -83,6 +83,7 @@ export function BurgerConstructor() {
       <div
         className={classNames(styles.basketListContainer, (isHoverIngredient ? styles.basketListContainerHovered : ''), (ingredientDragged ? styles.basketListContainerWaitingForIngredient : ''))}
         ref={basketRef}
+        data-test="constructor"
       >
         <div className={classNames(styles.bulletEdge, 'mr-4', 'mb-4')}>
 
@@ -141,10 +142,18 @@ export function BurgerConstructor() {
         </div>
       </div>
 
-      <div className={classNames(styles.orderInfo, 'mt-10', 'mr-4', 'mb-10')}>
+      <div
+        className={classNames(styles.orderInfo, 'mt-10', 'mr-4', 'mb-10')}
+        data-test="order-info"
+      >
         {basket.length > 0 && (
           <div className={classNames(styles.orderInfoPrice, 'mr-10')}>
-            <span className={classNames('text', 'text_type_digits-medium', 'mr-2')}>{totalPrice}</span>
+            <span
+              className={classNames('text', 'text_type_digits-medium', 'mr-2')}
+              data-test="order-price"
+            >
+              {totalPrice}
+            </span>
             <CurrencyIcon type="primary" />
           </div>
         )}

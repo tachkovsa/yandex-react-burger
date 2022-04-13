@@ -10,7 +10,10 @@ interface IOrderAcceptedProps {
 
 export const OrderAccepted: FC<IOrderAcceptedProps> = ({ orderNumber }) => (
   <div className={styles.modal}>
-    <div className={classNames(styles.orderNumber, 'mb-8', 'text', 'text_type_digits-large')}>
+    <div
+      className={classNames(styles.orderNumber, 'mb-8', 'text', 'text_type_digits-large')}
+      data-test="order-number"
+    >
       {orderNumber}
     </div>
     <div className={classNames(styles.orderSubtext, 'mb-15', 'text', 'text_type_main-medium')}>

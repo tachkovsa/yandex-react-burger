@@ -1,46 +1,62 @@
-# Getting Started with Create React App
+# О проекте
+Данное приложение было разработано в рамках обучения на курсе [React-разработчик](https://practicum.yandex.ru/react/) от Яндекс.Практикум.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Демо
+Демонстрационный вариант можно увидеть по приведённым ниже сылкам.
+- [Yandex.Cloud](http://tachkovsa.nomoredomains.work/)
+- [GitHub Pages](https://tachkovsa.github.io/yandex-react-burger/)
 
-## Available Scripts
+# Основной функционал
+Приложение предназначено для обслуживания клиентов 🍔 Stellar Burger.
+- Регистрация / Авторизация / Восстановление пароля
+- Сборка бургера из ингредиентов
+- Оформление заказа
+- Просмотр детальной информации о заказе и ингредиентах
+- Просмотр истории заказов - своих и всех
 
-In the project directory, you can run:
+# Технологии
+Backend часть была предоставлена Яндекс.Практикумом, frontend часть включает в себя следующий набор исползуемых технологий:
+- React
+- Redux
+- TypeScript
+- WebSocket
+- Jest
+- Cypress
 
-### `npm start`
+# Доступные скрипты
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Установка
+В случае возникновения проблем - укажите флаг `--legacy-peer-deps`.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+`npm install`
 
-### `npm test`
+### Запуск
+По умолчанию, происходит по адресу http://localhost:3000
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`npm run start`
 
-### `npm run build`
+### Тестирование
+Проверяет только reducers.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`npm run test`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### e2e
+Включает в себя проверку следующих сценариев:
+- Приложение доступно по адресу
+- Перетаскивание ингредиентов в конструктор
+- Открытие модального окна с описанием ингредиента
+- Отображение в модальном окне данных ингредиента
+- Открытие модального окна с данными о заказе при клике по кнопке "Оформить заказ"
+- Закрытие модальных окон при клике на кнопку закрытия
+`npm run cypress:open`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### deploy
+#### GitHub Pages
+Выкладывает проект в ветку `gh-page`.
 
-### `npm run eject`
+`npm run deploy`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Yandex.Cloud
+Выкладывает проект на [Yandex.Cloud](https://cloud.yandex.ru).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+`npm run deploy-script`

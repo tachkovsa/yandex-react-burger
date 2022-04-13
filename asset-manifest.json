@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "./static/css/main.3372e73e.css",
-    "main.js": "./static/js/main.bfe472cc.js",
-    "static/media/JetBrainsMono-Regular.woff2": "./static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
-    "static/media/JetBrainsMono-Bold.woff": "./static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
-    "static/media/JetBrainsMono-Regular.woff": "./static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
-    "static/media/JetBrainsMono-Bold.woff2": "./static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
-    "static/media/iceland.woff": "./static/media/iceland.77ad7fc2baffd9305538.woff",
-    "static/media/iceland.woff2": "./static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
-    "static/media/done.svg": "./static/media/done.81df86a5ed3e62693cd002b3a3d539b7.svg",
-    "index.html": "./index.html",
-    "main.3372e73e.css.map": "./static/css/main.3372e73e.css.map",
-    "main.bfe472cc.js.map": "./static/js/main.bfe472cc.js.map"
+    "main.css": "./yandex-react-burger/static/css/main.3372e73e.css",
+    "main.js": "./yandex-react-burger/static/js/main.cd60f4c2.js",
+    "static/media/JetBrainsMono-Regular.woff2": "./yandex-react-burger/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
+    "static/media/JetBrainsMono-Bold.woff": "./yandex-react-burger/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
+    "static/media/JetBrainsMono-Regular.woff": "./yandex-react-burger/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
+    "static/media/JetBrainsMono-Bold.woff2": "./yandex-react-burger/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
+    "static/media/iceland.woff": "./yandex-react-burger/static/media/iceland.77ad7fc2baffd9305538.woff",
+    "static/media/iceland.woff2": "./yandex-react-burger/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
+    "static/media/done.svg": "./yandex-react-burger/static/media/done.81df86a5ed3e62693cd002b3a3d539b7.svg",
+    "index.html": "./yandex-react-burger/index.html",
+    "main.3372e73e.css.map": "./yandex-react-burger/static/css/main.3372e73e.css.map",
+    "main.cd60f4c2.js.map": "./yandex-react-burger/static/js/main.cd60f4c2.js.map"
   },
   "entrypoints": [
     "static/css/main.3372e73e.css",
-    "static/js/main.bfe472cc.js"
+    "static/js/main.cd60f4c2.js"
   ]
 }

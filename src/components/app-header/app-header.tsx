@@ -13,7 +13,7 @@ import styles from './app-header.module.css';
 export function AppHeader() {
   const location = useLocation();
 
-  const matchedMain = matchPath(location.pathname, { path: '/', exact: true });
+  const matchedMain = matchPath(location.pathname, { path: ['/', '/yandex-react-burger'], exact: true });
   const matchedFeed = matchPath(location.pathname, { path: '/feed', exact: true });
   const matchedProfile = matchPath(location.pathname, { path: '/profile' });
 

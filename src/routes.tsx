@@ -39,7 +39,7 @@ export function Routes() {
     <>
       <Switch location={switchLocation}>
         {/* Главная страница, конструктор бургеров */}
-        <Route exact path="/" component={MainPage} />
+        <Route exact path={['/', '/yandex-react-burger']} component={MainPage} />
         {/* Страница ленты заказов */}
         <Route exact path="/feed" component={FeedPage} />
         {/* Страница авторизации */}

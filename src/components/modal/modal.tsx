@@ -38,10 +38,16 @@ export const Modal: FC<IModalProps> = ({
   return reactModalsPlaceholder && ReactDOM.createPortal(
     (
       <>
-        <div className={classNames(styles.modal, 'p-10')}>
-          <div className={classNames(styles.modalHeader)}>
+        <div
+          className={classNames(styles.modal, 'p-10')}
+          data-test="modal"
+        >
+          <div className={classNames(styles.modalHeader)} data-test="modal-header">
             {header && (<p className={classNames(styles.modalTitle, 'text', 'text_type_main-large')}>{header}</p>)}
-            <CloseIcon type="primary" onClick={onClose} />
+            <CloseIcon
+              type="primary"
+              onClick={onClose}
+            />
           </div>
           <div className={classNames(styles.modalContent)}>
             {children}

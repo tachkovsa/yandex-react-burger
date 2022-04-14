@@ -1,15 +1,19 @@
 module.exports = {
+  env: {
+    browser: true,
+  },
   extends: [
     'airbnb',
     'airbnb-typescript',
     'airbnb/hooks',
+    "plugin:cypress/recommended",
   ],
-  env: {
-    browser: true,
-  },
   parserOptions: {
     project: './tsconfig.json',
   },
+  plugins: [
+    "cypress"
+  ],
   rules: {
     'no-plusplus': 'off',
     'no-unused-vars': 'off',

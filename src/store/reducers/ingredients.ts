@@ -10,7 +10,7 @@ export type TIngredientsState = {
   ingredientDragged: boolean
 };
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   loading: null,
   loaded: false,
   error: null,

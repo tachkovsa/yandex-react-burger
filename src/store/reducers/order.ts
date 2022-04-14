@@ -8,7 +8,7 @@ export type TOrderState = {
   burgerName: string | null;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   loading: false,
   error: null,
   orderNumber: null,

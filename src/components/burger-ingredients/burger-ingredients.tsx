@@ -114,12 +114,14 @@ export const BurgerIngredients = () => {
           <p className="text text_type_main-medium" ref={bunsTitleRef}>
             Булки
           </p>
-          <ul className={classNames(styles.ingredientsList, 'mt-6')}>
+          <ul className={classNames(styles.ingredientsList, 'mt-6')} data-test="burger-buns">
             {ingredients.filter((i) => i.type === 'bun').map((ingredient: IIngredient) => (
               <li
                 className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}
                 onClick={() => openDetailedIngredientPage(ingredient._id)}
+                data-test="burger-ingredient"
+                data-testid={ingredient._id}
               >
                 <BurgerIngredient
                   ingredient={ingredient}
@@ -134,12 +136,14 @@ export const BurgerIngredients = () => {
           <p className="text text_type_main-medium" ref={sauceTitleRef}>
             Соусы
           </p>
-          <ul className={classNames(styles.ingredientsList, 'mt-6')}>
+          <ul className={classNames(styles.ingredientsList, 'mt-6')} data-test="burger-sauces">
             {ingredients.filter((i) => i.type === 'sauce').map((ingredient) => (
               <li
                 className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}
                 onClick={() => openDetailedIngredientPage(ingredient._id)}
+                data-test="burger-ingredient"
+                data-testid={ingredient._id}
               >
                 <BurgerIngredient
                   ingredient={ingredient}
@@ -153,12 +157,14 @@ export const BurgerIngredients = () => {
           <p className="text text_type_main-medium" ref={stuffingsTitleRef}>
             Начинки
           </p>
-          <ul className={classNames(styles.ingredientsList, 'mt-6')}>
+          <ul className={classNames(styles.ingredientsList, 'mt-6')} data-test="burger-stuffings">
             {ingredients.filter((i) => i.type === 'main').map((ingredient) => (
               <li
                 className={classNames(styles.ingredientsListItem, 'mb-8')}
                 key={ingredient._id}
                 onClick={() => openDetailedIngredientPage(ingredient._id)}
+                data-test="burger-ingredient"
+                data-testid={ingredient._id}
               >
                 <BurgerIngredient
                   ingredient={ingredient}

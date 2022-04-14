@@ -7,3 +7,6 @@ export const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24;
 
 export const FEED_PAGE_MAX_ORDERS = 20;
 export const FEED_PAGE_ORDERS_PER_COLUMN = 10;
+
+export const APP_URL = process.env.APP_DEV_URL || 'http://localhost:3000';
+export const ORDER_TIMEOUT = 20000;
